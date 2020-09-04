@@ -6,5 +6,17 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <style name="ButtonMain" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="colorPrimary">@color/CaribGreen</item>
+        <item name="android:background">@color/CaribGreen</item>
+        <item name="colorAccent">@color/Keppel</item>
+        <item name="android:textColor">@color/White</item>
+    </style>
+    <style name="ButtonAlt" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorPrimary">@color/Manatee</item>
+        <item name="android:background">@color/Manatee</item>
+        <item name="colorAccent">@color/PewterBlue</item>
+        <item name="android:textColor">@color/Black</item>
+    </style>
 
 </resources>
