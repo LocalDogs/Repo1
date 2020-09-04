@@ -6,17 +6,43 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
     <style name="ButtonMain" parent="ThemeOverlay.AppCompat.Dark">
-        <item name="colorPrimary">@color/CaribGreen</item>
-        <item name="android:background">@color/CaribGreen</item>
-        <item name="colorAccent">@color/Keppel</item>
+        <item name="android:background">@drawable/outlinedboxcg</item>
         <item name="android:textColor">@color/White</item>
     </style>
+
     <style name="ButtonAlt" parent="ThemeOverlay.AppCompat.Light">
-        <item name="colorPrimary">@color/Manatee</item>
-        <item name="android:background">@color/Manatee</item>
-        <item name="colorAccent">@color/PewterBlue</item>
+        <item name="android:background">@drawable/outlinedboxlw</item>
         <item name="android:textColor">@color/Black</item>
     </style>
+
+    <style name="InputBox" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:background">@drawable/rounded_corner</item>
+        <item name="android:shape">rectangle</item>
+    </style>
+    <style name="TitleText" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textSize">64px</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/White</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="BoxCW" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:background">@color/CaribGreen</item>
+    </style>
+    <style name="BoxLW" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:background">@color/LavWeb</item>
+    </style>
+
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
