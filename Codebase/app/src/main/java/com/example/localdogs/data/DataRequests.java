@@ -5,9 +5,11 @@ import com.google.gson.GsonBuilder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 
 public class DataRequests{
 
@@ -21,11 +23,12 @@ public class DataRequests{
         this.gson = new Gson();
     }
 
-    public void RetrieveUserProfile(String key){
-        this.__MakeRequest("/cardstack/users", key);
+    public void RetrieveUserProfile(String param, String key){
+        String query = param + "=" + key;
+        this.__MakeGetRequest("/user/retrieve?" + query);
     }
     // should make __MakeGetRequest and __MakePostRequest and __MakeDeleteRequest and __MakeUpdateRequest
-    private void __MakeRequest(String endPoint, String key){
+    private void __MakeGetRequest(String endPoint){
 
         URL url;
         HttpURLConnection conn;
@@ -34,21 +37,29 @@ public class DataRequests{
             try {
                conn = (HttpURLConnection) url.openConnection();
                conn.setRequestMethod("GET");
-               conn.setRequestProperty("email", key);
+               /* only need to specify content-type with PUT/POST */
+               //conn.setRequestProperty("", key);
                if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
                    BufferedReader buffer = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                    try{
                        String response = this.__readHttpInputStream(buffer);
+                       System.out.println(response);
                        /* perform gson transformation here... */
+                       // maybe make helper fxn
                        GsonBuilder gsonBuilder = new GsonBuilder();
                        gsonBuilder.setPrettyPrinting();
                        Gson gson = gsonBuilder.create();
-                       User user = gson.fromJson(response, User.class);
-                       System.out.println(user);
+                       User[] users = gson.fromJson(response, User[].class);
+                       for (User user : users){
+                           System.out.println(user);
+                       }
                    }catch(IOException e) {
                        e.printStackTrace();
                        System.err.println("DataRequests.readHttpInputStream: error reading InputStream");
                    }
+               }
+               else{
+                   System.out.println("failed to establish a connection");
                }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -74,4 +85,5 @@ public class DataRequests{
         }
         return response.toString();
     }
+
 }
