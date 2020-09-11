@@ -21,12 +21,22 @@
         <item name="android:background">@drawable/rounded_corner</item>
         <item name="android:shape">rectangle</item>
     </style>
+
     <style name="TitleText" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:textSize">64px</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/White</item>
         <item name="android:background">@color/CaribGreen</item>
+        <item name="android:padding">5dp</item>
+    </style>
+
+    <style name="ParagraphText" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textSize">50px</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:gravity">left</item>
+        <item name="android:textColor">@color/Black</item>
         <item name="android:padding">5dp</item>
     </style>
 
