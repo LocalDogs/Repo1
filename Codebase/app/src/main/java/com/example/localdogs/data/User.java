@@ -2,6 +2,8 @@ package com.example.localdogs.data;
 
 import androidx.annotation.NonNull;
 
+import com.google.gson.Gson;
+
 public class User {
     private String firstname;
     private String lastname;
@@ -42,6 +44,17 @@ public class User {
     }
 
     public String getDateOfBirth() { return this.dateofbirth; }
+
+    public String serializeToJson(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
+
+    // ALWAYS returns an array of type User
+    public static User[] deserializeFromJson(String jsonUser){
+        Gson gson = new Gson();
+        return gson.fromJson(jsonUser, User[].class);
+    }
 
     @NonNull
     @Override

@@ -2,6 +2,8 @@ package com.example.localdogs.data;
 
 import androidx.annotation.NonNull;
 
+import com.google.gson.Gson;
+
 public class Dog {
 
     private String name;
@@ -25,6 +27,16 @@ public class Dog {
     public String getBreed() { return this.breed; }
     public String getDateOfBirth() { return this.dateofbirth; }
     public int getWeight() { return this.weight; }
+
+    public String serializeToJson(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
+
+    public static Dog deserializeFromJson(String jsonDog){
+        Gson gson = new Gson();
+        return gson.fromJson(jsonDog, Dog.class);
+    }
 
     @NonNull
     @Override

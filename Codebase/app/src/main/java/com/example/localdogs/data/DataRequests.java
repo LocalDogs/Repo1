@@ -3,13 +3,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class DataRequests{
 
@@ -23,39 +23,36 @@ public class DataRequests{
         this.gson = new Gson();
     }
 
-    public void RetrieveUserProfile(String param, String key){
+    public String retrieveUserInfo(String param, String key){
         String query = param + "=" + key;
-        this.__MakeGetRequest("/user/retrieve?" + query);
+        return this.__makeGetRequest("/user/retrieve?" + query);
     }
-    // should make __MakeGetRequest and __MakePostRequest and __MakeDeleteRequest and __MakeUpdateRequest
-    private void __MakeGetRequest(String endPoint){
 
+    public String sendNewUserInfo(String userInfo){
+        return this.__makePutRequest("/user/create", userInfo);
+    }
+
+    // should make __makeGetRequest and __MakePostRequest and __MakeDeleteRequest and __MakeUpdateRequest
+    private String __makeGetRequest(String endPoint){
         URL url;
-        HttpURLConnection conn;
+        HttpsURLConnection conn;
+        String response = "";
         try {
             url = new URL(this.baseApiEndpoint + endPoint);
             try {
-               conn = (HttpURLConnection) url.openConnection();
+               conn = (HttpsURLConnection) url.openConnection();
                conn.setRequestMethod("GET");
                /* only need to specify content-type with PUT/POST */
                //conn.setRequestProperty("", key);
-               if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
+
+               if(conn.getResponseCode() == HttpsURLConnection.HTTP_OK){
                    BufferedReader buffer = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                    try{
-                       String response = this.__readHttpInputStream(buffer);
-                       System.out.println(response);
-                       /* perform gson transformation here... */
-                       // maybe make helper fxn
-                       GsonBuilder gsonBuilder = new GsonBuilder();
-                       gsonBuilder.setPrettyPrinting();
-                       Gson gson = gsonBuilder.create();
-                       User[] users = gson.fromJson(response, User[].class);
-                       for (User user : users){
-                           System.out.println(user);
-                       }
+                       response = this.__readHttpsInputStream(buffer);
+                       //System.out.println(response);
                    }catch(IOException e) {
                        e.printStackTrace();
-                       System.err.println("DataRequests.readHttpInputStream: error reading InputStream");
+                       System.err.println("DataRequests.readHttpsInputStream: error reading InputStream");
                    }
                }
                else{
@@ -63,22 +60,63 @@ public class DataRequests{
                }
             } catch (IOException e) {
                 e.printStackTrace();
-                System.err.println("DataRequests.MakeRequests: HttpURLConnection creation failed.");
+                System.err.println("DataRequests.MakeRequests: HttpsURLConnection creation failed.");
             }
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
             System.err.println("DataRequests.MakeRequests: URL object creation failed.");
         }
+        return response;
     }
 
-    private String __readHttpInputStream(BufferedReader buffer) throws IOException {
+    private String __makePutRequest(String endPoint, String data){
+        System.out.println(data);
+        URL url;
+        HttpsURLConnection conn;
+        String response = "";
+        try {
+            url = new URL(this.baseApiEndpoint + endPoint);
+            try {
+                conn = (HttpsURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json; utf-8");
+                conn.setDoOutput(true);
+                DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+                os.writeBytes(data);
+                if(conn.getResponseCode() == HttpsURLConnection.HTTP_OK){
+                    BufferedReader buffer = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    try{
+                        response = this.__readHttpsInputStream(buffer);
+                        //System.out.println(response);
+                    }catch(IOException e) {
+                        e.printStackTrace();
+                        System.err.println("DataRequests.readHttpsInputStream: error reading InputStream");
+                    }
+                }
+                else{
+                    System.out.println("failed to establish a connection");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.err.println("DataRequests.MakeRequests: HttpsURLConnection creation failed.");
+            }
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            System.err.println("DataRequests.MakeRequests: URL object creation failed.");
+        }
+        return response;
+    }
+
+    private String __readHttpsInputStream(BufferedReader buffer) throws IOException {
         StringBuilder response = new StringBuilder();
         String readLine;
         try{
             while((readLine = buffer.readLine()) != null){
                 response.append(readLine);
             }
+            buffer.close();
         }catch(IOException e){
             e.printStackTrace();
             throw e;
