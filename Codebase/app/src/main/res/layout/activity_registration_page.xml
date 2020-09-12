@@ -44,7 +44,6 @@
 
     <include
         layout="@layout/content_scrolling"
-        android:layout_height="wrap_content"
-        android:layout_width=""/>
+        />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
