@@ -2,6 +2,7 @@ package com.example.localdogs;
 
 import android.provider.ContactsContract;
 
+import com.android.volley.RequestQueue;
 import com.example.localdogs.data.DataRequests;
 import com.example.localdogs.data.User;
 
@@ -24,5 +25,8 @@ public class DataRequestTest {
         User user = new User("Randy", "Savage", "heehaw@aol.com", "05/02/1969");
         String response = dataRequests.sendNewUserInfo(user.serializeToJson());
         System.out.println(response);
+    }
+    @Test
+    public void testVolleyGetRequest(){
     }
 }
