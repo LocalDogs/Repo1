@@ -3,6 +3,7 @@ import android.content.Context;
 
 import com.android.volley.Response;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,6 +26,11 @@ public class UserRequests extends Requests {
         // asynchronous call
         return super.postRequest("/user/create", user.toJSONObject());
     }
+    public void retrieveUserProfile(String email, Response.Listener<JSONObject> successListener, Response.ErrorListener errorListener){
+        String query = "email=" + email;
+        super.getRequest("/user/retrieve", query, successListener, errorListener);
+    }
+
     public User retrieveUserProfile(String email){
         String query = "email=" + email;
         JSONObject jsonUser = super.getRequest("/user/retrieve", query);

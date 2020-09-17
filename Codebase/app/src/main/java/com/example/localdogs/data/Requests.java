@@ -4,9 +4,11 @@ import android.content.Context;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.RequestFuture;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.concurrent.ExecutionException;
@@ -83,5 +85,17 @@ public class Requests {
         }
 
         return response;
+    }
+    public void getRequest(String uri, String query, Response.Listener<JSONObject> successListener, Response.ErrorListener errorListener){
+        // synchronous call
+        JsonObjectRequest jsonReq = new JsonObjectRequest
+                (
+                        Request.Method.GET,
+                        this.url + uri + '?'+ query,
+                        null,
+                        successListener,
+                        errorListener
+                );
+        RequestQueueSingleton.getInstance(context).addToRequestQueue(jsonReq);
     }
 }

@@ -27,7 +27,7 @@ public class RequestsTester {
     @Rule
     public GrantPermissionRule mRunTimePermissionRule = GrantPermissionRule.grant(Manifest.permission.INTERNET);
     @Test
-    public void useAppContext() throws InterruptedException {
+    public void uploadUserTest() throws InterruptedException {
         // Context of the app under test.
         final Object syncObject = new Object();
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
@@ -37,11 +37,11 @@ public class RequestsTester {
             @Override
             public void onResponse(JSONObject response) {
                 System.out.println(response.toString());
-                synchronized (syncObject){
+                synchronized (syncObject) {
                     syncObject.notify();
                 }
             }
-        }, new Response.ErrorListener(){
+        }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -50,9 +50,37 @@ public class RequestsTester {
         });
         // need to test UserRequests.retrieveUser later
         assertEquals("com.example.localdogs", appContext.getPackageName());
-        synchronized (syncObject){
+        synchronized (syncObject) {
+            syncObject.wait();
+        }
+    }
+    @Test
+    public void retrieveUserTest() throws InterruptedException {
+        // Context of the app under test.
+        final Object syncObject = new Object();
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        UserRequests userRequests = new UserRequests(appContext);
+        userRequests.retrieveUserProfile("heehaw@aol.com", new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                System.out.println(response.toString());
+                synchronized (syncObject) {
+                    syncObject.notify();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        // need to test UserRequests.retrieveUser later
+        assertEquals("com.example.localdogs", appContext.getPackageName());
+        synchronized (syncObject) {
             syncObject.wait();
         }
 
     }
+
 }
