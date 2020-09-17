@@ -9,13 +9,16 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.localdogs.ui.main.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
+    Button button_login, button_register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         //tabs.setupWithViewPager(viewPager);
         FloatingActionButton fab = findViewById(R.id.fab);
 
+        Log.i("LocalDogs/Main", "Main created");
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -35,5 +40,7 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+
     }
 }
