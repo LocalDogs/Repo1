@@ -11,13 +11,13 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class DataRequests{
+public class oldDataRequests{
 
     private String baseApiEndpoint;
     private GsonBuilder gsonBuilder;
     private Gson gson;
 
-    public DataRequests(){
+    public oldDataRequests(){
         this.baseApiEndpoint = "https://njxnl2knh4.execute-api.us-east-2.amazonaws.com/beeta";
         this.gsonBuilder = new GsonBuilder();
         this.gson = new Gson();

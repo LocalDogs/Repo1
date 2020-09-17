@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class User {
     private String firstname;
     private String lastname;
@@ -45,15 +48,35 @@ public class User {
 
     public String getDateOfBirth() { return this.dateofbirth; }
 
-    public String serializeToJson(){
-        Gson gson = new Gson();
-        return gson.toJson(this);
+    public JSONObject toJSONObject(){
+        JSONObject jsonUser = new JSONObject();
+        try {
+            jsonUser.put("firstname", getFirstname());
+            jsonUser.put("lastname", getLastname());
+            jsonUser.put("email", getEmail());
+            jsonUser.put("password", "dummypass"); // temporary
+            jsonUser.put("dateofbirth", getDateOfBirth());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonUser;
     }
 
-    // ALWAYS returns an array of type User
-    public static User[] deserializeFromJson(String jsonUser){
-        Gson gson = new Gson();
-        return gson.fromJson(jsonUser, User[].class);
+    public static User toUser(JSONObject jsonUser){
+        User user = null;
+        try {
+            user = new User
+                    (
+                            jsonUser.getString("firstname"),
+                            jsonUser.getString("lastname"),
+                            jsonUser.getString("email"),
+                            jsonUser.getString("dateofbirth")
+            );
+        } catch (JSONException e) {
+            e.printStackTrace();
+            System.out.println("User.toUser conversion error");
+        }
+        return user;
     }
 
     @NonNull
