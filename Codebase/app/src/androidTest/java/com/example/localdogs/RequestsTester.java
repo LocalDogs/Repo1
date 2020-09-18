@@ -60,19 +60,39 @@ public class RequestsTester {
         final Object syncObject = new Object();
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         UserRequests userRequests = new UserRequests(appContext);
+
+        /* asynchronous request for a user profile specified
+           by their email (which should be unique)
+         */
         userRequests.retrieveUserProfile("heehaw@aol.com", new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 System.out.println(response.toString());
+
+                // create a user object from database data
+                User user = User.toUser(response);
+
+                System.out.println(user.toString());
+
+                // synchronized block only necessary for testing
                 synchronized (syncObject) {
                     syncObject.notify();
                 }
+                /*
+                Add whatever code you want to execute here AFTER data has been
+                returned from the server, populate fields in view, whatever.
+                */
+
             }
         }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                /*
+                Some error in getting the request occurred, whether no user existed, or
+                the request was rejected
+                */
             }
         });
         // need to test UserRequests.retrieveUser later

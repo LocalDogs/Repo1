@@ -82,7 +82,7 @@ public class User {
     @NonNull
     @Override
     public String toString() {
-        return "User: { firstname: " + this.firstname + " lastname: " + this.lastname + " email: " + this.email + " }";
+        return "User: { firstname: " + this.firstname + " lastname: " + this.lastname + "dateofbirth: " + this.getDateOfBirth() + " email: " + this.email + " }";
     }
 
 
