@@ -43,7 +43,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <include
-        layout="@layout/content_scrolling"
+        layout="@layout/registration_content_scrolling"
         />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
