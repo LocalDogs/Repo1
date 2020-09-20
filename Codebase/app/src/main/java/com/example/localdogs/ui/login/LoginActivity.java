@@ -26,26 +26,26 @@ import android.widget.Toast;
 
 import com.example.localdogs.Cardstack;
 import com.example.localdogs.R;
+import com.example.localdogs.RegistrationPage;
 import com.example.localdogs.ui.login.LoginViewModel;
 import com.example.localdogs.ui.login.LoginViewModelFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private LoginViewModel loginViewModel;
+    //private LoginViewModel loginViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
-                .get(LoginViewModel.class);
+        /*loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
+                .get(LoginViewModel.class);*/
 
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
-        final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
-        loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
+        /*loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
             public void onChanged(@Nullable LoginFormState loginFormState) {
                 if (loginFormState == null) {
@@ -110,32 +110,44 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 return false;
             }
-        });
+        });*/
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        /*loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
-        });
+        });*/
+
+            Log.i("LoginActivity","Listening for buttons!");
+        /*Button registerButton = (Button)findViewById(R.id.register);
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Log.i("LoginActivity","Register button clicked");
+                Intent myIntent = new Intent(view.getContext(), RegistrationPage.class);
+                startActivity(myIntent);
+            }
+        });*/
     }
 
-    private void updateUiWithUser(LoggedInUserView model) {
+    /*private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
-        loginSuccess();
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
-    }
+    }*/
 
-    public void loginSuccess(){
-        System.out.println("Login Successful");
-        Intent intent = new Intent(this, Cardstack.class);
-        startActivity(intent);
+    public void registerClick(View view) {
+        Log.i("LoginActivity", "Register button clicked");
+        System.out.println("[print] register button clicked");
+        if(view.getId() == R.id.register) {
+            Intent myIntent = new Intent(view.getContext(), RegistrationPage.class);
+            startActivity(myIntent);
+        }
     }
 }
