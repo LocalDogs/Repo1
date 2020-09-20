@@ -6,7 +6,8 @@ ul.navbar {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    overflow: auto;
+    white-space: nowrap;
     background-color: #45B69C;
 }
 
@@ -26,10 +27,10 @@ img.navbar.logo {
 }
 
 img.mainbody {
-    height: 30px;
+    height: 100px;
 }
 
-li a {
+li.navbar a {
     display: block;
     color: BLACK;
     font-weight: bold;
@@ -38,10 +39,26 @@ li a {
     text-decoration: none;
 }
 
-li a:hover {
+li a.link {
+    color: blue;
+}
+
+li.navbar a:hover {
     background-color: white;
 }
 
 .active {
     background-color: grey;
-  }
+}
+
+p {
+    margin: 50px;
+}
+
+h1.index {
+    text-align: center;
+}
+
+a.link {
+    text-decoration: none;
+}
