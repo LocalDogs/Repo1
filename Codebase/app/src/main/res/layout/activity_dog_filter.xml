@@ -1,122 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient1"
     android:fitsSystemWindows="true"
-    tools:context=".DogFilterActivity" >
+    tools:context=".DogFilterActivity">
 
-    <ScrollView
-        android:id="@+id/scrollView2"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/gradient1"
-        android:clipToPadding="false"
-        android:paddingTop="70px"
-        app:layout_anchor="@+id/scrollView2"
-        app:layout_anchorGravity="center">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <Switch
+            android:id="@+id/swActivityLevel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/outlinedboxcg"
+            android:gravity="center"
+            android:text="Activity Level" />
+
+        <RatingBar
+            android:id="@+id/rbActivityLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:baselineAligned="false"
+            android:numStars="5"
+            android:stepSize="1"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3"
+            tools:visibility="gone" />
+
+        <Switch
+            android:id="@+id/swWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/outlinedboxcg"
+            android:gravity="center"
+            android:text="Weight" />
+
+        <EditText
+            android:id="@+id/etMinWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/outlinedboxlw"
+            android:ems="10"
+            android:hint="Minimum Weight"
+            android:inputType="number"
+            android:textColor="#000000"
+            android:textColorHighlight="#FFFFFF"
+            android:textColorHint="#8A4A4848"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/etMaxWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/outlinedboxlw"
+            android:ems="10"
+            android:hint="Maximum Weight"
+            android:inputType="number"
+            android:textColor="#000000"
+            android:textColorHighlight="#FFFFFF"
+            android:textColorHint="#8A4A4848"
+            android:visibility="gone" />
+
+        <Switch
+            android:id="@+id/swAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/outlinedboxcg"
+            android:gravity="center"
+            android:text="Age" />
+
+        <SeekBar
+            android:id="@+id/sbMinAge"
+            style="@style/Widget.AppCompat.SeekBar.Discrete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:max="20"
+            android:progress="1"
+            android:visibility="gone"
+            app:tickMarkTint="#FFFFFF" />
+
+        <SeekBar
+            android:id="@+id/sbMaxAge"
+            style="@style/Widget.AppCompat.SeekBar.Discrete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:max="20"
+            android:progress="1"
+            android:visibility="gone"
+            app:tickMarkTint="#FFFFFF" />
+
+        <Switch
+            android:id="@+id/swBreed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/outlinedboxcg"
+            android:gravity="center"
+            android:text="Breed" />
+
+        <TextView
+            android:id="@+id/tvBreedsListLabel"
+            style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_margin="10dp"
+            android:background="@drawable/outlinedboxcg"
+            android:text="Select a breed:"
+            android:textColor="#000000"
+            android:visibility="gone" />
 
-            <Switch
-                android:id="@+id/swActivityLevel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10px"
-                android:background="@drawable/outlinedboxcg"
-                android:text="Activity Level" />
+        <CheckedTextView
+            android:id="@+id/ctvBreedSelection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:checkMark="@android:drawable/arrow_up_float"
+            android:text="abreed"
+            android:textSize="18sp"
+            android:visibility="gone" />
 
-            <RatingBar
-                android:id="@+id/rbActivityLevel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:baselineAligned="false"
-                android:numStars="5"
-                android:padding="10px"
-                android:stepSize="1"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3"
-                tools:visibility="gone" />
+    </LinearLayout>
 
-            <Switch
-                android:id="@+id/swWeight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10px"
-                android:background="@drawable/outlinedboxcg"
-                android:text="Weight" />
-
-            <EditText
-                android:id="@+id/etMinWeight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Minimum Weight (Whole Number)"
-                android:inputType="number"
-                android:textColor="#FFFFFF"
-                android:textColorHighlight="#000000"
-                android:textColorHint="#8AFFFFFF"
-                android:visibility="gone" />
-
-            <EditText
-                android:id="@+id/etMaxWeight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Maximum Weight (Whole Number)"
-                android:inputType="number"
-                android:textColor="#FFFFFF"
-                android:textColorHighlight="#000000"
-                android:textColorHint="#8AFFFFFF"
-                android:visibility="gone" />
-
-            <Switch
-                android:id="@+id/swAge"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10px"
-                android:background="@drawable/outlinedboxcg"
-                android:text="Age" />
-
-            <SeekBar
-                android:id="@+id/sbMinAge"
-                style="@style/Widget.AppCompat.SeekBar.Discrete"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10px"
-                android:max="20"
-                android:progress="1"
-                android:visibility="gone"
-                app:tickMarkTint="#FFFFFF" />
-
-            <SeekBar
-                android:id="@+id/sbMaxAge"
-                style="@style/Widget.AppCompat.SeekBar.Discrete"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10px"
-                android:max="20"
-                android:progress="1"
-                android:visibility="gone"
-                app:tickMarkTint="#FFFFFF" />
-
-            <Switch
-                android:id="@+id/swBreed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10px"
-                android:background="@drawable/outlinedboxcg"
-                android:text="Breed" />
-
-        </LinearLayout>
-    </ScrollView>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</FrameLayout>
