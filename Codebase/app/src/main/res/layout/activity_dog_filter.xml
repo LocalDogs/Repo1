@@ -2,46 +2,121 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".DogFilterActivity">
+    tools:context=".DogFilterActivity" >
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar"
+    <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
-        android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient1"
+        android:clipToPadding="false"
+        android:paddingTop="70px"
+        app:layout_anchor="@+id/scrollView2"
+        app:layout_anchorGravity="center">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:toolbarId="@+id/toolbar">
+            android:orientation="vertical">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+            <Switch
+                android:id="@+id/swActivityLevel"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+                android:layout_height="wrap_content"
+                android:layout_margin="10px"
+                android:background="@drawable/outlinedboxcg"
+                android:text="Activity Level" />
 
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-    </com.google.android.material.appbar.AppBarLayout>
+            <RatingBar
+                android:id="@+id/rbActivityLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:baselineAligned="false"
+                android:numStars="5"
+                android:padding="10px"
+                android:stepSize="1"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                tools:visibility="gone" />
 
-    <include layout="@layout/registration_content_scrolling" />
+            <Switch
+                android:id="@+id/swWeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10px"
+                android:background="@drawable/outlinedboxcg"
+                android:text="Weight" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+            <EditText
+                android:id="@+id/etMinWeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Minimum Weight (Whole Number)"
+                android:inputType="number"
+                android:textColor="#FFFFFF"
+                android:textColorHighlight="#000000"
+                android:textColorHint="#8AFFFFFF"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/etMaxWeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Maximum Weight (Whole Number)"
+                android:inputType="number"
+                android:textColor="#FFFFFF"
+                android:textColorHighlight="#000000"
+                android:textColorHint="#8AFFFFFF"
+                android:visibility="gone" />
+
+            <Switch
+                android:id="@+id/swAge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10px"
+                android:background="@drawable/outlinedboxcg"
+                android:text="Age" />
+
+            <SeekBar
+                android:id="@+id/sbMinAge"
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10px"
+                android:max="20"
+                android:progress="1"
+                android:visibility="gone"
+                app:tickMarkTint="#FFFFFF" />
+
+            <SeekBar
+                android:id="@+id/sbMaxAge"
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10px"
+                android:max="20"
+                android:progress="1"
+                android:visibility="gone"
+                app:tickMarkTint="#FFFFFF" />
+
+            <Switch
+                android:id="@+id/swBreed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10px"
+                android:background="@drawable/outlinedboxcg"
+                android:text="Breed" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

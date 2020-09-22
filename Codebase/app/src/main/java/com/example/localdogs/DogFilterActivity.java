@@ -2,14 +2,14 @@ package com.example.localdogs;
 
 import android.os.Bundle;
 
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.RatingBar;
+import android.widget.SeekBar;
+import android.widget.Switch;
 
 public class DogFilterActivity extends AppCompatActivity {
 
@@ -17,18 +17,52 @@ public class DogFilterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dog_filter);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-        toolBarLayout.setTitle(getTitle());
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        Switch swActivityLevel = findViewById(R.id.swActivityLevel);
+        swActivityLevel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                RatingBar rbActivityLevel = findViewById(R.id.rbActivityLevel);
+                if(b){
+                    rbActivityLevel.setVisibility(View.VISIBLE);
+                }
+                else{
+                    rbActivityLevel.setVisibility(View.GONE);
+                }
             }
         });
+        Switch swWeight = findViewById(R.id.swWeight);
+        swWeight.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                EditText etMin = findViewById(R.id.etMinWeight);
+                EditText etMax = findViewById(R.id.etMaxWeight);
+                if(b){
+                    etMin.setVisibility(View.VISIBLE);
+                    etMax.setVisibility(View.VISIBLE);
+                }
+                else{
+                    etMin.setVisibility(View.GONE);
+                    etMax.setVisibility(View.GONE);
+                }
+            }
+        });
+        Switch swAge = findViewById(R.id.swAge);
+        swAge.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                SeekBar sbMin = findViewById(R.id.sbMinAge);
+                SeekBar sbMax = findViewById(R.id.sbMaxAge);
+                if(b){
+                   sbMin.setVisibility(View.VISIBLE);
+                   sbMax.setVisibility(View.VISIBLE);
+                }
+                else{
+                    sbMin.setVisibility(View.GONE);
+                    sbMax.setVisibility(View.GONE);
+                }
+            }
+        });
+
+
     }
 }
