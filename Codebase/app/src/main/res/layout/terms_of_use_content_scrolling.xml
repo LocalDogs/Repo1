@@ -2,15 +2,17 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".TermsOfUse"
     tools:showIn="@layout/activity_terms_of_use">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="758dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:layout_editor_absoluteY="1dp">
 
         <TextView
@@ -18,62 +20,96 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="
-Last revised on September 23, 2020\n\n
+    Last revised on September 23, 2020\n\n
 
-Welcome to Local Dogs, LLC.\n\n
+    Welcome to Local Dogs, LLC.\n\n
 
-1. Acceptance of Terms of Use Agreement.
-- By creating a Local Dogs account or by using the Local Dogs app, you agree to be bound by: \n\n   - (i) Terms of Use, \n   - (ii) Privacy Policy, and \n   - (iii) Any terms disclosed to you if you purchase or have purchased additional features, products or services we offer on the Service (collectively, this “Agreement”). \n\nIf you do not accept and agree to be bound by all of the terms of this Agreement (other than the limited one-time opt out right for certain members provided for in Section 15), you should not use the Service.
+    1. Acceptance of Terms of Use Agreement.
+    - By creating a Local Dogs account or by using the Local Dogs app, you agree to be bound by: \n\n   - (i) Terms of Use, \n   - (ii) Privacy Policy, and \n   - (iii) Any terms disclosed to you if you purchase or have purchased additional features, products or services we offer on the Service (collectively, this “Agreement”). \n\nIf you do not accept and agree to be bound by all of the terms of this Agreement (other than the limited one-time opt out right for certain members provided for in Section 15), you should not use the Service.
 
-\n\nWe may make changes to this Agreement and to the Service from time to time. We may do this for a variety of reasons including to reflect changes in or requirements of the law, new features, or changes in business practices.
+    \n\nWe may make changes to this Agreement and to the Service from time to time. We may do this for a variety of reasons including to reflect changes in or requirements of the law, new features, or changes in business practices.
 
-\n\n2. Eligibility.
-\n- You must be at least 18 years of age to create an account on Local Dogs and use the Service. By creating an account and using the Service, you represent and warrant that:
+    \n\n2. Eligibility.
+    \n- You must be at least 18 years of age to create an account on Local Dogs and use the Service. By creating an account and using the Service, you represent and warrant that:
 
-\n   - You can form a binding contract with Local Dogs,
-\n   - You are not a person who is barred from using the Service under the laws of the United States or any other applicable jurisdiction–meaning that you do not appear on the U.S. Treasury Department’s list of Specially Designated Nationals or face any other similar prohibition,
-\n   - You will comply with this Agreement and all applicable local, state, national and international laws, rules and regulations, and
-\n   - You have never been convicted of or pled no contest to a felony, a sex crime, or any crime involving violence, and that you are not required to register as a sex offender with any state, federal or local sex offender registry.
-\n\n3. Your Account.
-\n- In order to use Local Dogs, you may sign in using your email. For more information regarding the information we collect from you and how we use it, please consult our Privacy Policy.
+    \n   - You can form a binding contract with Local Dogs,
+    \n   - You are not a person who is barred from using the Service under the laws of the United States or any other applicable jurisdiction–meaning that you do not appear on the U.S. Treasury Department’s list of Specially Designated Nationals or face any other similar prohibition,
+    \n   - You will comply with this Agreement and all applicable local, state, national and international laws, rules and regulations, and
+    \n   - You have never been convicted of or pled no contest to a felony, a sex crime, or any crime involving violence, and that you are not required to register as a sex offender with any state, federal or local sex offender registry.
+    \n\n3. Your Account.
+    \n- In order to use Local Dogs, you may sign in using your email. For more information regarding the information we collect from you and how we use it, please consult our Privacy Policy.
 
-\n\n- You are responsible for maintaining the confidentiality of your login credentials you use to sign up for Local Dogs, and you are solely responsible for all activities that occur under those credentials. If you think someone has gained access to your account, please immediately contact us.
+    \n\n- You are responsible for maintaining the confidentiality of your login credentials you use to sign up for Local Dogs, and you are solely responsible for all activities that occur under those credentials. If you think someone has gained access to your account, please immediately contact us.
 
-\n\n4. Modifying the Service and Termination.
-\n- Local Dogs is always striving to improve the Service and bring you additional functionality that you will find engaging and useful. This means we may add new product features or enhancements from time to time as well as remove some features, and if these actions do not materially affect your rights or obligations, we may not provide you with notice before taking them. We may even suspend the Service entirely, in which event we will notify you in advance unless extenuating circumstances, such as safety or security concerns, prevent us from doing so.
+    \n\n4. Modifying the Service and Termination.
+    \n- Local Dogs is always striving to improve the Service and bring you additional functionality that you will find engaging and useful. This means we may add new product features or enhancements from time to time as well as remove some features, and if these actions do not materially affect your rights or obligations, we may not provide you with notice before taking them. We may even suspend the Service entirely, in which event we will notify you in advance unless extenuating circumstances, such as safety or security concerns, prevent us from doing so.
 
-\n\n- You may terminate your account at any time, for any reason, by following the instructions in “Settings” in the Service, however if you use a third party payment account, you will need to manage in app purchases through such account (e.g., iTunes, Google Play) to avoid additional billing.
+    \n\n- You may terminate your account at any time, for any reason, by following the instructions in “Settings” in the Service, however if you use a third party payment account, you will need to manage in app purchases through such account (e.g., iTunes, Google Play) to avoid additional billing.
 
-\n\n- Local Dogs may terminate your account at any time without notice if it believes that you have violated this Agreement. Upon such termination, you will not be entitled to any refund for purchases. After your account is terminated, this Agreement will terminate, except that the following provisions will still apply to you and Local Dogs: Section 4, Section 5, and Sections 12 through 19.
+    \n\n- Local Dogs may terminate your account at any time without notice if it believes that you have violated this Agreement. Upon such termination, you will not be entitled to any refund for purchases. After your account is terminated, this Agreement will terminate, except that the following provisions will still apply to you and Local Dogs: Section 4, Section 5, and Sections 12 through 19.
 
-\n\n5. Safety; Your Interactions with Other Members.
-\n- Though Local Dogs strives to encourage a respectful member experience through features like the double opt-in that allows members to communicate only after they have both indicated interest in one another, it is not responsible for the conduct of any member on or off of the Service. You agree to use caution in all interactions with other members, particularly if you decide to communicate off the Service or meet in person. In addition, you agree to review and follow Local Dogs’s Safety Tips prior to using the Service. You agree that you will not provide your financial information (for example, your credit card or bank account information), or wire or otherwise send money, to other members.
+    \n\n5. Safety; Your Interactions with Other Members.
+    \n- Though Local Dogs strives to encourage a respectful member experience through features like the double opt-in that allows members to communicate only after they have both indicated interest in one another, it is not responsible for the conduct of any member on or off of the Service. You agree to use caution in all interactions with other members, particularly if you decide to communicate off the Service or meet in person. In addition, you agree to review and follow Local Dogs’s Safety Tips prior to using the Service. You agree that you will not provide your financial information (for example, your credit card or bank account information), or wire or otherwise send money, to other members.
 
-\n\n- YOU ARE SOLELY RESPONSIBLE FOR YOUR INTERACTIONS WITH OTHER MEMBERS. YOU UNDERSTAND THAT LOCAL DOGS DOES NOT CONDUCT CRIMINAL BACKGROUND CHECKS ON ITS MEMBERS OR OTHERWISE INQUIRE INTO THE BACKGROUND OF ITS MEMBERS. LOCAL DOGS MAKES NO REPRESENTATIONS OR WARRANTIES AS TO THE CONDUCT OF MEMBERS. LOCAL DOGS RESERVES THE RIGHT TO CONDUCT – AND YOU AUTHORIZE LOCAL DOGS TO CONDUCT – ANY CRIMINAL BACKGROUND CHECK OR OTHER SCREENINGS (SUCH AS SEX OFFENDER REGISTER SEARCHES) AT ANY TIME USING AVAILABLE PUBLIC RECORDS OBTAINED BY IT OR WITH THE ASSISTANCE OF A CONSUMER REPORTING AGENCY, AND YOU AGREE THAT ANY INFORMATION YOU PROVIDE MAY BE USED FOR THAT PURPOSE.
+    \n\n- YOU ARE SOLELY RESPONSIBLE FOR YOUR INTERACTIONS WITH OTHER MEMBERS. YOU UNDERSTAND THAT LOCAL DOGS DOES NOT CONDUCT CRIMINAL BACKGROUND CHECKS ON ITS MEMBERS OR OTHERWISE INQUIRE INTO THE BACKGROUND OF ITS MEMBERS. LOCAL DOGS MAKES NO REPRESENTATIONS OR WARRANTIES AS TO THE CONDUCT OF MEMBERS. LOCAL DOGS RESERVES THE RIGHT TO CONDUCT – AND YOU AUTHORIZE LOCAL DOGS TO CONDUCT – ANY CRIMINAL BACKGROUND CHECK OR OTHER SCREENINGS (SUCH AS SEX OFFENDER REGISTER SEARCHES) AT ANY TIME USING AVAILABLE PUBLIC RECORDS OBTAINED BY IT OR WITH THE ASSISTANCE OF A CONSUMER REPORTING AGENCY, AND YOU AGREE THAT ANY INFORMATION YOU PROVIDE MAY BE USED FOR THAT PURPOSE.
 
-\n\n6. Community Rules.
-\n- By using the Service, you agree that you will not:
+    \n\n6. Community Rules.
+    \n- By using the Service, you agree that you will not:
 
-\n\n   - Use the Service for any purpose that is illegal or prohibited by this Agreement.
-\n   - Use the Service for any harmful or nefarious purpose.
-\n   - Use the Service in order to damage Local Dogs, LLC.
-\n   - Violate our Community Guidelines , as updated from time to time.
-\n   - Spam, solicit money from or defraud any members.
-\n   - Impersonate any person or entity or post any images of another person without his or her permission.
-\n   - Bully, “stalk,” intimidate, assault, harass, mistreat or defame any person.
-\n   - Post any Content that violates or infringes anyone’s rights, including rights of publicity, privacy, copyright, trademark or other intellectual property or contract right.
-\n   - Post any Content that is hate speech, threatening, sexually explicit or pornographic; incites violence; or contains nudity or graphic or gratuitous violence.
-\n   - Post any Content that promotes racism, bigotry, hatred or physical harm of any kind against any group or individual.
-\n   - Solicit passwords for any purpose, or personal identifying information for commercial or unlawful purposes from other users or disseminate another person’s personal information without his or her permission.
-\n   - Use another user’s account, share an account with another user, or maintain more than one account.
-\n   - Create another account if we have already terminated your account, unless you have our permission.
-\n\n- Local Dogs reserves the right to investigate and/ or terminate your account without a refund of any purchases if you have violated this Agreement, misused the Service or behaved in a way that Local Dogs regards as inappropriate or unlawful, including actions or communications that occur on or off the Service.
+    \n\n   - Use the Service for any purpose that is illegal or prohibited by this Agreement.
+    \n   - Use the Service for any harmful or nefarious purpose.
+    \n   - Use the Service in order to damage Local Dogs, LLC.
+    \n   - Violate our Community Guidelines , as updated from time to time.
+    \n   - Spam, solicit money from or defraud any members.
+    \n   - Impersonate any person or entity or post any images of another person without his or her permission.
+    \n   - Bully, “stalk,” intimidate, assault, harass, mistreat or defame any person.
+    \n   - Post any Content that violates or infringes anyone’s rights, including rights of publicity, privacy, copyright, trademark or other intellectual property or contract right.
+    \n   - Post any Content that is hate speech, threatening, sexually explicit or pornographic; incites violence; or contains nudity or graphic or gratuitous violence.
+    \n   - Post any Content that promotes racism, bigotry, hatred or physical harm of any kind against any group or individual.
+    \n   - Solicit passwords for any purpose, or personal identifying information for commercial or unlawful purposes from other users or disseminate another person’s personal information without his or her permission.
+    \n   - Use another user’s account, share an account with another user, or maintain more than one account.
+    \n   - Create another account if we have already terminated your account, unless you have our permission.
+    \n\n- Local Dogs reserves the right to investigate and/ or terminate your account without a refund of any purchases if you have violated this Agreement, misused the Service or behaved in a way that Local Dogs regards as inappropriate or unlawful, including actions or communications that occur on or off the Service.
 
-"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    " />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/button2"
+                style="@style/ButtonMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="161dp"
+                android:layout_marginLeft="161dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="162dp"
+                android:layout_marginRight="162dp"
+                android:text="Accept"
+                app:layout_constraintBottom_toTopOf="@+id/button3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/button3"
+                style="@style/ButtonAlt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="161dp"
+                android:layout_marginLeft="161dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="162dp"
+                android:layout_marginRight="162dp"
+                android:layout_marginBottom="16dp"
+                android:text="Reject"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button2" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
 </androidx.core.widget.NestedScrollView>
