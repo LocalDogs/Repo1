@@ -1,5 +1,5 @@
 body {
-    background-color: #D8DDEF
+    background-color: #D8DDEF;
 }
 
 ul.navbar {
@@ -51,7 +51,7 @@ li.navbar a:hover {
     background-color: grey;
 }
 
-p {
+p.index {
     margin: 50px;
 }
 
@@ -61,4 +61,10 @@ h1.index {
 
 a.link {
     text-decoration: none;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
