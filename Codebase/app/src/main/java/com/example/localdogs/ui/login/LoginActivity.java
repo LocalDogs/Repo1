@@ -32,20 +32,22 @@ import com.example.localdogs.ui.login.LoginViewModelFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
-    //private LoginViewModel loginViewModel;
+    private LoginViewModel loginViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        /*loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
-                .get(LoginViewModel.class);*/
+        loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
+                .get(LoginViewModel.class);
 
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
+        final Button registerButton = (Button)findViewById(R.id.register);
+        //final RegistrationPage rp = (RegistrationPage)findViewById(R.id.registion)
 
-        /*loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
+        loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
             public void onChanged(@Nullable LoginFormState loginFormState) {
                 if (loginFormState == null) {
@@ -67,12 +69,12 @@ public class LoginActivity extends AppCompatActivity {
                 if (loginResult == null) {
                     return;
                 }
-                loadingProgressBar.setVisibility(View.GONE);
+                //loadingProgressBar.setVisibility(View.GONE);
                 if (loginResult.getError() != null) {
-                    showLoginFailed(loginResult.getError());
+                    //showLoginFailed(loginResult.getError());
                 }
                 if (loginResult.getSuccess() != null) {
-                    updateUiWithUser(loginResult.getSuccess());
+                    //updateUiWithUser(loginResult.getSuccess());
                 }
                 setResult(Activity.RESULT_OK);
 
@@ -110,20 +112,30 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 return false;
             }
-        });*/
+        });
 
-        /*loginButton.setOnClickListener(new View.OnClickListener() {
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadingProgressBar.setVisibility(View.VISIBLE);
+                //loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+                Intent intent = new Intent(v.getContext(), Cardstack.class);
+                startActivity(intent);
             }
-        });*/
+        });
+        registerButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                //Log.i("LoginActivity", "Register button pressed");
+                Toast.makeText(getApplicationContext(), "Register!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(v.getContext(), RegistrationPage.class);
+                startActivity(intent);
+            }
+        });
 
             Log.i("LoginActivity","Listening for buttons!");
-        /*Button registerButton = (Button)findViewById(R.id.register);
-        registerButton.setOnClickListener(new View.OnClickListener() {
+        /*registerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Log.i("LoginActivity","Register button clicked");
                 Intent myIntent = new Intent(view.getContext(), RegistrationPage.class);
@@ -142,12 +154,13 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }*/
 
-    public void registerClick(View view) {
+    /*public void registerClick(View view) {
         Log.i("LoginActivity", "Register button clicked");
+        Toast.makeText(getApplicationContext(), "Register!", Toast.LENGTH_SHORT).show();
         System.out.println("[print] register button clicked");
         if(view.getId() == R.id.register) {
-            Intent myIntent = new Intent(view.getContext(), RegistrationPage.class);
+            Intent myIntent = new Intent(this, RegistrationPage.class);
             startActivity(myIntent);
         }
-    }
+    }*/
 }
