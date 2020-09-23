@@ -1,6 +1,5 @@
 package com.example.localdogs;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -8,8 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RatingBar;
@@ -17,12 +14,13 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.example.localdogs.data.DogFilter;
+
 import java.util.ArrayList;
-import java.util.List;
 
 public class DogFilterActivity extends AppCompatActivity {
-
-    private ArrayList<String> dogBreeds;
+    private DogFilter dogFilter;
+    //private ArrayList<String> dogBreeds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +30,8 @@ public class DogFilterActivity extends AppCompatActivity {
             by some other means. However we do it, it probably shouldn't be locally stored on the
             phone, in case we want to update it.
          */
-        this.dogBreeds = new ArrayList<String>();
+        //this.dogBreeds = new ArrayList<String>();
+        this.dogFilter = DogFilter.getInstance(this);
         setContentView(R.layout.activity_dog_filter);
         Switch swActivityLevel = findViewById(R.id.swActivityLevel);
         swActivityLevel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -73,15 +72,21 @@ public class DogFilterActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 SeekBar sbMin = findViewById(R.id.sbMinAge);
                 SeekBar sbMax = findViewById(R.id.sbMaxAge);
+                TextView tvMin = findViewById(R.id.tvMinAgeSliderLabel);
+                TextView tvMax = findViewById(R.id.tvMaxAgeSliderLabel);
                 if(b){
                    compoundButton.setBackground(getResources().getDrawable(R.drawable.outlinedboxlw));
                    sbMin.setVisibility(View.VISIBLE);
                    sbMax.setVisibility(View.VISIBLE);
+                   tvMin.setVisibility(View.VISIBLE);
+                   tvMax.setVisibility(View.VISIBLE);
                 }
                 else{
                     compoundButton.setBackground(getResources().getDrawable(R.drawable.outlinedboxcg));
                     sbMin.setVisibility(View.GONE);
                     sbMax.setVisibility(View.GONE);
+                    tvMin.setVisibility(View.GONE);
+                    tvMax.setVisibility(View.GONE);
                 }
             }
         });
@@ -89,21 +94,19 @@ public class DogFilterActivity extends AppCompatActivity {
         swBreed.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                TextView twBreedsListLabel = findViewById(R.id.tvBreedsListLabel);
+                EditText etMixed1 = findViewById(R.id.etBreedName);
+                EditText etMixed2 = findViewById(R.id.etBreedName2);
                 if(b){
                     compoundButton.setBackground(getResources().getDrawable(R.drawable.outlinedboxlw));
-                    twBreedsListLabel.setVisibility(View.VISIBLE);
+                    etMixed1.setVisibility(View.VISIBLE);
+                    etMixed2.setVisibility(View.VISIBLE);
                 }
                 else{
                     compoundButton.setBackground(getResources().getDrawable(R.drawable.outlinedboxcg));
-                    twBreedsListLabel.setVisibility(View.GONE);
+                    etMixed1.setVisibility(View.GONE);
+                    etMixed2.setVisibility(View.GONE);
                 }
             }
         });
     }
-
-    private void hideKeyboard(Context context, View view){
-
-    }
-
 }

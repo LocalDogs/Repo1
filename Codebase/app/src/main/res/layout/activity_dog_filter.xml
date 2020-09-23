@@ -25,12 +25,15 @@
 
         <RatingBar
             android:id="@+id/rbActivityLevel"
+            style="@android:style/Widget.Holo.Light.RatingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:baselineAligned="false"
             android:numStars="5"
+            android:scaleX="0.75"
+            android:scaleY="0.75"
             android:stepSize="1"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
@@ -47,33 +50,60 @@
             android:gravity="center"
             android:text="Weight" />
 
-        <EditText
-            android:id="@+id/etMinWeight"
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/outlinedboxlw"
-            android:ems="10"
-            android:hint="Minimum Weight"
-            android:inputType="number"
-            android:textColor="#000000"
-            android:textColorHighlight="#FFFFFF"
-            android:textColorHint="#8A4A4848"
-            android:visibility="gone" />
+            android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/etMaxWeight"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/outlinedboxlw"
-            android:ems="10"
-            android:hint="Maximum Weight"
-            android:inputType="number"
-            android:textColor="#000000"
-            android:textColorHighlight="#FFFFFF"
-            android:textColorHint="#8A4A4848"
-            android:visibility="gone" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <EditText
+                    android:id="@+id/etMinWeight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight=".50"
+                    android:background="@drawable/outlinedboxlw"
+                    android:ems="10"
+                    android:hint="Minimum Weight"
+                    android:inputType="number"
+                    android:textColor="#000000"
+                    android:textColorHighlight="#FFFFFF"
+                    android:textColorHint="#8A4A4848"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/etMaxWeight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight=".50"
+                    android:background="@drawable/outlinedboxlw"
+                    android:ems="10"
+                    android:hint="Maximum Weight"
+                    android:inputType="number"
+                    android:textColor="#000000"
+                    android:textColorHighlight="#FFFFFF"
+                    android:textColorHint="#8A4A4848"
+                    android:visibility="gone" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </TableLayout>
 
         <Switch
             android:id="@+id/swAge"
@@ -83,6 +113,16 @@
             android:background="@drawable/outlinedboxcg"
             android:gravity="center"
             android:text="Age" />
+
+        <TextView
+            android:id="@+id/tvMinAgeSliderLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:text="Minimum Age:"
+            android:textColor="#000000"
+            android:visibility="gone" />
 
         <SeekBar
             android:id="@+id/sbMinAge"
@@ -94,6 +134,16 @@
             android:progress="1"
             android:visibility="gone"
             app:tickMarkTint="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/tvMaxAgeSliderLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:text="Maximum Age:"
+            android:textColor="#000000"
+            android:visibility="gone" />
 
         <SeekBar
             android:id="@+id/sbMaxAge"
@@ -115,16 +165,72 @@
             android:gravity="center"
             android:text="Breed" />
 
-        <TextView
-            android:id="@+id/tvBreedsListLabel"
-            style="@style/TitleText"
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:background="@drawable/outlinedboxcg"
-            android:text="Select a breed:"
-            android:textColor="#000000"
-            android:visibility="gone" />
+            android:layout_height="match_parent">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <EditText
+                    android:id="@+id/etBreedName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight=".50"
+                    android:background="@drawable/outlinedboxlw"
+                    android:contentDescription="dog breed name"
+                    android:ems="10"
+                    android:hint="Enter breed name"
+                    android:singleLine="true"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/etBreedName2"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight=".50"
+                    android:background="@drawable/outlinedboxlw"
+                    android:contentDescription="dog breed name"
+                    android:ems="10"
+                    android:hint="Enter breed name"
+                    android:singleLine="true"
+                    android:visibility="gone" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </TableLayout>
+
+        <FrameLayout
+            android:id="@+id/frm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:foregroundGravity="center">
+
+            <Button
+                android:id="@+id/bttnSaveFilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@color/CaribGreen"
+                android:gravity="center"
+                android:text="Save" />
+        </FrameLayout>
 
     </LinearLayout>
 
