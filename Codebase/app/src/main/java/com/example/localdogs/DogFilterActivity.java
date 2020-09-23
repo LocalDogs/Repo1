@@ -1,10 +1,14 @@
 package com.example.localdogs;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -13,11 +17,22 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DogFilterActivity extends AppCompatActivity {
+
+    private ArrayList<String> dogBreeds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*TODO: dogBreeds
+            Populate with dog breeds. we can keep this list up to date in the database, or
+            by some other means. However we do it, it probably shouldn't be locally stored on the
+            phone, in case we want to update it.
+         */
+        this.dogBreeds = new ArrayList<String>();
         setContentView(R.layout.activity_dog_filter);
         Switch swActivityLevel = findViewById(R.id.swActivityLevel);
         swActivityLevel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -75,20 +90,20 @@ public class DogFilterActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 TextView twBreedsListLabel = findViewById(R.id.tvBreedsListLabel);
-                CheckedTextView ctvBreedSelection = findViewById(R.id.ctvBreedSelection);
                 if(b){
                     compoundButton.setBackground(getResources().getDrawable(R.drawable.outlinedboxlw));
                     twBreedsListLabel.setVisibility(View.VISIBLE);
-                    ctvBreedSelection.setVisibility(View.VISIBLE);
                 }
                 else{
                     compoundButton.setBackground(getResources().getDrawable(R.drawable.outlinedboxcg));
                     twBreedsListLabel.setVisibility(View.GONE);
-                    ctvBreedSelection.setVisibility(View.GONE);
                 }
             }
         });
+    }
 
+    private void hideKeyboard(Context context, View view){
 
     }
+
 }

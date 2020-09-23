@@ -126,16 +126,6 @@
             android:textColor="#000000"
             android:visibility="gone" />
 
-        <CheckedTextView
-            android:id="@+id/ctvBreedSelection"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:checkMark="@android:drawable/arrow_up_float"
-            android:text="abreed"
-            android:textSize="18sp"
-            android:visibility="gone" />
-
     </LinearLayout>
 
 </FrameLayout>
