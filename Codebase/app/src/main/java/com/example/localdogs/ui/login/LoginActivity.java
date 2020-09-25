@@ -33,6 +33,7 @@ import com.example.localdogs.ui.login.LoginViewModelFactory;
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
+    public final int LAUNCH_SECOND_ACTIVITY = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -118,8 +119,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                /*loginViewModel.login(usernameEditText.getText().toString(),
+                        passwordEditText.getText().toString());*/
+                Toast.makeText(getApplicationContext(), "Login!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(v.getContext(), Cardstack.class);
                 startActivity(intent);
             }
@@ -130,9 +132,12 @@ public class LoginActivity extends AppCompatActivity {
                 //Log.i("LoginActivity", "Register button pressed");
                 Toast.makeText(getApplicationContext(), "Register!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(v.getContext(), RegistrationPage.class);
-                startActivity(intent);
+                //startActivity(intent);
+                startActivityForResult(intent, LAUNCH_SECOND_ACTIVITY);
             }
         });
+
+
 
             Log.i("LoginActivity","Listening for buttons!");
         /*registerButton.setOnClickListener(new View.OnClickListener() {
@@ -143,6 +148,21 @@ public class LoginActivity extends AppCompatActivity {
             }
         });*/
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == LAUNCH_SECOND_ACTIVITY) {
+            if(resultCode == Activity.RESULT_OK){
+                Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_SHORT).show();
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+                Toast.makeText(getApplicationContext(), "Registration failed!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }//onActivityResult
+
 
     /*private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
