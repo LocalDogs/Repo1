@@ -7,11 +7,62 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".UserSettings"
     tools:showIn="@layout/activity_user_settings">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="1dp">
 
-    <TextView
-        android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/distanceText"
+            style="@style/InputBox"
+            android:layout_width="395dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:ems="10"
+            android:hint="What Distance Do You Prefer"
+            android:inputType="distanceFrom"
+
+
+
+    <Switch
+        android:id="@+id/profileSwitch"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/large_text" />
+        android:layout_gravity="center"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:ems="10"
+        android:checked="true"
+        android:text="Display Profile in card stack"
+        android:textColor="@color/Black"
+        android:textOff="@string/No"
+        android:textOn="@string/Yes" />
+    <Switch
+        android:id="@+id/muteButton"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:ems="10"
+        android:textOn="@string/Yes"
+        android:textOff="No"
+        android:text="Mute Notifications"
+        android:textColor="@color/Black"
+        />
+
+
+    </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
