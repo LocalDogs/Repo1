@@ -28,7 +28,7 @@ public class DogFilterActivity extends AppCompatActivity {
         /*TODO: dogBreeds
             Populate with dog breeds. we can keep this list up to date in the database, or
             by some other means. However we do it, it probably shouldn't be locally stored on the
-            phone, in case we want to update it.
+            phone, in case we want to push updates quicker and easier.
          */
         //this.dogBreeds = new ArrayList<String>();
         this.dogFilter = DogFilter.getInstance(this);
