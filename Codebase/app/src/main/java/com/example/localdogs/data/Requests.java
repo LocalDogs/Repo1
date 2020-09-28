@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutionException;
 
 public class Requests {
 
-    private String url = "https://njxnl2knh4.execute-api.us-east-2.amazonaws.com/beeta";
+    private String url = "https://njxnl2knh4.execute-api.us-east-2.amazonaws.com/LocalDogsAPI";
     private Context context;
 
     public Requests(Context context){
@@ -87,7 +87,7 @@ public class Requests {
         return response;
     }
     public void getRequest(String uri, String query, Response.Listener<JSONObject> successListener, Response.ErrorListener errorListener){
-        // synchronous call
+        // asynchronous call
         JsonObjectRequest jsonReq = new JsonObjectRequest
                 (
                         Request.Method.GET,

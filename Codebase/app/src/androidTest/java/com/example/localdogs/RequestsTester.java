@@ -2,6 +2,8 @@ package com.example.localdogs;
 
 import android.Manifest;
 import android.content.Context;
+import android.util.Log;
+
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -33,19 +35,27 @@ public class RequestsTester {
         final Object syncObject = new Object();
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         UserRequests userRequests = new UserRequests(appContext);
-        User user = new User("Randy", "Savage", "heehaw@aol.com", "05/02/1969");
+        User user = new User("Josephine", "Grady", "yabbadoo@aol.com", "05/10/1980");
 
         /*
         takes a User object as a parameter, Response.Listener for success handling,
         and a Response.ErrorListener for failure handling
+
         response is a json object with the following fields:
-        "modifiedCount", "upsertId", "upsertedCount", "matchedCount"
-            if an email already exists, this can be checked by looking at either
-            upsertedCount, or matchedCount
-                upsertedCount == 1 if the email was unique, 0 if not
-                matchedCount == 1 if the email was no unique, 0 if it is
-                if either of these values are > 1, would be an exceptional case,
-                and should probably be handled -- it shouldn't happen
+        "statusCode" and "body", which depending on the value of "statusCode" may contain
+        either "upsertedId" or "error"
+
+        if statusCode == 200 then a successful connection was made with the database and the
+        following checks can be made:
+            if an email already exists, this can be checked by checking if
+            upsertedID is null or not, usertedId will NOT be null if the new user was
+            inserted into the database, it WILL be null if the email already exists
+        if statusCode == 500, then the connection with the database failed to be made:
+            for the most part, this should probably never happen unless the app does not have access
+            to the internet -- I suspect AWS and MongoDB Atlas rarely has downtime.
+            probably should just notify the user to make sure they are connected to the internet
+            or something in this case
+            might could right another class to handle this stuff dunno
         */
         userRequests.uploadNewUser(user, new Response.Listener<JSONObject>() {
             @Override
@@ -54,34 +64,67 @@ public class RequestsTester {
                 /*
                 The server will respond with whether or not the request succeeded in
                 adding the user to the database.
+
+                if response is null for some reason, onError listener will be evoked
+                    instead
                  */
                 try {
-                    System.out.println(response.getInt("upsertedCount"));
-                    System.out.println(response.getInt("matchedCount"));
+                    if(response.getInt("statusCode") == 200 && response.getBoolean("inserted")){
+
+                        System.out.println(response.getString("message"));
+
+                    }
+                    else if(response.getInt("statusCode") == 500){
+
+                        System.out.println("Connection failed to be made with database");
+
+                    }
+                    else{
+
+                        System.out.println("Email already exists");
+
+                    }
                 } catch (JSONException e) {
+
                     e.printStackTrace();
+
                 }
+
                 System.out.println(response.toString());
+
                 synchronized (syncObject) {
+
                     syncObject.notify();
+
                 }
             }
         }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
+
                 error.printStackTrace();
+                Log.d("uploadNewUser.onErrorResponse", "yikes");
+
+                synchronized (syncObject) {
+
+                    syncObject.notify();
+
+                }
             }
         });
         // need to test UserRequests.retrieveUser later
 
         synchronized (syncObject) {
+
             syncObject.wait();
+
         }
         assertEquals("com.example.localdogs", appContext.getPackageName());
     }
     @Test
     public void retrieveUserTest() throws InterruptedException {
+
         // Context of the app under test.
         final Object syncObject = new Object();
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
@@ -90,22 +133,46 @@ public class RequestsTester {
         /*
         asynchronous request for a user profile specified
         by their email (which should be unique)
+        response will be null if the user does not exist
          */
-        userRequests.retrieveUserProfile("heehaw@aol.com", new Response.Listener<JSONObject>() {
+        userRequests.retrieveUserProfile("yabbadoo@aol.com", new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                System.out.println(response.toString());
 
-                // create a user object from database data
-                User user = User.toUser(response);
+                try {
+                    if(response.getInt("statusCode") == 200 && response.getBoolean("found")) {
 
-                System.out.println(user.toString());
+                        System.out.println(response.toString());
 
-                // synchronized block only necessary for testing
-                // it allows the request thread to finish before exiting test
+                        // create a user object from database data
+                        User user = User.toUser(response);
+
+                        System.out.println(user.toString());
+
+                        // synchronized block only necessary for testing
+                        // it allows the request thread to finish before exiting test
+
+                    }
+                    else if(response.getInt("statusCode") == 500){
+
+                        System.out.println("Connection failed to be made with database");
+
+                    }
+                    else{
+
+                        System.out.println("Email was not found");
+
+                    }
+                } catch (JSONException e) {
+
+                    e.printStackTrace();
+
+                }
+
                 synchronized (syncObject) {
                     syncObject.notify();
                 }
+
                 /*
                 Add whatever code you want to execute here AFTER data has been
                 returned from the server, populate fields in view, whatever.
@@ -118,9 +185,13 @@ public class RequestsTester {
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
                 /*
-                Some error in getting the request occurred, whether no user existed, or
-                the request was rejected
+                    This executes mostly if the response is null for whatever reason.
                 */
+                Log.d("retrieveUserTest.onErrorResponse", "yikes");
+
+                synchronized (syncObject) {
+                    syncObject.notify();
+                }
             }
         });
         // need to test UserRequests.retrieveUser later
