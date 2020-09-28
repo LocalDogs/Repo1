@@ -44,6 +44,8 @@ public class DogFilter {
         this.minWeight = minWeight;
     }
 
+    public void setMaxWeight(int maxWeight) { this.maxWeight = maxWeight; }
+
     public void setBreed1(String breed1){
         this.breed1 = breed1;
     }
