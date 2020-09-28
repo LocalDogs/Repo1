@@ -35,7 +35,7 @@ public class RequestsTester {
         final Object syncObject = new Object();
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         UserRequests userRequests = new UserRequests(appContext);
-        User user = new User("Josephine", "Grady", "yabbadoo@aol.com", "05/10/1980");
+        User user = new User("Josephine", "Grady", "yabbadoo@aol.com", "05/10/1980", "tacosraight");
 
         /*
         takes a User object as a parameter, Response.Listener for success handling,

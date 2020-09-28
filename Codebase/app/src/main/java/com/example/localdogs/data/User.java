@@ -12,12 +12,14 @@ public class User {
     private String lastname;
     private String email;
     private String dateofbirth;
+    private String password;
 
-    public User(String firstname, String lastname, String email, String dateofbirth){
+    public User(String firstname, String lastname, String email, String dateofbirth, String password){
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.dateofbirth = dateofbirth;
+        this.password = password;
     }
 
     public void setFirstName(String firstname){
@@ -48,13 +50,15 @@ public class User {
 
     public String getDateOfBirth() { return this.dateofbirth; }
 
+    public String getPassword() { return this.password; }
+
     public JSONObject toJSONObject(){
         JSONObject jsonUser = new JSONObject();
         try {
             jsonUser.put("firstname", getFirstname());
             jsonUser.put("lastname", getLastname());
             jsonUser.put("email", getEmail());
-            jsonUser.put("password", "dummypass"); // temporary
+            jsonUser.put("password", getPassword()); // temporary
             jsonUser.put("dateofbirth", getDateOfBirth());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -70,7 +74,8 @@ public class User {
                             jsonUser.getString("firstname"),
                             jsonUser.getString("lastname"),
                             jsonUser.getString("email"),
-                            jsonUser.getString("dateofbirth")
+                            jsonUser.getString("dateofbirth"),
+                            jsonUser.getString("password")
             );
         } catch (JSONException e) {
             e.printStackTrace();

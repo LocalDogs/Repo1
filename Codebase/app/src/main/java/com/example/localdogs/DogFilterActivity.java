@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 public class DogFilterActivity extends AppCompatActivity {
     private DogFilter dogFilter;
+
     //private ArrayList<String> dogBreeds;
 
     @Override
