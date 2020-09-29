@@ -24,11 +24,18 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.example.localdogs.Cardstack;
 import com.example.localdogs.R;
 import com.example.localdogs.RegistrationPage;
+import com.example.localdogs.data.User;
+import com.example.localdogs.data.UserRequests;
 import com.example.localdogs.ui.login.LoginViewModel;
 import com.example.localdogs.ui.login.LoginViewModelFactory;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -122,8 +129,39 @@ public class LoginActivity extends AppCompatActivity {
                 /*loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());*/
                 Toast.makeText(getApplicationContext(), "Login!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(v.getContext(), Cardstack.class);
-                startActivity(intent);
+
+                final View t = v;
+
+                UserRequests user = new UserRequests(getApplicationContext());
+                user.retrieveUserProfile(usernameEditText.getText().toString(), new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("LoginTest", "Succeeded");
+
+                        try {
+                            //200 = successful connection
+                            if (response.getInt("statusCode") == 200 && response.getBoolean("found")) {
+                                User bob = User.toUser(response);
+                                Log.d("Login", bob.toString());
+                                Intent intent = new Intent(t.getContext(), Cardstack.class);
+                                startActivity(intent);
+                            }
+                            else if (response.getInt("statusCode") == 500)
+                                System.out.println("Error on statusCode, value is 500");
+                            else
+                                System.out.println("No email found!");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("LoginTest", "Failed");
+                    }
+                });
+                //System.out.println(usernameEditText.getText().toString());
             }
         });
         registerButton.setOnClickListener(new View.OnClickListener(){
