@@ -18,7 +18,7 @@
             android:label="@string/title_activity_terms_of_use"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".DogFilterActivity"
+            android:name=".DogFilter.DogFilterActivity"
             android:exported="true"
             android:label="@string/title_activity_dog_filter"
             android:theme="@style/AppTheme.NoActionBar">
