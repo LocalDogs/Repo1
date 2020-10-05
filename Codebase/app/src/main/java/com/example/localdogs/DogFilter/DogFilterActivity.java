@@ -32,7 +32,7 @@ public class DogFilterActivity extends AppCompatActivity{
             by some other means. However we do it, it probably shouldn't be locally stored on the
             phone, in case we want to push updates quicker and easier.
          */
-
+        dogFilter = DogFilter.getInstance(getApplicationContext());
         setContentView(R.layout.activity_dog_filter);
         final DogFilterActivityLevelField activityLevel = new DogFilterActivityLevelField
                 (
@@ -67,22 +67,16 @@ public class DogFilterActivity extends AppCompatActivity{
         btnSaveFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("killlmeee", breeds.firstBreed());
-                Log.d("killlmeee", breeds.secondBreed());
-                Log.d("killlmeee", Integer.toString(ages.minAge()));
-                Log.d("killlmeee", Integer.toString(ages.maxAge()));
-                Log.d("killlmeee", Integer.toString(activityLevel.getActivityLevel()));
-                /*updateDogFilter
+                updateDogFilter
                         (
-                                (int) rbActivityLevel.getRating(),
-                                sbMin.getProgress(),
-                                sbMax.getProgress(),
-                                Integer.parseInt(etMin.getText().toString()),
-                                Integer.parseInt(etMax.getText().toString()),
-                                etMixed1.getText().toString(),
-                                etMixed2.getText().toString()
+                                activityLevel.getActivityLevel(),
+                                ages.getMinAge(),
+                                ages.getMaxAge(),
+                                weights.getMinWeight(),
+                                weights.getMaxWeight(),
+                                breeds.getFirstBreed(),
+                                breeds.getSecondBreed()
                         );
-                System.out.println(dogFilter.getActivityLevel());*/
             }
         });
 
@@ -98,8 +92,6 @@ public class DogFilterActivity extends AppCompatActivity{
                     String breed2
             )
     {
-        Log.d("updateDogFilter", Integer.toString(minWeight));
-        /*
         dogFilter.setActivityLevel(activityLevel);
         dogFilter.setBreed1(breed1);
         dogFilter.setBreed2(breed2);
@@ -107,6 +99,7 @@ public class DogFilterActivity extends AppCompatActivity{
         dogFilter.setMinAge(minAge);
         dogFilter.setMaxWeight(maxWeight);
         dogFilter.setMinWeight(minWeight);
-        */
+        Log.d("PrintDogFilter", dogFilter.toString());
+        finish();
     }
 }

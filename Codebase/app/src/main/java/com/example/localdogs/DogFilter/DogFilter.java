@@ -2,6 +2,11 @@ package com.example.localdogs.DogFilter;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class DogFilter {
 
     private static DogFilter instance;
@@ -80,5 +85,33 @@ public class DogFilter {
 
     public String getBreed2() {
         return breed2;
+    }
+
+    @NonNull
+    @Override
+    public String toString(){
+
+        return this.toJSONObject().toString();
+
+    }
+    public JSONObject toJSONObject(){
+
+        JSONObject jsonDogFilter = new JSONObject();
+        try {
+
+            jsonDogFilter.put("activityLevel", activityLevel);
+            jsonDogFilter.put("minWeight", minWeight);
+            jsonDogFilter.put("maxWeight", maxWeight);
+            jsonDogFilter.put("minAge", minAge); // temporary
+            jsonDogFilter.put("MaxAge", maxAge);
+            jsonDogFilter.put("breed1", breed1);
+            jsonDogFilter.put("breed2", breed2);
+
+        } catch (JSONException e) {
+
+            e.printStackTrace();
+
+        }
+        return jsonDogFilter;
     }
 }

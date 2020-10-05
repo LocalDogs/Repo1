@@ -53,15 +53,20 @@ public class User {
     public String getPassword() { return this.password; }
 
     public JSONObject toJSONObject(){
+
         JSONObject jsonUser = new JSONObject();
         try {
+
             jsonUser.put("firstname", getFirstname());
             jsonUser.put("lastname", getLastname());
             jsonUser.put("email", getEmail());
             jsonUser.put("password", getPassword()); // temporary
             jsonUser.put("dateofbirth", getDateOfBirth());
+
         } catch (JSONException e) {
+
             e.printStackTrace();
+
         }
         return jsonUser;
     }
@@ -87,7 +92,7 @@ public class User {
     @NonNull
     @Override
     public String toString() {
-        return "User: { firstname: " + this.firstname + " lastname: " + this.lastname + "dateofbirth: " + this.getDateOfBirth() + " email: " + this.email + " }";
+        return this.toJSONObject().toString();
     }
 
 

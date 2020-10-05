@@ -46,10 +46,10 @@ public class DogFilterBreedFields implements CompoundButton.OnCheckedChangeListe
 
         }
     }
-    public String firstBreed(){
+    public String getFirstBreed(){
         return breed1.getText().toString();
     }
-    public String secondBreed(){
+    public String getSecondBreed(){
         return breed2.getText().toString();
     }
 
