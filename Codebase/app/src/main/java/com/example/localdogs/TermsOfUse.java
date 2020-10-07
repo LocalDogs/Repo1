@@ -42,7 +42,7 @@ public class TermsOfUse extends AppCompatActivity {
         acceptTermsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), Cardstack.class);
+                Intent intent = new Intent(view.getContext(), RegistrationPage.class);
                 startActivity(intent);
             }
         });

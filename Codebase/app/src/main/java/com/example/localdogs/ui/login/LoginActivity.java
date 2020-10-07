@@ -29,6 +29,7 @@ import com.android.volley.VolleyError;
 import com.example.localdogs.Cardstack;
 import com.example.localdogs.R;
 import com.example.localdogs.RegistrationPage;
+import com.example.localdogs.TermsOfUse;
 import com.example.localdogs.data.User;
 import com.example.localdogs.data.UserRequests;
 import com.example.localdogs.ui.login.LoginViewModel;
@@ -164,14 +165,15 @@ public class LoginActivity extends AppCompatActivity {
                 //System.out.println(usernameEditText.getText().toString());
             }
         });
+        //click the register button
         registerButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 //Log.i("LoginActivity", "Register button pressed");
-                Toast.makeText(getApplicationContext(), "Register!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(v.getContext(), RegistrationPage.class);
-                //startActivity(intent);
-                startActivityForResult(intent, LAUNCH_SECOND_ACTIVITY);
+                //Toast.makeText(getApplicationContext(), "Register!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(v.getContext(), TermsOfUse.class);
+                startActivity(intent);
+                //startActivityForResult(intent, LAUNCH_SECOND_ACTIVITY); //??????
             }
         });
 

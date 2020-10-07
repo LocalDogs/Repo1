@@ -127,13 +127,13 @@ public class RegistrationPage extends AppCompatActivity {
         initFields();
         Log.i("RegistrationPage", "Finished initializing fields");
 
-        //****************LINK Registration -> Login Page***********************
+        //****************LINK Registration -> Terms of Use Page***********************
         final Button backButton = findViewById(R.id.goBack);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), LoginActivity.class);
+                Intent intent = new Intent(view.getContext(), TermsOfUse.class);
                 startActivity(intent);
             }
         });
@@ -143,9 +143,8 @@ public class RegistrationPage extends AppCompatActivity {
     private boolean checkBoxes() {
         boolean retval = true;
         //all of these are alphabetical, 2 to 24 characters
-        //NEEDS FIXING******************************************
         String regex = "(?=.*[a-zA-Z\\s])"
-                + "(?=\\S+$).{2,24}$";
+                + ".{2,24}$";
         Pattern p = Pattern.compile(regex);
         if (!p.matcher(firstNameField.getText().toString()).matches()) {
             if (!firstNameField.getText().toString().equals(""))
@@ -188,10 +187,9 @@ public class RegistrationPage extends AppCompatActivity {
             retval = false;
         }
 
-        //NEEDS FIXING******************************************************
-        /*regex = "^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$";
+        regex = "^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$";
         p = Pattern.compile(regex);
-        if (p.matcher(dobField.getText().toString()).matches()) {
+        if (!p.matcher(dobField.getText().toString()).matches()) {
             if (!dobField.getText().toString().equals(""))
                 dobField.setError("Invalid date of birth");
             retval = false;
@@ -200,7 +198,7 @@ public class RegistrationPage extends AppCompatActivity {
             if (!dobDogField.getText().toString().equals(""))
                 dobDogField.setError("Invalid date of birth");
             retval = false;
-        }*/
+        }
         //purebredBox
         //vaccinatedBox
         //energyBar
@@ -230,11 +228,11 @@ public class RegistrationPage extends AppCompatActivity {
                 }
             });
 
-            //********LINK TO TERMS OF USE TEST
+            //********LINK TO CARDSTACK TEST
             regButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(view.getContext(), TermsOfUse.class);
+                    Intent intent = new Intent(view.getContext(), Cardstack.class);
                     startActivity(intent);
                 }
             });
