@@ -12,6 +12,7 @@ import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -25,14 +26,14 @@ import com.yuyakaido.android.cardstackview.*
 //class MainActivity : AppCompatActivity(), CardStackListener {
 class Cardstack : AppCompatActivity(), CardStackListener {
 
-private val drawerLayout by lazy { findViewById<DrawerLayout>(R.id.drawer_layout) }
+    private val drawerLayout by lazy { findViewById<DrawerLayout>(R.id.drawer_layout) }
     private val cardStackView by lazy { findViewById<CardStackView>(R.id.card_stack_view) }
     private val manager by lazy { CardStackLayoutManager(this, this) }
     private val adapter by lazy { CardStackAdapter(Cards().spots) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_cardstack)
         setupNavigation()
         setupCardStackView()
         setupButton()
@@ -153,8 +154,6 @@ private val drawerLayout by lazy { findViewById<DrawerLayout>(R.id.drawer_layout
         manager.setCanScrollVertical(true)
         manager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
         manager.setOverlayInterpolator(LinearInterpolator())
-        //cardStackView = CardStackView(this)
-
         cardStackView.layoutManager = manager
         cardStackView.adapter = adapter
         cardStackView.itemAnimator.apply {
