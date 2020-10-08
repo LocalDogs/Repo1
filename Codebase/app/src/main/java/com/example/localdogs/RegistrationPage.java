@@ -135,6 +135,7 @@ public class RegistrationPage extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), TermsOfUse.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -207,8 +208,8 @@ public class RegistrationPage extends AppCompatActivity {
 
     public void register(View view) {
 
-        //***************TO LINK TO TERMS OF USE************************NEEDS FIX
         Button regButton = findViewById(R.id.registerButton);
+        final View t = view;
 
         if (checkBoxes()) {
             //Intent returnIntent = new Intent();
@@ -220,6 +221,11 @@ public class RegistrationPage extends AppCompatActivity {
                 @Override
                 public void onResponse(JSONObject response) {
                     Log.d("RegistrationTest", "Succeeded");
+                    //*********LINK TO CARDSTACK CLASS*********************************//
+                    Intent intent = new Intent(t.getContext(), Cardstack.class);
+                    startActivity(intent);
+                    finish();
+
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -227,16 +233,6 @@ public class RegistrationPage extends AppCompatActivity {
                     Log.d("RegistrationTest", "ERROR");
                 }
             });
-
-            //********LINK TO CARDSTACK TEST
-            regButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(view.getContext(), Cardstack.class);
-                    startActivity(intent);
-                }
-            });
-            //********
 
             //finish();
         }
