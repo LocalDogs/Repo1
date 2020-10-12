@@ -62,7 +62,12 @@
         android:text="Mute Notifications"
         android:textColor="@color/Black"
         />
-
+    <Button
+        android:id="@+id/escapeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Return"
+        />
 
     </LinearLayout>
 
