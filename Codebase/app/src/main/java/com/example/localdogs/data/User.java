@@ -107,11 +107,14 @@ public class User {
         User user = null;
         ArrayList<Dog> dogs = new ArrayList<Dog>();
         try {
-
-            for(int i = 0; i < jsonUser.getJSONArray("dogs").length(); i++){
+            /*
+                TODO:
+                    uncomment out the following code when temporary constructor is removed
+            */
+            /*for(int i = 0; i < jsonUser.getJSONArray("dogs").length(); i++){
                 Dog dog = Dog.toDog(jsonUser.getJSONArray("dogs").getJSONObject(i));
                 dogs.add(dog);
-            }
+            }*/
             user = new User
                     (
                             jsonUser.getString("firstname"),
