@@ -37,13 +37,13 @@ public class DogFilterWeightFields implements CompoundButton.OnCheckedChangeList
 
         if (b) {
 
-            compoundButton.setBackground(context.getResources().getDrawable(R.drawable.outlinedboxlw));
+            compoundButton.setBackground(context.getResources().getDrawable(R.drawable.outlinedboxcg));
             etMin.setVisibility(View.VISIBLE);
             etMax.setVisibility(View.VISIBLE);
 
         } else {
 
-            compoundButton.setBackground(context.getResources().getDrawable(R.drawable.outlinedboxcg));
+            compoundButton.setBackground(context.getResources().getDrawable(R.drawable.outlinedboxlw));
             etMin.setVisibility(View.GONE);
             etMax.setVisibility(View.GONE);
 

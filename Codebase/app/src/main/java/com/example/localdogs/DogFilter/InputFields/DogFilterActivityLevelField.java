@@ -25,12 +25,12 @@ public class DogFilterActivityLevelField implements CompoundButton.OnCheckedChan
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         if (b) {
 
-            compoundButton.setBackground(context.getResources().getDrawable(R.drawable.outlinedboxlw));
+            swActivityLevel.setBackground(context.getResources().getDrawable(R.drawable.outlinedboxcg));
             rbActivityLevel.setVisibility(View.VISIBLE);
 
         } else {
 
-            compoundButton.setBackground(context.getResources().getDrawable(R.drawable.outlinedboxcg));
+            swActivityLevel.setBackground(context.getResources().getDrawable(R.drawable.outlinedboxlw));
             rbActivityLevel.setVisibility(View.GONE);
 
         }

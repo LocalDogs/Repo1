@@ -43,7 +43,7 @@ public class DogFilterAgeFields implements CompoundButton.OnCheckedChangeListene
 
                 if (b) {
 
-                    compoundButton.setBackground(context.getResources().getDrawable(R.drawable.outlinedboxlw));
+                    compoundButton.setBackground(context.getResources().getDrawable(R.drawable.outlinedboxcg));
                     sbMin.setVisibility(View.VISIBLE);
                     sbMax.setVisibility(View.VISIBLE);
                     tvMin.setVisibility(View.VISIBLE);
@@ -51,7 +51,7 @@ public class DogFilterAgeFields implements CompoundButton.OnCheckedChangeListene
 
                 } else {
 
-                    compoundButton.setBackground(context.getResources().getDrawable(R.drawable.outlinedboxcg));
+                    compoundButton.setBackground(context.getResources().getDrawable(R.drawable.outlinedboxlw));
                     sbMin.setVisibility(View.GONE);
                     sbMax.setVisibility(View.GONE);
                     tvMin.setVisibility(View.GONE);

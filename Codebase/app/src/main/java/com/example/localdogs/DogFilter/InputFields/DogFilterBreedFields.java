@@ -34,13 +34,13 @@ public class DogFilterBreedFields implements CompoundButton.OnCheckedChangeListe
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         if (b) {
 
-            compoundButton.setBackground(context.getResources().getDrawable(R.drawable.outlinedboxlw));
+            compoundButton.setBackground(context.getDrawable(R.drawable.outlinedboxcg));
             breed1.setVisibility(View.VISIBLE);
             breed2.setVisibility(View.VISIBLE);
 
         } else {
 
-            compoundButton.setBackground(context.getDrawable(R.drawable.outlinedboxcg));
+            compoundButton.setBackground(context.getResources().getDrawable(R.drawable.outlinedboxlw));
             breed1.setVisibility(View.GONE);
             breed2.setVisibility(View.GONE);
 
