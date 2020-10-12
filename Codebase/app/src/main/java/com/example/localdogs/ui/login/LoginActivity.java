@@ -138,8 +138,10 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                                 else if (response.getInt("statusCode") == 500)
                                     System.out.println("Error on statusCode, value is 500");
-                                else
+                                else {
+                                    Toast.makeText(getApplicationContext(), "Invalid email", Toast.LENGTH_SHORT).show();
                                     System.out.println("No email found!");
+                                }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -187,8 +189,10 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             else if (response.getInt("statusCode") == 500)
                                 System.out.println("Error on statusCode, value is 500");
-                            else
+                            else {
+                                Toast.makeText(getApplicationContext(), "Invalid email", Toast.LENGTH_SHORT).show();
                                 System.out.println("No email found!");
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
