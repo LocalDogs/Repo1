@@ -4,6 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.example.localdogs.data.User;
+import com.example.localdogs.data.UserRequests;
+import com.example.localdogs.ui.login.LoginActivity;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -19,15 +24,19 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.util.regex.*;
 
 public class RegistrationPage extends AppCompatActivity {
+    public final int LAUNCH_TERMS_ACTIVITY = 1;
 
     EditText firstNameField;
     EditText lastNameField;
@@ -118,14 +127,25 @@ public class RegistrationPage extends AppCompatActivity {
         initFields();
         Log.i("RegistrationPage", "Finished initializing fields");
 
+        //****************LINK Registration -> Terms of Use Page***********************
+        final Button backButton = findViewById(R.id.goBack);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), TermsOfUse.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 
     private boolean checkBoxes() {
         boolean retval = true;
         //all of these are alphabetical, 2 to 24 characters
-        String regex = "(?=.*[a-zA-Z -])"
-                + "(?=\\S+$).{2,24}$";
+        String regex = "(?=.*[a-zA-Z\\s])"
+                + ".{2,24}$";
         Pattern p = Pattern.compile(regex);
         if (!p.matcher(firstNameField.getText().toString()).matches()) {
             if (!firstNameField.getText().toString().equals(""))
@@ -167,9 +187,10 @@ public class RegistrationPage extends AppCompatActivity {
                 emailField.setError("Invalid email");
             retval = false;
         }
+
         regex = "^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$";
         p = Pattern.compile(regex);
-        if (p.matcher(dobField.getText().toString()).matches()) {
+        if (!p.matcher(dobField.getText().toString()).matches()) {
             if (!dobField.getText().toString().equals(""))
                 dobField.setError("Invalid date of birth");
             retval = false;
@@ -186,11 +207,36 @@ public class RegistrationPage extends AppCompatActivity {
     }
 
     public void register(View view) {
+
+        Button regButton = findViewById(R.id.registerButton);
+        final View t = view;
+
         if (checkBoxes()) {
-            Intent returnIntent = new Intent();
-            setResult(Activity.RESULT_OK, returnIntent);
-            finish();
+            //Intent returnIntent = new Intent();
+            //setResult(Activity.RESULT_OK, returnIntent);
+
+            User stuff = new User(firstNameField.getText().toString(), lastNameField.getText().toString(), emailField.getText().toString(), dobField.getText().toString(), passwordField.getText().toString());
+            UserRequests stuff2 = new UserRequests(getApplicationContext());
+            stuff2.uploadNewUser(stuff, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.d("RegistrationTest", "Succeeded");
+                    //*********LINK TO CARDSTACK CLASS*********************************//
+                    Intent intent = new Intent(t.getContext(), Cardstack.class);
+                    startActivity(intent);
+                    finish();
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("RegistrationTest", "ERROR");
+                }
+            });
+
+            //finish();
         }
-        Toast.makeText(getApplicationContext(), "Error with registration", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(getApplicationContext(), "Error with registration", Toast.LENGTH_SHORT).show();
     }
 }

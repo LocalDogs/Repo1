@@ -24,11 +24,19 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.example.localdogs.Cardstack;
 import com.example.localdogs.R;
 import com.example.localdogs.RegistrationPage;
+import com.example.localdogs.TermsOfUse;
+import com.example.localdogs.data.User;
+import com.example.localdogs.data.UserRequests;
 import com.example.localdogs.ui.login.LoginViewModel;
 import com.example.localdogs.ui.login.LoginViewModelFactory;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -80,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                 setResult(Activity.RESULT_OK);
 
                 //Complete and destroy login activity once successful
-                finish();
+                //finish();
             }
         });
 
@@ -105,35 +113,105 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
+            //THIS IS THE METHOD THAT HANDLES THE ENTER KEY ON KEYBOARD BEHAVIOR
+            //ONCE THE USER PRESSES ENTER AFTER ENTERING LOGIN INFO, THIS WILL VALIDATE IT WITH THE CURRENT DATABASE ENTRIES
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            public boolean onEditorAction(final TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     loginViewModel.login(usernameEditText.getText().toString(),
                             passwordEditText.getText().toString());
+                    UserRequests user = new UserRequests(getApplicationContext());
+                    user.retrieveUserProfile(usernameEditText.getText().toString(), new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d("LoginTest", "Succeeded");
+
+                            try {
+                                //200 = successful connection
+                                if (response.getInt("statusCode") == 200 && response.getBoolean("found")) {
+                                    User bob = User.toUser(response);
+                                    Log.d("Login", bob.toString());
+                                    Intent intent = new Intent(v.getContext(), Cardstack.class);
+                                    startActivity(intent);
+                                    //If there is a valid login after pressing keyboard enter key. End activity
+                                    finish();
+                                }
+                                else if (response.getInt("statusCode") == 500)
+                                    System.out.println("Error on statusCode, value is 500");
+                                else
+                                    System.out.println("No email found!");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("LoginTest", "Failed");
+                        }
+                    });
+
                 }
                 return false;
             }
         });
 
+        //THIS IS THE WHERE THE LOGIN BUTTON IS HANDLED
+        //ONCE THE USER CLICKS LOGIN AFTER ENTERING LOGIN INFO, THIS WILL VALIDATE IT WITH THE CURRENT DATABASE ENTRIES
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //loadingProgressBar.setVisibility(View.VISIBLE);
                 /*loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());*/
-                Toast.makeText(getApplicationContext(), "Login!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(v.getContext(), Cardstack.class);
-                startActivity(intent);
+                //Toast.makeText(getApplicationContext(), "Login!", Toast.LENGTH_SHORT).show();
+
+                final View t = v;
+
+                UserRequests user = new UserRequests(getApplicationContext());
+                user.retrieveUserProfile(usernameEditText.getText().toString(), new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("LoginTest", "Succeeded");
+
+                        try {
+                            //200 = successful connection
+                            if (response.getInt("statusCode") == 200 && response.getBoolean("found")) {
+                                User bob = User.toUser(response);
+                                Log.d("Login", bob.toString());
+                                Intent intent = new Intent(t.getContext(), Cardstack.class);
+                                startActivity(intent);
+                                //If there is a valid login after pressing login button. End activity
+                                finish();
+                            }
+                            else if (response.getInt("statusCode") == 500)
+                                System.out.println("Error on statusCode, value is 500");
+                            else
+                                System.out.println("No email found!");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("LoginTest", "Failed");
+                    }
+                });
+                //System.out.println(usernameEditText.getText().toString());
             }
         });
+        //click the register button
         registerButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 //Log.i("LoginActivity", "Register button pressed");
-                Toast.makeText(getApplicationContext(), "Register!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(v.getContext(), RegistrationPage.class);
-                //startActivity(intent);
-                startActivityForResult(intent, LAUNCH_SECOND_ACTIVITY);
+                //Toast.makeText(getApplicationContext(), "Register!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(v.getContext(), TermsOfUse.class);
+                startActivity(intent);
+                //startActivityForResult(intent, LAUNCH_SECOND_ACTIVITY); //??????
             }
         });
 
