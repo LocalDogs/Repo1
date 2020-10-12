@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.example.localdogs.Spot;
 
 public class Cards {
-    ArrayList<Spot> spots;
+    public ArrayList<Spot> spots;
     public Cards(){
         this.spots = new ArrayList<Spot>();
         //defaultSpots();
@@ -21,6 +21,12 @@ public class Cards {
         spots.add(new Spot("Shep", "Border Collie", "https://i.imgur.com/7mFNyBt.jpg"));
         spots.add(new Spot("Lola", "French Bulldog", "https://i.imgur.com/4aP8WFJ.jpg"));
         spots.add(new Spot("Chester", "German Shepard", "https://i.imgur.com/v3s7AE8.jpg"));
-        spots.add(new Spot("S P A W N", "Labrador", "https://source.unsplash.com/N2ARFd1jAiw/600x800"));
+        spots.add(new Spot("Beast", "Great Dane", "https://i.imgur.com/r6DZC8E.jpg"));
+        spots.add(new Spot("Lady", "Not sure", "https://i.imgur.com/k6AV99J.jpg"));
+        spots.add(new Spot("Goggles", "English Shepard", "https://i.imgur.com/e1Ng7zo.jpg"));
+        spots.add(new Spot("Scrungus", "Beagle", "https://i.imgur.com/eMKRlnv.jpg"));
+    }
+    public void newSpot(String name, String city, String url){
+        this.spots.add(new Spot(name, city, url));
     }
 }

@@ -6,6 +6,7 @@ package com.example.localdogs
 //import android.os.Bundle
 //import android.view.View
 //import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -20,6 +21,8 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DiffUtil
+import com.example.localdogs.DogFilter.DogFilter
+import com.example.localdogs.DogFilter.DogFilterActivity
 import com.example.localdogs.ui.CardStackAdapter
 import com.yuyakaido.android.cardstackview.*
 
@@ -271,7 +274,14 @@ class Cardstack : AppCompatActivity(), CardStackListener {
         result.dispatchUpdatesTo(adapter)
     }
 
-
+    fun settingsClick(view: View) {
+        val intent = Intent(this, UserSettings::class.java)
+        startActivity(intent)
+    }
+    fun filterClick(view: View) {
+        val intent = Intent(this, DogFilterActivity::class.java)
+        startActivity(intent)
+    }
 
 
 }
