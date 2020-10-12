@@ -5,233 +5,254 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient1"
+    android:background="#d8ddef"
     android:fitsSystemWindows="true"
     tools:context=".DogFilter.DogFilterActivity">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <Switch
-            android:id="@+id/swActivityLevel"
+        <TextView
+            android:id="@+id/textView7"
+            style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/outlinedboxcg"
-            android:gravity="center"
-            android:text="Activity Level" />
-
-        <RatingBar
-            android:id="@+id/rbActivityLevel"
-            style="@android:style/Widget.Holo.Light.RatingBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:baselineAligned="false"
-            android:numStars="5"
-            android:scaleX="0.75"
-            android:scaleY="0.75"
-            android:stepSize="1"
-            android:visibility="gone"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="Dog Filter Settings"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3"
-            tools:visibility="gone" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <Switch
-            android:id="@+id/swWeight"
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/outlinedboxcg"
-            android:gravity="center"
-            android:text="Weight" />
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView7">
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TableRow
+            <Switch
+                android:id="@+id/swActivityLevel"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/outlinedboxlw"
+                android:text="Activity Level" />
 
-                <EditText
-                    android:id="@+id/etMinWeight"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_weight=".50"
-                    android:background="@drawable/outlinedboxlw"
-                    android:ems="10"
-                    android:hint="Minimum Weight"
-                    android:inputType="number"
-                    android:textColor="#000000"
-                    android:textColorHighlight="#FFFFFF"
-                    android:textColorHint="#8A4A4848"
-                    android:visibility="gone" />
+            <RatingBar
+                android:id="@+id/rbActivityLevel"
+                style="@android:style/Widget.Holo.Light.RatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:baselineAligned="false"
+                android:numStars="5"
+                android:scaleX="0.75"
+                android:scaleY="0.75"
+                android:stepSize="1"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                tools:visibility="gone" />
 
-                <EditText
-                    android:id="@+id/etMaxWeight"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_weight=".50"
-                    android:background="@drawable/outlinedboxlw"
-                    android:ems="10"
-                    android:hint="Maximum Weight"
-                    android:inputType="number"
-                    android:textColor="#000000"
-                    android:textColorHighlight="#FFFFFF"
-                    android:textColorHint="#8A4A4848"
-                    android:visibility="gone" />
-            </TableRow>
+            <Switch
+                android:id="@+id/swWeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/outlinedboxlw"
+                android:text="Weight" />
 
-            <TableRow
+            <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-            </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
 
-            <TableRow
+                    <EditText
+                        android:id="@+id/etMinWeight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight=".50"
+                        android:background="@drawable/outlinedboxlw"
+                        android:ems="10"
+                        android:hint="Minimum Weight"
+                        android:inputType="number"
+                        android:textColor="#000000"
+                        android:textColorHighlight="#FFFFFF"
+                        android:textColorHint="#8A4A4848"
+                        android:visibility="gone" />
+
+                    <EditText
+                        android:id="@+id/etMaxWeight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight=".50"
+                        android:background="@drawable/outlinedboxlw"
+                        android:ems="10"
+                        android:hint="Maximum Weight"
+                        android:inputType="number"
+                        android:textColor="#000000"
+                        android:textColorHighlight="#FFFFFF"
+                        android:textColorHint="#8A4A4848"
+                        android:visibility="gone" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </TableLayout>
+
+            <Switch
+                android:id="@+id/swAge"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/outlinedboxlw"
+                android:text="Age" />
 
-            <TableRow
+            <TextView
+                android:id="@+id/tvMinAgeSliderLabel"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </TableLayout>
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:text="Minimum Age:"
+                android:textColor="#000000"
+                android:visibility="gone" />
 
-        <Switch
-            android:id="@+id/swAge"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/outlinedboxcg"
-            android:gravity="center"
-            android:text="Age" />
-
-        <TextView
-            android:id="@+id/tvMinAgeSliderLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:text="Minimum Age:"
-            android:textColor="#000000"
-            android:visibility="gone" />
-
-        <SeekBar
-            android:id="@+id/sbMinAge"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:max="20"
-            android:progress="1"
-            android:visibility="gone"
-            app:tickMarkTint="#FFFFFF" />
-
-        <TextView
-            android:id="@+id/tvMaxAgeSliderLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:text="Maximum Age:"
-            android:textColor="#000000"
-            android:visibility="gone" />
-
-        <SeekBar
-            android:id="@+id/sbMaxAge"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:max="20"
-            android:progress="1"
-            android:visibility="gone"
-            app:tickMarkTint="#FFFFFF" />
-
-        <Switch
-            android:id="@+id/swBreed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/outlinedboxcg"
-            android:gravity="center"
-            android:text="Breed" />
-
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TableRow
+            <SeekBar
+                android:id="@+id/sbMinAge"
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:max="20"
+                android:progress="1"
+                android:visibility="gone"
+                app:tickMarkTint="#FFFFFF" />
 
-                <EditText
-                    android:id="@+id/etBreedName"
+            <TextView
+                android:id="@+id/tvMaxAgeSliderLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:text="Maximum Age:"
+                android:textColor="#000000"
+                android:visibility="gone" />
+
+            <SeekBar
+                android:id="@+id/sbMaxAge"
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:max="20"
+                android:progress="1"
+                android:visibility="gone"
+                app:tickMarkTint="#FFFFFF" />
+
+            <Switch
+                android:id="@+id/swBreed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/outlinedboxlw"
+                android:text="Breed" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+                    <EditText
+                        android:id="@+id/etBreedName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight=".50"
+                        android:background="@drawable/outlinedboxlw"
+                        android:contentDescription="dog breed name"
+                        android:ems="10"
+                        android:hint="Enter breed name"
+                        android:singleLine="true"
+                        android:visibility="gone" />
+
+                    <EditText
+                        android:id="@+id/etBreedName2"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight=".50"
+                        android:background="@drawable/outlinedboxlw"
+                        android:contentDescription="dog breed name"
+                        android:ems="10"
+                        android:hint="Enter breed name"
+                        android:singleLine="true"
+                        android:visibility="gone" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </TableLayout>
+
+            <FrameLayout
+                android:id="@+id/frm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:foregroundGravity="center">
+
+                <Button
+                    android:id="@+id/bttnSaveFilter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:layout_weight=".50"
-                    android:background="@drawable/outlinedboxlw"
-                    android:contentDescription="dog breed name"
-                    android:ems="10"
-                    android:hint="Enter breed name"
-                    android:singleLine="true"
-                    android:visibility="gone" />
+                    android:background="@color/CaribGreen"
+                    android:gravity="center"
+                    android:text="Save" />
+            </FrameLayout>
 
-                <EditText
-                    android:id="@+id/etBreedName2"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_weight=".50"
-                    android:background="@drawable/outlinedboxlw"
-                    android:contentDescription="dog breed name"
-                    android:ems="10"
-                    android:hint="Enter breed name"
-                    android:singleLine="true"
-                    android:visibility="gone" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </TableLayout>
-
-        <FrameLayout
-            android:id="@+id/frm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:foregroundGravity="center">
-
-            <Button
-                android:id="@+id/bttnSaveFilter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@color/CaribGreen"
-                android:gravity="center"
-                android:text="Save" />
-        </FrameLayout>
-
-    </LinearLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

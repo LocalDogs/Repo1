@@ -13,61 +13,109 @@
         android:orientation="vertical"
         tools:layout_editor_absoluteY="1dp">
 
-        <EditText
-            android:id="@+id/distanceText"
-            style="@style/InputBox"
-            android:layout_width="395dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:ems="10"
-            android:hint="What Distance Do You Prefer"
-            android:inputType="number"
-            android:text="distanceFrom" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/textView8"
+                style="@style/TitleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="User Settings"
+                app:layout_constraintBottom_toTopOf="@+id/distanceText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <EditText
+                android:id="@+id/distanceText"
+                style="@style/InputBox"
+                android:layout_width="395dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:ems="10"
+                android:hint="What Distance Do You Prefer"
+                android:inputType="number"
+                android:text="distanceFrom"
+                app:layout_constraintBottom_toTopOf="@+id/profileSwitch"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
-    <Switch
-        android:id="@+id/profileSwitch"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:ems="10"
-        android:checked="true"
-        android:text="Display Profile in card stack"
-        android:textColor="@color/Black"
-        android:textOff="No"
-        android:textOn="Yes" />
-    <Switch
-        android:id="@+id/muteButton"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:ems="10"
-        android:textOn="Yes"
-        android:textOff="No"
-        android:text="Mute Notifications"
-        android:textColor="@color/Black"
-        />
-    <Button
-        android:id="@+id/escapeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Return"
-        />
+            <Switch
+                android:id="@+id/profileSwitch"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/outlinedboxlw"
+                android:checked="true"
+                android:ems="10"
+                android:text="Display Profile in card stack"
+                android:textColor="@color/Black"
+                android:textOff="No"
+                android:textOn="Yes"
+                app:layout_constraintBottom_toTopOf="@+id/muteButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/distanceText" />
+
+            <Switch
+                android:id="@+id/muteButton"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/outlinedboxlw"
+                android:ems="10"
+                android:text="Mute Notifications"
+                android:textColor="@color/Black"
+                android:textOff="No"
+                android:textOn="Yes"
+                app:layout_constraintBottom_toTopOf="@+id/escapeButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profileSwitch" />
+
+            <Button
+                android:id="@+id/escapeButton"
+                style="@style/BoxCW"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="161dp"
+                android:layout_marginLeft="161dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="162dp"
+                android:layout_marginRight="162dp"
+                android:text="Save"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/muteButton" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </LinearLayout>
 
