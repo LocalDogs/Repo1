@@ -110,10 +110,8 @@
                 android:text="Accept"
                 app:layout_constraintBottom_toTopOf="@+id/rejectTerms"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tosterms"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toBottomOf="@id/tosterms" />
 
             <Button
                 android:id="@+id/rejectTerms"
