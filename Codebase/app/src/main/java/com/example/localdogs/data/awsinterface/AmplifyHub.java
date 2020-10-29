@@ -16,6 +16,7 @@ import com.amplifyframework.core.Amplify;
 import com.amplifyframework.core.InitializationStatus;
 import com.amplifyframework.hub.HubChannel;
 import com.amplifyframework.rx.RxAmplify;
+import com.example.localdogs.data.User;
 
 public class AmplifyHub {
 
