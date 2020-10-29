@@ -10,7 +10,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.localdogs.data.User;
-import com.example.localdogs.data.UserRequests;
+import com.example.localdogs.data.awsinterface.UserRequests;
 
 import org.json.JSONException;
 import org.json.JSONObject;

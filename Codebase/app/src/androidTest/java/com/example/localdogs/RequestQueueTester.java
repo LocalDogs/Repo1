@@ -2,29 +2,17 @@ package com.example.localdogs;
 
 import android.Manifest;
 import android.content.Context;
-import android.nfc.Tag;
-import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.test.internal.platform.content.PermissionGranter;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.RequestFuture;
-import com.android.volley.toolbox.StringRequest;
-import com.example.localdogs.data.RequestQueueSingleton;
-import com.example.localdogs.data.User;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import com.example.localdogs.data.awsinterface.RequestQueueSingleton;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;

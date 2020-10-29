@@ -1,34 +1,23 @@
 package com.example.localdogs;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.localdogs.data.User;
-import com.example.localdogs.data.UserRequests;
-import com.example.localdogs.ui.login.LoginActivity;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.localdogs.data.awsinterface.UserRequests;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.Observer;
 
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RatingBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
