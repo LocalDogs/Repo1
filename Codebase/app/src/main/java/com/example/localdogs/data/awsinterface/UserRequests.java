@@ -1,38 +1,35 @@
 package com.example.localdogs.data.awsinterface;
-import android.content.Context;
 
-import com.android.volley.Response;
-import com.example.localdogs.data.User;
+import com.amplifyframework.api.ApiException;
+import com.amplifyframework.api.rest.RestResponse;
+import com.amplifyframework.core.Consumer;
 import com.example.localdogs.data.awsinterface.Requests;
+import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 public class UserRequests extends Requests {
+    private String rsUploadUser;
+    private String rsRetrieveUser;
 
-    private String url = "https://njxnl2knh4.execute-api.us-east-2.amazonaws.com/beeta";
-    private Context context;
-
-    public UserRequests(Context context){
-        super(context);
-        this.context = context;
-    }
-    public void uploadNewUser(User user, Response.Listener<JSONObject> successListener, Response.ErrorListener errorListener){
-        // asynchronous call
-        super.postRequest("/user/create", user.toJSONObject(), successListener, errorListener);
-    }
-    public JSONObject uploadNewUser(User user){
-        // asynchronous call
-        return super.postRequest("/user/create", user.toJSONObject());
-    }
-    public void retrieveUserProfile(String email, Response.Listener<JSONObject> successListener, Response.ErrorListener errorListener){
-        String query = "email=" + email;
-        super.getRequest("/user/retrieve", query, successListener, errorListener);
+    public UserRequests(){
+        super();
+        rsUploadUser = "/uploadUser";
+        rsRetrieveUser = "/retrieveUser";
     }
 
-    public User retrieveUserProfile(String email){
-        String query = "email=" + email;
-        JSONObject jsonUser = super.getRequest("/user/retrieve", query);
-        return User.toUser(jsonUser);
+    public void retrieveUserInfo(String email, Consumer<RestResponse>onSuccess, Consumer<ApiException> onFailure){
+        Map<String, String> query = new HashMap<String, String>();
+        query.put("email", email);
+        super.getData(query, rsRetrieveUser, onSuccess, onFailure);
     }
 
+    public void uploadUserInfo(JSONObject newUser, Consumer<RestResponse>onSuccess, Consumer<ApiException> onFailure){
+        super.postData(newUser, rsUploadUser, onSuccess, onFailure);
+    }
 }

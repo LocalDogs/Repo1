@@ -1,100 +1,51 @@
 package com.example.localdogs.data.awsinterface;
 
-import android.content.Context;
-
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.RequestFuture;
-import com.example.localdogs.data.awsinterface.RequestQueueSingleton;
+import com.amplifyframework.api.ApiException;
+import com.amplifyframework.api.rest.RestOptions;
+import com.amplifyframework.api.rest.RestResponse;
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.core.Consumer;
 
 import org.json.JSONObject;
 
-import java.util.concurrent.ExecutionException;
+import java.io.UnsupportedEncodingException;
+import java.util.Collections;
+import java.util.Map;
 
 public class Requests {
 
-    private String url = "https://njxnl2knh4.execute-api.us-east-2.amazonaws.com/LocalDogsAPI";
-    private Context context;
+    public void getData(Map<String, String> query, String resource, Consumer<RestResponse> onSuccess, Consumer<ApiException> onFailure){
+        RestOptions options = RestOptions.builder()
+                .addPath(resource)
+                .addQueryParameters(query)
+                .build();
+        Amplify.API.get(options, (success) -> {
+            // do some stuff?
+            onSuccess.accept(success);
+        }, (error) -> {
+            // do some stuff?
+            onFailure.accept(error);
+        });
+    }
 
-    public Requests(Context context){
-        this.context = context;
-    }
-    public void postRequest(String uri, JSONObject data, Response.Listener<JSONObject> successListener, Response.ErrorListener errorListener){
-        // asynchronous call
-        JsonObjectRequest jsonReq = new JsonObjectRequest
-                (
-                        Request.Method.POST,
-                        this.url + "/user/create",
-                        data,
-                        successListener,
-                        errorListener
-                );
-        RequestQueueSingleton.getInstance(context).addToRequestQueue(jsonReq);
-    }
-    public JSONObject postRequest(String uri, JSONObject data){
-        // synchronous call
-        JSONObject response = null;
-        RequestFuture<JSONObject> future = RequestFuture.newFuture();
-        JsonObjectRequest jsonReq = new JsonObjectRequest
-                (
-                        Request.Method.POST,
-                        this.url + "/user/create",
-                        data,
-                        future,
-                        future
-                );
-        RequestQueueSingleton.getInstance(context).addToRequestQueue(jsonReq);
-        // handle errors responses
+    public void postData(JSONObject data, String resource, Consumer<RestResponse> onSuccess, Consumer<ApiException> onFailure){
+        byte[] bdata = new byte[0];
         try {
-            response = future.get();
-            System.out.println(response);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            System.out.println("fail1");
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-            System.out.println("fail2");
+            bdata = data.toString().getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new AssertionError("UTF-8 is not supported -- if this throws, pull your money out of the stock market");
         }
-        return response;
-    }
-    public JSONObject getRequest(String uri, String query){
-        // synchronous call
-        JSONObject response = null;
-        RequestFuture<JSONObject> future = RequestFuture.newFuture();
-        JsonObjectRequest jsonReq = new JsonObjectRequest
-                (
-                        Request.Method.GET,
-                        this.url + uri + '?'+ query,
-                        null,
-                        future,
-                        future
-                );
-        RequestQueueSingleton.getInstance(context).addToRequestQueue(jsonReq);
-        // handle errors responses
-        try{
-            response = future.get();
-            System.out.println(response);
-        }catch(InterruptedException e){
-            e.printStackTrace();
-            System.out.println("fail1");
-        }catch(ExecutionException e){
-            e.printStackTrace();
-            System.out.println("fail2");
-        }
-
-        return response;
-    }
-    public void getRequest(String uri, String query, Response.Listener<JSONObject> successListener, Response.ErrorListener errorListener){
-        // asynchronous call
-        JsonObjectRequest jsonReq = new JsonObjectRequest
-                (
-                        Request.Method.GET,
-                        this.url + uri + '?'+ query,
-                        null,
-                        successListener,
-                        errorListener
-                );
-        RequestQueueSingleton.getInstance(context).addToRequestQueue(jsonReq);
+        RestOptions options = RestOptions.builder()
+                .addPath(resource)
+                .addHeader("Content-Type", "application/json")
+                .addBody(bdata)
+                .build();
+        Amplify.API.post(options, (success) -> {
+            // do some stuff?
+            onSuccess.accept(success);
+            }, (error) -> {
+                // do some stuff?
+                onFailure.accept(error);
+            });
     }
 }

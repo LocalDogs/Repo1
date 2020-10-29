@@ -86,6 +86,7 @@ public class AmplifyHub {
                              * ** API calls
                              * ** This event not firing is apparently common, there an issue in the
                              * ** Amplify github
+                             * ** this worked randomly?
                              */
                             Log.i("Auth", "Auth session just expired.");
                             break;

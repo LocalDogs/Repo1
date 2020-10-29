@@ -53,7 +53,14 @@ public class Authentication {
                     // upload user to our database
                     // then call provided callback
                     //updateAuthenticatedStatus(true);
-                    onSuccess.accept(response);
+                    UserRequests ur = new UserRequests();
+                    ur.uploadUserInfo(userData, (success) -> {
+                        Log.i("RegisterUser", "uploading new user to db");
+                        onSuccess.accept(response);
+                    }, (error) -> {
+                        Log.e("RegisterUser", error.getMessage(), error.getCause());
+                    });
+
                 },
                 (err) -> {
                     // can put stuff here if needed before passed in callback

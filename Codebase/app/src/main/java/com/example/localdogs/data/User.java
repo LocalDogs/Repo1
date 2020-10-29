@@ -9,25 +9,26 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class User {
     private String firstname;
     private String lastname;
     private String email;
     private String dateofbirth;
-    private String password;
     private ArrayList<Dog> dogs;
     /*
     TODO:
         Update constructor calls in rest of code after sprint 1 presentation
         for now, going to just overload the constructor for compatability
      */
-    public User(String firstname, String lastname, String email, String dateofbirth, String password){
+    public User(String firstname, String lastname, String email, String dateofbirth){
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.dateofbirth = dateofbirth;
-        this.password = password;
         ArrayList<String> breedList = new ArrayList<String>();
         breedList.add("pickle");
         breedList.add("rick");
@@ -36,12 +37,11 @@ public class User {
         this.dogs = dogList;
     }
 
-    public User(String firstname, String lastname, String email, String dateofbirth, String password, ArrayList<Dog> dogs){
+    public User(String firstname, String lastname, String email, String dateofbirth, ArrayList<Dog> dogs){
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.dateofbirth = dateofbirth;
-        this.password = password;
         this.dogs = dogs;
     }
 
@@ -73,8 +73,6 @@ public class User {
 
     public String getDateOfBirth() { return this.dateofbirth; }
 
-    public String getPassword() { return this.password; }
-
     /**
      * This method is to turn a User class object into a json object.
      * @param
@@ -91,7 +89,6 @@ public class User {
             jsonUser.put("firstname", getFirstname());
             jsonUser.put("lastname", getLastname());
             jsonUser.put("email", getEmail());
-            jsonUser.put("password", getPassword()); // temporary
             jsonUser.put("dateofbirth", getDateOfBirth());
             jsonUser.put("dogs", dogList);
 
@@ -120,8 +117,7 @@ public class User {
                             jsonUser.getString("firstname"),
                             jsonUser.getString("lastname"),
                             jsonUser.getString("email"),
-                            jsonUser.getString("dateofbirth"),
-                            jsonUser.getString("password")//,
+                            jsonUser.getString("dateofbirth")
                             //dogs
             );
 
