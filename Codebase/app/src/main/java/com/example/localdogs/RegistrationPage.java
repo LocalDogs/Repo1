@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.localdogs.data.User;
+import com.example.localdogs.data.awsinterface.Authentication;
 import com.example.localdogs.data.awsinterface.api.UserRequests;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -204,23 +205,18 @@ public class RegistrationPage extends AppCompatActivity {
             //Intent returnIntent = new Intent();
             //setResult(Activity.RESULT_OK, returnIntent);
             // changes here
-            User stuff = new User(firstNameField.getText().toString(), lastNameField.getText().toString(), emailField.getText().toString(), dobField.getText().toString(), passwordField.getText().toString());
-            UserRequests stuff2 = new UserRequests(getApplicationContext());
-            stuff2.uploadNewUser(stuff, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    Log.d("RegistrationTest", "Succeeded");
-                    //*********LINK TO CARDSTACK CLASS*********************************//
-                    Intent intent = new Intent(t.getContext(), Cardstack.class);
-                    startActivity(intent);
-                    finish();
-
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.d("RegistrationTest", "ERROR");
-                }
+            User stuff = new User(firstNameField.getText().toString(), lastNameField.getText().toString(), emailField.getText().toString(), dobField.getText().toString());
+            //UserRequests stuff2 = new UserRequests(getApplicationContext());
+            Authentication.getInstance(getApplicationContext()).registerUser(stuff.getEmail(), passwordField.getText().toString(), stuff.toJSONObject(), (success) -> {
+                        //go to cardstack; successful
+                        Intent intent = new Intent(t.getContext(), Cardstack.class);
+                        startActivity(intent);
+                        finish();
+            },
+            (error) -> {
+                //duplicate email
+                Log.e("Auth", error.getMessage());
+                Toast.makeText(getApplicationContext(), "Email already exists", Toast.LENGTH_SHORT).show();
             });
 
             //finish();

@@ -31,6 +31,8 @@ import com.example.localdogs.R;
 import com.example.localdogs.RegistrationPage;
 import com.example.localdogs.TermsOfUse;
 import com.example.localdogs.data.User;
+import com.example.localdogs.data.awsinterface.AmplifyHub;
+import com.example.localdogs.data.awsinterface.Authentication;
 import com.example.localdogs.data.awsinterface.api.UserRequests;
 import com.example.localdogs.ui.login.LoginViewModel;
 import com.example.localdogs.ui.login.LoginViewModelFactory;
@@ -46,6 +48,14 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AmplifyHub.launchAmplify(getApplicationContext());
+        if (Authentication.getInstance(getApplicationContext()).isSessionGood()) {
+            //user session is already good; bypass login screen
+            Intent intent = new Intent(this, Cardstack.class);
+            startActivity(intent);
+            //If there is a valid login after pressing keyboard enter key. End activity
+            finish();
+        }
         setContentView(R.layout.activity_login);
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
@@ -120,8 +130,13 @@ public class LoginActivity extends AppCompatActivity {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     loginViewModel.login(usernameEditText.getText().toString(),
                             passwordEditText.getText().toString());
+                    authenticateUser(usernameEditText, passwordEditText, v);
                     // changes here
-                    UserRequests user = new UserRequests(getApplicationContext());
+                    //UserRequests user = new UserRequests(getApplicationContext());
+
+
+                    /* old way to authenticate email when pressing enter key on keyboard
+
                     user.retrieveUserProfile(usernameEditText.getText().toString(), new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
@@ -153,12 +168,13 @@ public class LoginActivity extends AppCompatActivity {
                         public void onErrorResponse(VolleyError error) {
                             Log.d("LoginTest", "Failed");
                         }
-                    });
+                    }); */
 
                 }
                 return false;
             }
         });
+
 
         //THIS IS THE WHERE THE LOGIN BUTTON IS HANDLED
         //ONCE THE USER CLICKS LOGIN AFTER ENTERING LOGIN INFO, THIS WILL VALIDATE IT WITH THE CURRENT DATABASE ENTRIES
@@ -171,7 +187,9 @@ public class LoginActivity extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(), "Login!", Toast.LENGTH_SHORT).show();
 
                 final View t = v;
+                authenticateUser(usernameEditText, passwordEditText, v);
                 // changes here
+                /*
                 UserRequests user = new UserRequests(getApplicationContext());
                 user.retrieveUserProfile(usernameEditText.getText().toString(), new Response.Listener<JSONObject>() {
                     @Override
@@ -204,7 +222,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         Log.d("LoginTest", "Failed");
                     }
-                });
+                }); */
                 //System.out.println(usernameEditText.getText().toString());
             }
         });
@@ -231,6 +249,29 @@ public class LoginActivity extends AppCompatActivity {
             }
         });*/
     }
+
+
+    private void authenticateUser(EditText email, EditText password, View v) {
+        Authentication.getInstance(getApplicationContext()).signInUser(email.getText().toString(), password.getText().toString(), (success) -> {
+            UserRequests ur = new UserRequests();
+            ur.retrieveUserInfo(email.getText().toString(), (retrieveUserSuccess) -> {
+                        Log.i("Retrieve User Test", retrieveUserSuccess.toString());
+                        Intent intent = new Intent(v.getContext(), Cardstack.class);
+                        startActivity(intent);
+                        //If there is a valid login after pressing keyboard enter key. End activity
+                        finish();
+                    },
+                    (error) -> {
+                        //no matching email in database; no internet connection; mongodb/aws host is down
+                        Toast.makeText(getApplicationContext(), "Login failed! Please try again later!", Toast.LENGTH_SHORT).show();
+                    });
+        },(error) -> {
+            //user doesn't exist database/incognito pool, entered wrong password
+            Toast.makeText(getApplicationContext(), "Login failed!", Toast.LENGTH_SHORT).show();
+        });
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
