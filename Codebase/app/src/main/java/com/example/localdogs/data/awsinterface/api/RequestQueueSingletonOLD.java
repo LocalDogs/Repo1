@@ -1,4 +1,4 @@
-package com.example.localdogs.data.awsinterface;
+package com.example.localdogs.data.awsinterface.api;
 
 import android.content.Context;
 
@@ -7,14 +7,14 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
 // code pulled from https://developer.android.com/training/volley/requestqueue
-public class RequestQueueSingleton {
+public class RequestQueueSingletonOLD {
     @SuppressWarnings("memory leak")
-    private static RequestQueueSingleton instance;
+    private static RequestQueueSingletonOLD instance;
     private RequestQueue requestQueue;
     //private ImageLoader imageLoader;
     private static Context ctx;
 
-    private RequestQueueSingleton(Context context) {
+    private RequestQueueSingletonOLD(Context context) {
         ctx = context;
         requestQueue = getRequestQueue();
 
@@ -35,9 +35,9 @@ public class RequestQueueSingleton {
                 });*/
     }
 
-    public static synchronized RequestQueueSingleton getInstance(Context context) {
+    public static synchronized RequestQueueSingletonOLD getInstance(Context context) {
         if (instance == null) {
-            instance = new RequestQueueSingleton(context);
+            instance = new RequestQueueSingletonOLD(context);
         }
         return instance;
     }

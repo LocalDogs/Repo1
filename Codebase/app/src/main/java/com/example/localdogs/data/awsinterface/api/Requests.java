@@ -1,4 +1,4 @@
-package com.example.localdogs.data.awsinterface;
+package com.example.localdogs.data.awsinterface.api;
 
 import com.amplifyframework.api.ApiException;
 import com.amplifyframework.api.rest.RestOptions;

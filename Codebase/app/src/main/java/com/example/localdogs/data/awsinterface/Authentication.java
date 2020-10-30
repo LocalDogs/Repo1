@@ -3,25 +3,22 @@ package com.example.localdogs.data.awsinterface;
 import android.content.Context;
 import android.util.Log;
 
-import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amplifyframework.auth.AuthException;
 import com.amplifyframework.auth.AuthUserAttribute;
 import com.amplifyframework.auth.AuthUserAttributeKey;
 import com.amplifyframework.auth.cognito.AWSCognitoAuthSession;
 import com.amplifyframework.auth.options.AuthSignUpOptions;
 import com.amplifyframework.auth.result.AuthSignInResult;
-import com.amplifyframework.auth.result.AuthSignUpResult;
 import com.amplifyframework.core.Action;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.core.Consumer;
 import com.amplifyframework.rx.RxAmplify;
-import com.google.android.play.core.assetpacks.AssetPackException;
+import com.example.localdogs.data.awsinterface.api.UserRequests;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
-import java.util.Objects;
 
 public class Authentication {
     private static Authentication instance;
@@ -50,12 +47,18 @@ public class Authentication {
         activeUserEmail = email;
     }
 
-    public void signInUser(String email, String password, Consumer<AuthSignInResult> success, Consumer<AuthException> failure){
-        Amplify.Auth.signIn(email, password, success, failure);
+    public void signInUser(String email, String password, Consumer<AuthSignInResult> onSuccess, Consumer<AuthException> onFailure){
+        Amplify.Auth.signIn(email, password, (success) -> {
+            updateActiveUserEmail(email);
+            onSuccess.accept(success);
+        }, onFailure);
     }
 
-    public void signOutUser(Action success, Consumer<AuthException> failure){
-        Amplify.Auth.signOut(success, failure);
+    public void signOutUser(Action onSuccess, Consumer<AuthException> onFailure){
+        Amplify.Auth.signOut(() -> {
+            updateActiveUserEmail(null);
+            onSuccess.call();
+        }, onFailure);
     }
 
     public void registerUser(String email, String password, JSONObject userData, Consumer<JSONObject> onSuccess, Consumer<AuthException> failure){
@@ -83,7 +86,7 @@ public class Authentication {
 
                         } catch (JSONException e) {
 
-                            throw new AssertionError("This literrally should never be an issue, but here we are");
+                            throw new AssertionError("This literally should never be an issue, but here we are");
 
                         }
                     }, (error) -> {

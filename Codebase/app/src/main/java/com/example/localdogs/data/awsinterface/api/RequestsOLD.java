@@ -1,4 +1,4 @@
-package com.example.localdogs.data.awsinterface;
+package com.example.localdogs.data.awsinterface.api;
 
 import android.content.Context;
 
@@ -6,7 +6,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.RequestFuture;
-import com.example.localdogs.data.awsinterface.RequestQueueSingleton;
+import com.example.localdogs.data.awsinterface.api.RequestQueueSingletonOLD;
 
 import org.json.JSONObject;
 
@@ -30,7 +30,7 @@ public class RequestsOLD {
                         successListener,
                         errorListener
                 );
-        RequestQueueSingleton.getInstance(context).addToRequestQueue(jsonReq);
+        RequestQueueSingletonOLD.getInstance(context).addToRequestQueue(jsonReq);
     }
     public JSONObject postRequest(String uri, JSONObject data){
         // synchronous call
@@ -44,7 +44,7 @@ public class RequestsOLD {
                         future,
                         future
                 );
-        RequestQueueSingleton.getInstance(context).addToRequestQueue(jsonReq);
+        RequestQueueSingletonOLD.getInstance(context).addToRequestQueue(jsonReq);
         // handle errors responses
         try {
             response = future.get();
@@ -70,7 +70,7 @@ public class RequestsOLD {
                         future,
                         future
                 );
-        RequestQueueSingleton.getInstance(context).addToRequestQueue(jsonReq);
+        RequestQueueSingletonOLD.getInstance(context).addToRequestQueue(jsonReq);
         // handle errors responses
         try{
             response = future.get();
@@ -95,6 +95,6 @@ public class RequestsOLD {
                         successListener,
                         errorListener
                 );
-        RequestQueueSingleton.getInstance(context).addToRequestQueue(jsonReq);
+        RequestQueueSingletonOLD.getInstance(context).addToRequestQueue(jsonReq);
     }
 }

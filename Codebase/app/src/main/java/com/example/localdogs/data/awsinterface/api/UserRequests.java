@@ -1,16 +1,13 @@
-package com.example.localdogs.data.awsinterface;
+package com.example.localdogs.data.awsinterface.api;
 
 import com.amplifyframework.api.ApiException;
 import com.amplifyframework.api.rest.RestResponse;
 import com.amplifyframework.core.Consumer;
-import com.example.localdogs.data.awsinterface.Requests;
-import com.google.gson.JsonObject;
+import com.example.localdogs.data.awsinterface.api.Requests;
 
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class UserRequests extends Requests {
