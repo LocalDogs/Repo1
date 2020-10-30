@@ -64,14 +64,6 @@
         },
         {
           "category": "function",
-          "resourceName": "uploadUser",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        },
-        {
-          "category": "function",
           "resourceName": "updateUser",
           "attributes": [
             "Name",
@@ -81,6 +73,14 @@
         {
           "category": "function",
           "resourceName": "retrieveDog",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "uploadUser",
           "attributes": [
             "Name",
             "Arn"

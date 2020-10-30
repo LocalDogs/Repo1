@@ -264,7 +264,9 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * TODO: If you try to sign with authenticated credentials already saved, you can keep resuming user activity until token expires
+     * User session expires every hour
      * If you try to sign in the login screen, it will login regardless if the password is correct or not
+     * Maybe implement some spinny wheel for loading & lock it :))))))))))))))))))))))))))))))))))))))))))))))))))))
      */
     private void authenticateUser(EditText email, EditText password, View v) {
         Authentication.getInstance(getApplicationContext()).signInUser(email.getText().toString(), password.getText().toString(), (success) -> {
@@ -279,11 +281,11 @@ public class LoginActivity extends AppCompatActivity {
                     },
                     (error) -> {
                         //no matching email in database; no internet connection; mongodb/aws host is down
-                        Toast.makeText(getApplicationContext(), "Login failed! Please try again later!", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Login failed! Please try again later!", Toast.LENGTH_SHORT).show();
                     });
         },(error) -> {
             //user doesn't exist database/incognito pool, entered wrong password
-            Toast.makeText(getApplicationContext(), "Login failed!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "Login failed!", Toast.LENGTH_SHORT).show();
         });
     }
 
