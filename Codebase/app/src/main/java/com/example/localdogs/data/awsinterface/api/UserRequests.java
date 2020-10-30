@@ -13,11 +13,13 @@ import java.util.Map;
 public class UserRequests extends Requests {
     private String rsUploadUser;
     private String rsRetrieveUser;
+    private String rsUpdateUser;
 
     public UserRequests(){
         super();
-        rsUploadUser = "/uploadUser";
-        rsRetrieveUser = "/retrieveUser";
+        rsUploadUser = ApiResources.uploadUser();
+        rsRetrieveUser = ApiResources.retrieveUser();
+        rsUpdateUser = ApiResources.updateUser();
     }
 
     public void retrieveUserInfo(String email, Consumer<RestResponse>onSuccess, Consumer<ApiException> onFailure){
@@ -28,5 +30,9 @@ public class UserRequests extends Requests {
 
     public void uploadUserInfo(JSONObject newUser, Consumer<RestResponse>onSuccess, Consumer<ApiException> onFailure){
         super.postData(newUser, rsUploadUser, onSuccess, onFailure);
+    }
+
+    public void updateUserInfo(JSONObject user, Consumer<RestResponse>onSuccess, Consumer<ApiException> onFailure){
+        super.postData(user, rsUpdateUser, onSuccess, onFailure);
     }
 }

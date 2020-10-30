@@ -11,22 +11,32 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DogRequests extends Requests {
-    private String rsUploadUser;
-    private String rsRetrieveUser;
+    private String rsUploadDog;
+    private String rsRetrieveDogs;
+    private String rsUpdateDog;
 
     public DogRequests(){
         super();
-        rsUploadUser = "/uploadDog";
-        rsRetrieveUser = "/retrieveDog";
+        rsUploadDog = ApiResources.uploadDog();
+        rsRetrieveDogs = ApiResources.retrieveDogs();
+        rsUpdateDog = ApiResources.updateDog();
     }
 
     public void retrieveDogInfo(String email, Consumer<RestResponse>onSuccess, Consumer<ApiException> onFailure){
         Map<String, String> query = new HashMap<String, String>();
         query.put("email", email);
-        super.getData(query, rsRetrieveUser, onSuccess, onFailure);
+        super.getData(query, rsRetrieveDogs, onSuccess, onFailure);
     }
 
-    public void uploadDogInfo(JSONObject newUser, Consumer<RestResponse>onSuccess, Consumer<ApiException> onFailure){
-        super.postData(newUser, rsUploadUser, onSuccess, onFailure);
+    /**
+     * Just calling an updateUser method on the backend with the user's updated dog list
+     * Before calling, update a User object with the dog list by appending or whatever
+     */
+    public void uploadDogInfo(JSONObject user, Consumer<RestResponse>onSuccess, Consumer<ApiException> onFailure){
+        super.postData(user, rsUploadDog, onSuccess, onFailure);
+    }
+
+    public void updateDogInfo(JSONObject user, Consumer<RestResponse> onSuccess, Consumer<ApiException> onFailure){
+        super.postData(user, rsUpdateDog, onSuccess, onFailure);
     }
 }
