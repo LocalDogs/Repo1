@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-localdogs-dev-234609-authRole",
+      "UnauthRoleArn": "arn:aws:iam::451994763983:role/amplify-localdogs-dev-234609-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::451994763983:role/amplify-localdogs-dev-234609-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-localdogs-dev-234609-deployment",
+      "UnauthRoleName": "amplify-localdogs-dev-234609-unauthRole",
+      "StackName": "amplify-localdogs-dev-234609",
+      "StackId": "arn:aws:cloudformation:us-east-2:451994763983:stack/amplify-localdogs-dev-234609/2be50130-1746-11eb-9561-06e0ced8ee4a",
+      "AmplifyAppId": "d2k1ozohu847nc"
+    },
+    "categories": {
+      "auth": {
+        "localdogsdeecd585": {}
+      }
+    }
+  }
+}
