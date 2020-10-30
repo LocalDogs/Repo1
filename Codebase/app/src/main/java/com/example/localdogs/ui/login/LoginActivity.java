@@ -31,7 +31,7 @@ import com.example.localdogs.R;
 import com.example.localdogs.RegistrationPage;
 import com.example.localdogs.TermsOfUse;
 import com.example.localdogs.data.User;
-import com.example.localdogs.data.UserRequests;
+import com.example.localdogs.data.awsinterface.api.UserRequests;
 import com.example.localdogs.ui.login.LoginViewModel;
 import com.example.localdogs.ui.login.LoginViewModelFactory;
 
@@ -120,6 +120,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     loginViewModel.login(usernameEditText.getText().toString(),
                             passwordEditText.getText().toString());
+                    // changes here
                     UserRequests user = new UserRequests(getApplicationContext());
                     user.retrieveUserProfile(usernameEditText.getText().toString(), new Response.Listener<JSONObject>() {
                         @Override
@@ -170,7 +171,7 @@ public class LoginActivity extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(), "Login!", Toast.LENGTH_SHORT).show();
 
                 final View t = v;
-
+                // changes here
                 UserRequests user = new UserRequests(getApplicationContext());
                 user.retrieveUserProfile(usernameEditText.getText().toString(), new Response.Listener<JSONObject>() {
                     @Override

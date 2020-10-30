@@ -6,7 +6,7 @@ import android.os.Bundle;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.localdogs.data.User;
-import com.example.localdogs.data.awsinterface.UserRequests;
+import com.example.localdogs.data.awsinterface.api.UserRequests;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -203,7 +203,7 @@ public class RegistrationPage extends AppCompatActivity {
         if (checkBoxes()) {
             //Intent returnIntent = new Intent();
             //setResult(Activity.RESULT_OK, returnIntent);
-
+            // changes here
             User stuff = new User(firstNameField.getText().toString(), lastNameField.getText().toString(), emailField.getText().toString(), dobField.getText().toString(), passwordField.getText().toString());
             UserRequests stuff2 = new UserRequests(getApplicationContext());
             stuff2.uploadNewUser(stuff, new Response.Listener<JSONObject>() {
