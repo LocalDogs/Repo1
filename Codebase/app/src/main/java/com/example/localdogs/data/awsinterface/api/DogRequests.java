@@ -30,7 +30,8 @@ public class DogRequests extends Requests {
 
     /**
      * Just calling an updateUser method on the backend with the user's updated dog list
-     * Before calling, update a User object with the dog list by appending or whatever
+     *
+     * Before calling, update a the active User's object with the dog list by appending or whatever
      */
     public void uploadDogInfo(JSONObject user, Consumer<RestResponse>onSuccess, Consumer<ApiException> onFailure){
         super.postData(user, rsUploadDog, onSuccess, onFailure);

@@ -117,6 +117,7 @@ public class Authentication {
                 // if the session is good, then grab the active users email for future api calls
                 AuthUserAttributeKey email = AuthUserAttributeKey.email();
                 for(int i = 0; i < attrUser.size(); i++){
+
                     if(attrUser.get(i).getKey().equals(email)){
 
                         Authentication.getInstance(context).updateActiveUserEmail(attrUser.get(i).getValue());
@@ -125,15 +126,15 @@ public class Authentication {
 
                     }
                 }
-
                 break;
             case FAILURE:
 
                 Log.e("Auth", "Session has expired", currentSession.getAWSCredentials().getError());
                 Authentication.getInstance(context).updateAuthenticatedStatus(false);
 
+                break;
             default:
-                Log.e("Auth", "SHRUG");
+                Log.e("Auth", "SHRUG: " + currentSession.getAWSCredentials().getType());
                 break;
         }
     }
