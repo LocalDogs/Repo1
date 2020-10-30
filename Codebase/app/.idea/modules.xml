@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/216724790/Codebase-LocalDogs.iml" filepath="$PROJECT_DIR$/.idea/modules/216724790/Codebase-LocalDogs.iml" group="LocalDogs" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/216724790/LocalDogs.iml" filepath="$PROJECT_DIR$/.idea/modules/216724790/LocalDogs.iml" group="LocalDogs" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/LocalDogs-app.iml" filepath="$PROJECT_DIR$/.idea/modules/LocalDogs-app.iml" group="LocalDogs/app" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app.iml" group="LocalDogs/app" />
     </modules>
   </component>

@@ -49,7 +49,18 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AmplifyHub.launchAmplify(getApplicationContext());
+        /**
+         * TODO: Make flag set to false in sign out process
+         */
+        Authentication.getInstance(getApplicationContext()).signOutUser(() -> {
+
+        },
+                (error) -> {
+
+                });
+        //This works :)))))))))))
         if (Authentication.getInstance(getApplicationContext()).isSessionGood()) {
+            Log.i("If statement test", "We got in boyz");
             //user session is already good; bypass login screen
             Intent intent = new Intent(this, Cardstack.class);
             startActivity(intent);
@@ -251,8 +262,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * TODO: If you try to sign with authenticated credentials already saved, you can keep resuming user activity until token expires
+     * If you try to sign in the login screen, it will login regardless if the password is correct or not
+     */
     private void authenticateUser(EditText email, EditText password, View v) {
         Authentication.getInstance(getApplicationContext()).signInUser(email.getText().toString(), password.getText().toString(), (success) -> {
+            Log.i("Success Login", "Woohoo!");
             UserRequests ur = new UserRequests();
             ur.retrieveUserInfo(email.getText().toString(), (retrieveUserSuccess) -> {
                         Log.i("Retrieve User Test", retrieveUserSuccess.toString());

@@ -209,6 +209,7 @@ public class RegistrationPage extends AppCompatActivity {
             //UserRequests stuff2 = new UserRequests(getApplicationContext());
             Authentication.getInstance(getApplicationContext()).registerUser(stuff.getEmail(), passwordField.getText().toString(), stuff.toJSONObject(), (success) -> {
                         //go to cardstack; successful
+                        Log.i("Success Registration", "Woohoo!");
                         Intent intent = new Intent(t.getContext(), Cardstack.class);
                         startActivity(intent);
                         finish();
@@ -216,7 +217,7 @@ public class RegistrationPage extends AppCompatActivity {
             (error) -> {
                 //duplicate email
                 Log.e("Auth", error.getMessage());
-                Toast.makeText(getApplicationContext(), "Email already exists", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Email already exists", Toast.LENGTH_SHORT).show();
             });
 
             //finish();
