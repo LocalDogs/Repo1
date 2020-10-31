@@ -22,7 +22,7 @@ public class UserRequests extends Requests {
         rsUpdateUser = ApiResources.updateUser();
     }
 
-    public void retrieveUserInfo(String email, Consumer<RestResponse>onSuccess, Consumer<ApiException> onFailure){
+    public void retrieveUserInfo(String email, Consumer<ProfileResult>onSuccess, Consumer<ApiException> onFailure){
         Map<String, String> query = new HashMap<String, String>();
         query.put("email", email);
         super.getData(query, rsRetrieveUser, onSuccess, onFailure);

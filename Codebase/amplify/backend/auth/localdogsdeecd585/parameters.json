@@ -1,6 +1,6 @@
 {
     "identityPoolName": "localdogsdeecd585_identitypool_deecd585",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "localddeecd585",
     "userPoolName": "localdogsdeecd585_userpool_deecd585",
     "autoVerifiedAttributes": [

@@ -9,19 +9,20 @@ import com.amplifyframework.core.Consumer;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Map;
 
 public class Requests {
 
-    public void getData(Map<String, String> query, String resource, Consumer<RestResponse> onSuccess, Consumer<ApiException> onFailure){
+    public void getData(Map<String, String> query, String resource, Consumer<ProfileResult> onSuccess, Consumer<ApiException> onFailure){
         RestOptions options = RestOptions.builder()
                 .addPath(resource)
                 .addQueryParameters(query)
                 .build();
         Amplify.API.get(options, (success) -> {
             // do some stuff?
-            onSuccess.accept(success);
+            onSuccess.accept(new ProfileResult(success.getData().getRawBytes(), "Retrieved Data Successfully"));
         }, (error) -> {
             // do some stuff?
             onFailure.accept(error);

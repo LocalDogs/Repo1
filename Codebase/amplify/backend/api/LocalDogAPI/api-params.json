@@ -44,7 +44,21 @@
             "name": "/uploadUser",
             "lambdaFunction": "uploadUser",
             "privacy": {
-                "open": true
+                "protected": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ],
+                "unauth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ]
             }
         }
     ],
@@ -65,8 +79,8 @@
         }
     ],
     "privacy": {
-        "auth": 3,
-        "unauth": 0,
+        "auth": 4,
+        "unauth": 1,
         "authRoleName": "amplify-localdogs-dev-234609-authRole",
         "unAuthRoleName": "amplify-localdogs-dev-234609-unauthRole"
     },
@@ -104,5 +118,5 @@
             ]
         }
     ],
-    "uuid": "8a473f64"
+    "uuid": "d1cb61c7"
 }

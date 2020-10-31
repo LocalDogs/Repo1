@@ -13,6 +13,7 @@ import com.amplifyframework.core.Action;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.core.Consumer;
 import com.amplifyframework.rx.RxAmplify;
+import com.example.localdogs.data.User;
 import com.example.localdogs.data.awsinterface.api.UserRequests;
 
 import org.json.JSONException;
@@ -24,7 +25,9 @@ public class Authentication {
     private static Authentication instance;
     private static Context context;
     private static boolean isAuthenticated;
+    private static CurrentSession currentSession;
     private static String activeUserEmail;
+    private static User activeUser;
 
     private Authentication(Context context){
         this.context = context;
@@ -49,15 +52,27 @@ public class Authentication {
 
     public void signInUser(String email, String password, Consumer<AuthSignInResult> onSuccess, Consumer<AuthException> onFailure){
         Amplify.Auth.signIn(email, password, (success) -> {
-            updateActiveUserEmail(email);
-            onSuccess.accept(success);
+            UserRequests ur = new UserRequests();
+            ur.retrieveUserInfo(email, (userProfile) -> {
+
+                Log.i("signInUser", "Checking CurrentSession status");
+                if(getCurrentSession() == null || !getCurrentSession().getCurrentSessionEmail().equals(email)) loadCurrentSession(userProfile.getUserProfile());
+                updateActiveUserEmail(getCurrentSession().getCurrentSessionEmail());
+                onSuccess.accept(success);
+
+            }, (error) -> Log.e("signInUser", "Failed to get user profile from database"));
+
         }, onFailure);
     }
 
     public void signOutUser(Action onSuccess, Consumer<AuthException> onFailure){
         Amplify.Auth.signOut(() -> {
-            updateActiveUserEmail(null);
+
+            // if user signs out, i think we hold onto the CurrentSession instance
+            // if a new user signs in, it will be replaced with the new user's session
+            // if the same user logs in, then we're good
             onSuccess.call();
+
         }, onFailure);
     }
 
@@ -74,6 +89,7 @@ public class Authentication {
                      **/
 
                     Log.i("Auth", response.toString());
+                    Log.i("UserRegistered", "Am i here");
                     UserRequests ur = new UserRequests();
                     ur.uploadUserInfo(userData, (success) -> {
                         Log.i("RegisterUser", "uploading new user to db");
@@ -137,5 +153,14 @@ public class Authentication {
                 Log.e("Auth", "SHRUG: " + currentSession.getAWSCredentials().getType());
                 break;
         }
+    }
+
+    public CurrentSession getCurrentSession(){
+        // this COULD be null, hopefully we can prevent that
+        return currentSession;
+    }
+
+    private void loadCurrentSession(User user){
+        currentSession = CurrentSession.getInstance(context);
     }
 }
