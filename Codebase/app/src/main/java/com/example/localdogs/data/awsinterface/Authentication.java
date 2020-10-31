@@ -162,5 +162,11 @@ public class Authentication {
 
     private void loadCurrentSession(User user){
         currentSession = CurrentSession.getInstance(context);
+        currentSession.updateCurrentSessionUser(user);
+    }
+
+    public void updateCurrentSession(User user){
+        currentSession = CurrentSession.getInstance(context);
+        currentSession.updateCurrentSessionUser(user);
     }
 }

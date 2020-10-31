@@ -17,6 +17,14 @@ class CurrentSession {
      * NOTE: THE GETTERS IN THIS CLASS CAN RETURN NULL
      * IF YOU'RE IN THE CARDSTACK, OR A SUCCESS CALLBACK FROM SIGNING IN,
      * IT SHOULD BE SAFE, BUT IF ITS NOT, THAT'S ON YOU, SO CHECK IT
+     * NOTE: YOU WILL NOT BE ABLE TO MODIFY THE USER OBJECT INSTANCE FROM HERE;
+     * TO DO THAT, YOU WILL HAVE TO CONSTRUCT A NEW USER OBJECT AND PASS IT INTO
+     * AUTHENTICATION.UPDATECURRENTSESSION()
+     * NOTE: DO NOT USE THIS TO STORE SOME OTHER USER'S PROFILE *THAT IS NOT THE
+     * SESSION HOLDER'S*; THAT WOULDN'T EVEN MAKE SENSE. IF YOU WANT TO DO THAT, OR STORE
+     * SOME PROFILE DATA FOR SOME OTHER REASON, USE A USER OBJECT THAT IS NOT GLOBALLY
+     * ACCESSIBLE. STORE ONLY FINAL CHANGES TO THE CURRENT SESSION HOLDER'S USER PROFILE HERE
+     * ****AFTER A SUCCESSFUL POST TO THE DATABASE WITH THE PROFILE UPDATE******
      */
     protected static synchronized CurrentSession getInstance(Context context){
         if(instance == null) instance = new CurrentSession(context.getApplicationContext());
@@ -39,11 +47,6 @@ class CurrentSession {
     }
 
     protected String getCurrentSessionUserDateOfBirth(){
-        if(currentSessionUser == null) return null;
-        return currentSessionUser.getDateOfBirth();
-    }
-
-    protected String getCurrentSessionUser(){
         if(currentSessionUser == null) return null;
         return currentSessionUser.getDateOfBirth();
     }
