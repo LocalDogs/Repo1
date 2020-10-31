@@ -56,8 +56,8 @@ public class Authentication {
             ur.retrieveUserInfo(email, (userProfile) -> {
 
                 Log.i("signInUser", "Checking CurrentSession status");
-                if(getCurrentSession() == null || !getCurrentSession().getCurrentSessionEmail().equals(email)) loadCurrentSession(userProfile.getUserProfile());
-                updateActiveUserEmail(getCurrentSession().getCurrentSessionEmail());
+                if(getCurrentSession() == null || !getCurrentSession().getCurrentSessionUserEmail().equals(email)) loadCurrentSession(userProfile.getUserProfile());
+                updateActiveUserEmail(getCurrentSession().getCurrentSessionUserEmail());
                 onSuccess.accept(success);
 
             }, (error) -> Log.e("signInUser", "Failed to get user profile from database"));
