@@ -21,12 +21,12 @@ public class DogRequests extends Requests {
         rsRetrieveDogs = ApiResources.retrieveDogs();
         rsUpdateDog = ApiResources.updateDog();
     }
-
-    public void retrieveDogInfo(String email, Consumer<RestResponse>onSuccess, Consumer<ApiException> onFailure){
+    // temporarily commented out -- need to add some CardstackListResponse or something
+    /*public void retrieveDogInfo(String email, Consumer<RestResponse>onSuccess, Consumer<ApiException> onFailure){
         Map<String, String> query = new HashMap<String, String>();
         query.put("email", email);
         super.getData(query, rsRetrieveDogs, onSuccess, onFailure);
-    }
+    }*/
 
     /**
      * Just calling an updateUser method on the backend with the user's updated dog list

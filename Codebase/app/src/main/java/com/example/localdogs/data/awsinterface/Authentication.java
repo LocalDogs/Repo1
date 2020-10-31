@@ -56,7 +56,7 @@ public class Authentication {
             ur.retrieveUserInfo(email, (userProfile) -> {
 
                 Log.i("signInUser", "Checking CurrentSession status");
-                if(getCurrentSession() == null || !getCurrentSession().getCurrentSessionUserEmail().equals(email)) loadCurrentSession(userProfile.getUserProfile());
+                if(getCurrentSession() == null || !getCurrentSession().getCurrentSessionUserEmail().equals(email)) loadCurrentSession(userProfile.getUser());
                 updateActiveUserEmail(getCurrentSession().getCurrentSessionUserEmail());
                 onSuccess.accept(success);
 

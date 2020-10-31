@@ -17,12 +17,14 @@ exports.handler = (event, context, callback) => {
 
         body.found = false;
         body.message = 'Email not found';
+        body.error = 'Email not found';
 
       }
       else{
         
         body.found = true;
         body.message = 'Email found';
+        body.error = null;
     
       }
       body.user = user;
@@ -33,7 +35,14 @@ exports.handler = (event, context, callback) => {
       console.log('Response ==> ' + JSON.stringify(response));
       callback (null, response);
         
-    }).catch(err => callback(null, {
+    }).catch((err) => {
+
+      var body = {};
+
+      body.error = 'Could not query database';
+      body.message = 'Could not damage database';
+
+      callback(null, {
 
       // error trying to query database after successfully establishing
       // a connection
@@ -44,9 +53,9 @@ exports.handler = (event, context, callback) => {
         
       },
       
-      error: 'Could not query database'
+      body: JSON.stringify(body)
 
-    }));
+    })});
   }).catch(err => {
     
     // error trying to connect to database

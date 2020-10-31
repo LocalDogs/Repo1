@@ -22,6 +22,8 @@ exports.handler = (event, context, callback) => {
         };
         body.message = 'Insert was successful';
         body.inserted = true;
+        body.duplicate = false;
+        body.error = null;
         body.payloadid = event.email;
         response.body = JSON.stringify(body);
         // send query results back to app
@@ -33,8 +35,17 @@ exports.handler = (event, context, callback) => {
       // this should never actually make it back to the app, because 
       // the duplicate email will be caught already by the AWS Cognito
       // registration process
-      if(err.message.includes("E11000")) body.error = "Duplicate Email";
-      else body.error = "Unknown";
+      if(err.message.includes("E11000")){
+        body.error = "Duplicate Email";
+        body.duplicate = true;
+      }
+      else{
+        body.error = "Unknown";
+        body.duplicate = false;
+      }
+      body.error = err.message;
+      body.payloadid = event.email; // might be null?
+      body.inserted = false;
       callback(null, {
 
         // error trying to query database after successfully establishing

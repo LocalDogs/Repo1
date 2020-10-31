@@ -3,7 +3,7 @@ package com.example.localdogs.data.awsinterface.api;
 import com.amplifyframework.api.ApiException;
 import com.amplifyframework.api.rest.RestResponse;
 import com.amplifyframework.core.Consumer;
-import com.example.localdogs.data.awsinterface.api.Requests;
+import com.example.localdogs.data.awsinterface.api.response.ProfileResult;
 
 import org.json.JSONObject;
 

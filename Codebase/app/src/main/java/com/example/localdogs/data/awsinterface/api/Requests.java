@@ -1,16 +1,17 @@
 package com.example.localdogs.data.awsinterface.api;
 
+import android.util.Log;
+
 import com.amplifyframework.api.ApiException;
 import com.amplifyframework.api.rest.RestOptions;
 import com.amplifyframework.api.rest.RestResponse;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.core.Consumer;
+import com.example.localdogs.data.awsinterface.api.response.ProfileResult;
 
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-import java.util.Collections;
 import java.util.Map;
 
 public class Requests {
@@ -22,7 +23,8 @@ public class Requests {
                 .build();
         Amplify.API.get(options, (success) -> {
             // do some stuff?
-            onSuccess.accept(new ProfileResult(success.getData().getRawBytes(), "Retrieved Data Successfully"));
+            Log.i("getData", success.getData().asString());
+            onSuccess.accept(new ProfileResult(success.getData().getRawBytes()));
         }, (error) -> {
             // do some stuff?
             onFailure.accept(error);
