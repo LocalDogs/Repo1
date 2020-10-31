@@ -207,7 +207,7 @@ public class RegistrationPage extends AppCompatActivity {
             // changes here
             User stuff = new User(firstNameField.getText().toString(), lastNameField.getText().toString(), emailField.getText().toString(), dobField.getText().toString());
             //UserRequests stuff2 = new UserRequests(getApplicationContext());
-            Authentication.getInstance(getApplicationContext()).registerUser(stuff.getEmail(), passwordField.getText().toString(), stuff.toJSONObject(), (success) -> {
+            Authentication.getInstance(getApplicationContext()).registerUser(stuff.getEmail(), passwordField.getText().toString(), stuff, (success) -> {
                         //go to cardstack; successful
                         Log.i("Success Registration", "Woohoo!");
                         Intent intent = new Intent(t.getContext(), Cardstack.class);

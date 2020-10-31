@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -24,6 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amazonaws.mobile.client.AWSMobileClient;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.localdogs.Cardstack;
@@ -34,6 +36,7 @@ import com.example.localdogs.data.User;
 import com.example.localdogs.data.awsinterface.AmplifyHub;
 import com.example.localdogs.data.awsinterface.Authentication;
 import com.example.localdogs.data.awsinterface.api.UserRequests;
+import com.example.localdogs.ui.ThreadSafeToast;
 import com.example.localdogs.ui.login.LoginViewModel;
 import com.example.localdogs.ui.login.LoginViewModelFactory;
 
@@ -52,13 +55,12 @@ public class LoginActivity extends AppCompatActivity {
         /**
          * TODO: Make flag set to false in sign out process
          */
-        Authentication.getInstance(getApplicationContext()).signOutUser(() -> {
+       /* Authentication.getInstance(getApplicationContext()).signOutUser(() -> {
 
-        },
-                (error) -> {
+        }, (error) -> {
 
-                });
-        //This works :)))))))))))
+        });*/
+        //This works :))))))))))) -- this should actually work now
         if (Authentication.getInstance(getApplicationContext()).isSessionGood()) {
             Log.i("If statement test", "We got in boyz");
             //user session is already good; bypass login screen
@@ -274,6 +276,7 @@ public class LoginActivity extends AppCompatActivity {
             UserRequests ur = new UserRequests();
             ur.retrieveUserInfo(email.getText().toString(), (retrieveUserSuccess) -> {
                         Log.i("Retrieve User Test", retrieveUserSuccess.toString());
+                        ThreadSafeToast.makeText(getApplicationContext(), "Login succeeded!", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(v.getContext(), Cardstack.class);
                         startActivity(intent);
                         //If there is a valid login after pressing keyboard enter key. End activity
@@ -281,11 +284,11 @@ public class LoginActivity extends AppCompatActivity {
                     },
                     (error) -> {
                         //no matching email in database; no internet connection; mongodb/aws host is down
-                        //Toast.makeText(getApplicationContext(), "Login failed! Please try again later!", Toast.LENGTH_SHORT).show();
+                        ThreadSafeToast.makeText(getApplicationContext(), "Login failed! Please try again later!", Toast.LENGTH_SHORT).show();
                     });
         },(error) -> {
             //user doesn't exist database/incognito pool, entered wrong password
-            //Toast.makeText(getApplicationContext(), "Login failed!", Toast.LENGTH_SHORT).show();
+            ThreadSafeToast.makeText(getApplicationContext(), "Login failed!", Toast.LENGTH_SHORT).show();
         });
     }
 
