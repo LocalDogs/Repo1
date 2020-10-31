@@ -52,6 +52,7 @@ public class AmplifyHub {
         if(instance == null) instance = new AmplifyHub(context.getApplicationContext());
         // i may need to return the instance here at some point
         // but doubtful
+        // just wanna guarantee when going back to the login screen, this isn't run again
     }
 
     private void subscribeToHub(){

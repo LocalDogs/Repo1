@@ -2,19 +2,22 @@ package com.example.localdogs.data.awsinterface;
 
 import android.content.Context;
 
+import com.example.localdogs.data.Dog;
 import com.example.localdogs.data.User;
+
+import java.util.ArrayList;
 
 class CurrentSession {
     private static User currentSessionUser;
     private static Context context;
-    private static CurrentSession instance;
+    private static volatile CurrentSession instance;
 
     private CurrentSession(Context context){
         this.context = context;
         this.instance = this;
     }
     /**
-     * NOTE: THE GETTERS IN THIS CLASS CAN RETURN NULL
+     * NOTE: ALL THE GETTERS IN THIS CLASS CAN RETURN NULL
      * IF YOU'RE IN THE CARDSTACK, OR A SUCCESS CALLBACK FROM SIGNING IN,
      * IT SHOULD BE SAFE, BUT IF ITS NOT, THAT'S ON YOU, SO CHECK IT
      * NOTE: YOU WILL NOT BE ABLE TO MODIFY THE USER OBJECT INSTANCE FROM HERE;
@@ -51,7 +54,12 @@ class CurrentSession {
         return currentSessionUser.getDateOfBirth();
     }
 
-    protected void updateCurrentSessionUser(User user){
+    protected ArrayList<Dog> getCurrentSessionUserDogs(){
+        if(currentSessionUser == null) return null;
+        return currentSessionUser.getDogs();
+    }
+
+    protected synchronized void updateCurrentSessionUser(User user){
         currentSessionUser = user;
     }
 

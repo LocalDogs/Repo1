@@ -24,7 +24,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 public class Authentication {
-    private static Authentication instance;
+    private static volatile Authentication instance;
     private static Context context;
     private static boolean isAuthenticated;
     private static CurrentSession currentSession;
@@ -174,12 +174,12 @@ public class Authentication {
         return currentSession;
     }
 
-    private void loadCurrentSession(User user){
+    private synchronized void loadCurrentSession(User user){
         currentSession = CurrentSession.getInstance(context);
         currentSession.updateCurrentSessionUser(user);
     }
 
-    public void updateCurrentSession(User user){
+    public synchronized void updateCurrentSession(User user){
         currentSession = CurrentSession.getInstance(context);
         currentSession.updateCurrentSessionUser(user);
     }

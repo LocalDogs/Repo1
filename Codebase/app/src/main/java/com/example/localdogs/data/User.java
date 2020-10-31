@@ -55,6 +55,8 @@ public class User {
 
     public void setDateOfBirth(String dateofbirth) { this.dateofbirth = dateofbirth; }
 
+    public void setDogs(ArrayList<Dog> dogs){ this.dogs = dogs; }
+
     public void setEmail(String email){
         this.email = email;
     }
@@ -72,6 +74,8 @@ public class User {
     }
 
     public String getDateOfBirth() { return this.dateofbirth; }
+
+    public ArrayList<Dog> getDogs(){ return this.dogs; }
 
     /**
      * This method is to turn a User class object into a json object.
