@@ -1,15 +1,17 @@
 package com.example.localdogs;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 import com.example.localdogs.Spot;
+import com.example.localdogs.data.Dog;
 
 public class Cards {
     public ArrayList<Spot> spots;
     public Cards(){
         this.spots = new ArrayList<Spot>();
         //defaultSpots();
-        defaultDogs();
+        defaultDogs2();
     }
 
     public void emptyCards(){
@@ -25,6 +27,9 @@ public class Cards {
         spots.add(new Spot("Lady", "Not sure", "https://i.imgur.com/k6AV99J.jpg"));
         spots.add(new Spot("Goggles", "English Shepard", "https://i.imgur.com/e1Ng7zo.jpg"));
         spots.add(new Spot("Scrungus", "Beagle", "https://i.imgur.com/eMKRlnv.jpg"));
+    }
+    public void defaultDogs2(){
+        spots.add(new Spot(new Dog("Amelia","Monster", new ArrayList<String>(Arrays.asList("Golden Retriever")), new dob(8,15,2010), 62, 7), "https://i.imgur.com/Zl1eL2d.jpg"));
     }
     public void newSpot(String name, String city, String url){
         this.spots.add(new Spot(name, city, url));

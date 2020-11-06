@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.localdogs.dob;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -16,12 +17,12 @@ public class Dog {
 
     private String name;
     private ArrayList<String> breeds;
-    private int age;
+    private dob age;
     private int weight;
     private String owner;
     private int activityLevel;
 
-    public Dog (String owner, String name, ArrayList<String> breeds, int age, int weight, int activityLevel){
+    public Dog (String owner, String name, ArrayList<String> breeds, dob age, int weight, int activityLevel){
         this.name = name;
         this.owner = owner; //email of user
         this.breeds = breeds;
@@ -46,6 +47,15 @@ public class Dog {
         return activityLevel;
     }
 
+    public String getActivityLevelAsString() {
+        String s = "";
+        for(int i=0; i<getActivityLevel()/2; i++)
+            s += "★";
+        for(int i=0; i<5-getActivityLevel()/2; i++)
+            s += "☆";
+        return s;
+    }
+
     public void setActivityLevel(int activityLevel) {
         this.activityLevel = activityLevel;
     }
@@ -60,15 +70,26 @@ public class Dog {
 
     public ArrayList<String> getBreeds() { return this.breeds; }
 
-    public int getAge() {
-        return age;
+    public String getBreedsAsString() {
+        String b = "";
+        if(this.isMixed()) {
+            for (int i = 0; i < getBreeds().size()-1; i++)
+                b += getBreeds().get(i) + " / ";
+            b += getBreeds().get(getBreeds().size()-1)+ " [Mixed]";
+        }
+        else b = this.getBreeds().get(0);
+        return b;
     }
 
-    public void setAge(int age) {
+    public int getAge() {
+        return age.getAgeYears();
+    }
+
+    public void setAge(dob age) {
         this.age = age;
     }
 
-    public Boolean isMixed(){ return (breeds.size() > 2); }
+    public Boolean isMixed(){ return (breeds.size() > 1); }
 
     /**
      * This method is to turn a Dog class object into a json object.
@@ -116,7 +137,8 @@ public class Dog {
                             jsonDog.getString("owner"),
                             jsonDog.getString("name"),
                             breedsList,
-                            jsonDog.getInt("age"),
+                            //jsonDog.getInt("age"), we're storing age as a DOB object, not an int
+                            new dob(1,1,2020),
                             jsonDog.getInt("weight"),
                             jsonDog.getInt("activityLevel")
                     );

@@ -2,6 +2,7 @@ package com.example.localdogs.data;
 
 import androidx.annotation.NonNull;
 
+import com.example.localdogs.dob;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -33,7 +34,7 @@ public class User {
         breedList.add("pickle");
         breedList.add("rick");
         ArrayList<Dog> dogList = new ArrayList<Dog>();
-        dogList.add(new Dog(email, "Cheerios", breedList, 3, 50, 2));
+        dogList.add(new Dog(email, "Cheerios", breedList, new dob(8,12,2014), 50, 2));
         this.dogs = dogList;
     }
 

@@ -26,7 +26,7 @@ class CardStackAdapter(
         val spot = spots[position]
         //holder.name.text = "${spot.id}. ${spot.name}"
         holder.name.text = "${spot.name}"
-        holder.city.text = spot.city
+        holder.city.text = spot.city;
         Glide.with(holder.image)
                 .load(spot.url)
                 .into(holder.image)

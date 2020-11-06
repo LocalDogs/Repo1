@@ -166,24 +166,40 @@ class Cardstack : AppCompatActivity(), CardStackListener {
         }
     }
 
-    private fun paginate() {
+    private fun loadDefaultCards(){
         val old = adapter.getSpots()
-        val cards = Cards();
-        val new = old.plus(cards.spots)
+        val cards = Cards()
+        //cards.defaultDogs()
+        val new = cards.spots
         val callback = SpotDiffCallback(old, new)
         val result = DiffUtil.calculateDiff(callback)
         adapter.setSpots(new)
         result.dispatchUpdatesTo(adapter)
     }
 
-    private fun reload() {
+    private fun paginate() {
+        loadDefaultCards()
+        addNewSpot(Spot("Charles","Good Boy","https://preview.redd.it/mo3qwb4xjtw51.jpg"))
+    }
+    private fun addNewSpot(spot: Spot){
         val old = adapter.getSpots()
-        val cards = Cards()
-        val new = cards.spots
+        val new = mutableListOf<Spot>().apply {
+            addAll(old)
+            add(manager.topPosition, spot)
+        }
         val callback = SpotDiffCallback(old, new)
         val result = DiffUtil.calculateDiff(callback)
         adapter.setSpots(new)
         result.dispatchUpdatesTo(adapter)
+    }
+
+    fun settingsClick(view: View) {
+        val intent = Intent(this, UserSettings::class.java)
+        startActivity(intent)
+    }
+    fun filterClick(view: View) {
+        val intent = Intent(this, DogFilterActivity::class.java)
+        startActivity(intent)
     }
 
     private fun addFirst(size: Int) {
@@ -273,15 +289,5 @@ class Cardstack : AppCompatActivity(), CardStackListener {
         adapter.setSpots(new)
         result.dispatchUpdatesTo(adapter)
     }
-
-    fun settingsClick(view: View) {
-        val intent = Intent(this, UserSettings::class.java)
-        startActivity(intent)
-    }
-    fun filterClick(view: View) {
-        val intent = Intent(this, DogFilterActivity::class.java)
-        startActivity(intent)
-    }
-
 
 }
