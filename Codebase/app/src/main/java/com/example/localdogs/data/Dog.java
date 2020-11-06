@@ -21,7 +21,12 @@ public class Dog {
     private int weight;
     private String owner;
     private int activityLevel;
+    private String imgurl;
 
+    public Dog (String owner, String name, ArrayList<String> breeds, dob age, int weight, int activityLevel, String imgurl){
+        this(owner, name, breeds, age, weight, activityLevel);
+        this.imgurl = imgurl;
+    }
     public Dog (String owner, String name, ArrayList<String> breeds, dob age, int weight, int activityLevel){
         this.name = name;
         this.owner = owner; //email of user
@@ -29,6 +34,14 @@ public class Dog {
         this.age = age;
         this.weight = weight;
         this.activityLevel = activityLevel;
+        this.imgurl = "https://i.imgur.com/2L7hOiz.jpg";
+    }
+
+    public void setImgUrl(String imgurl){
+        this.imgurl = imgurl;
+    }
+    public String getImgUrl(){
+        return this.imgurl;
     }
 
     public void setName(String name) { this.name = name; }
@@ -140,7 +153,8 @@ public class Dog {
                             //jsonDog.getInt("age"), we're storing age as a DOB object, not an int
                             new dob(1,1,2020),
                             jsonDog.getInt("weight"),
-                            jsonDog.getInt("activityLevel")
+                            jsonDog.getInt("activityLevel"),
+                            "https://i.imgur.com/2L7hOiz.jpg"
                     );
         } catch (JSONException e) {
 

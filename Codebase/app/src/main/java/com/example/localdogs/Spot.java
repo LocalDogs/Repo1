@@ -13,9 +13,9 @@ public class Spot {
     public Spot() {
 
     }
-    public Spot(Dog dog, String imgurl){
+    public Spot(Dog dog){
         this.dog = dog;
-        this.url = imgurl;
+        this.url = dog.getImgUrl();
         getTagline();
         getName();
     }
