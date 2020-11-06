@@ -1,5 +1,6 @@
 package com.example.localdogs;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -8,6 +9,8 @@ import com.android.volley.VolleyError;
 import com.example.localdogs.data.User;
 import com.example.localdogs.data.awsinterface.Authentication;
 import com.example.localdogs.data.awsinterface.api.UserRequests;
+import com.example.localdogs.ui.ThreadSafeToast;
+import com.example.localdogs.ui.login.LoginActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -200,6 +203,13 @@ public class RegistrationPage extends AppCompatActivity {
 
         Button regButton = findViewById(R.id.registerButton);
         final View t = view;
+        ProgressDialog nDialog;
+        nDialog = new ProgressDialog(RegistrationPage.this);
+        nDialog.setMessage("Loading..");
+        nDialog.setTitle("Please Wait");
+        nDialog.setIndeterminate(false);
+        nDialog.setCancelable(true);
+        nDialog.show();
 
         if (checkBoxes()) {
             //Intent returnIntent = new Intent();
@@ -211,18 +221,23 @@ public class RegistrationPage extends AppCompatActivity {
                         //go to cardstack; successful
                         Log.i("Success Registration", "Woohoo!");
                         Intent intent = new Intent(t.getContext(), Cardstack.class);
+                        nDialog.dismiss();
                         startActivity(intent);
                         finish();
             },
             (error) -> {
+                nDialog.dismiss();
                 //duplicate email
                 Log.e("Auth", error.getMessage());
+                ThreadSafeToast.makeText(getApplicationContext(), "Email Already Exists!", Toast.LENGTH_SHORT).show();
                 //Toast.makeText(getApplicationContext(), "Email already exists", Toast.LENGTH_SHORT).show();
             });
 
             //finish();
         }
-        else
+        else {
+            nDialog.dismiss();
             Toast.makeText(getApplicationContext(), "Error with registration", Toast.LENGTH_SHORT).show();
+        }
     }
 }

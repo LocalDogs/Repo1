@@ -5,6 +5,7 @@ import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -55,12 +56,16 @@ public class LoginActivity extends AppCompatActivity {
         /**
          * TODO: Make flag set to false in sign out process
          */
-       /* Authentication.getInstance(getApplicationContext()).signOutUser(() -> {
+
+        /*
+        Authentication.getInstance(getApplicationContext()).signOutUser(() -> {
 
         }, (error) -> {
 
-        });*/
+        });
+
         //This works :))))))))))) -- this should actually work now
+
         if (Authentication.getInstance(getApplicationContext()).isSessionGood()) {
             Log.i("If statement test", "We got in boyz");
             //user session is already good; bypass login screen
@@ -69,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
             //If there is a valid login after pressing keyboard enter key. End activity
             finish();
         }
+        */
         setContentView(R.layout.activity_login);
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
@@ -271,6 +277,15 @@ public class LoginActivity extends AppCompatActivity {
      * Maybe implement some spinny wheel for loading & lock it :))))))))))))))))))))))))))))))))))))))))))))))))))))
      */
     private void authenticateUser(EditText email, EditText password, View v) {
+        //*****************loading wheel stuff**********************************
+        ProgressDialog nDialog;
+        nDialog = new ProgressDialog(LoginActivity.this);
+        nDialog.setMessage("Loading..");
+        nDialog.setTitle("Please Wait");
+        nDialog.setIndeterminate(false);
+        nDialog.setCancelable(true);
+        nDialog.show();
+
         Authentication.getInstance(getApplicationContext()).signInUser(email.getText().toString(), password.getText().toString(), (success) -> {
             Log.i("Success Login", "Woohoo!");
             UserRequests ur = new UserRequests();
@@ -278,6 +293,7 @@ public class LoginActivity extends AppCompatActivity {
                         Log.i("Retrieve User Test", retrieveUserSuccess.toString());
                         ThreadSafeToast.makeText(getApplicationContext(), "Login succeeded!", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(v.getContext(), Cardstack.class);
+                        nDialog.dismiss();
                         startActivity(intent);
                         //If there is a valid login after pressing keyboard enter key. End activity
                         finish();
@@ -289,6 +305,7 @@ public class LoginActivity extends AppCompatActivity {
         },(error) -> {
             //user doesn't exist database/incognito pool, entered wrong password
             ThreadSafeToast.makeText(getApplicationContext(), "Login failed!", Toast.LENGTH_SHORT).show();
+            nDialog.dismiss();
         });
     }
 
