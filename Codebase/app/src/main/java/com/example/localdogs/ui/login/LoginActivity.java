@@ -30,6 +30,7 @@ import com.amazonaws.mobile.client.AWSMobileClient;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.localdogs.Cardstack;
+import com.example.localdogs.Loading;
 import com.example.localdogs.R;
 import com.example.localdogs.RegistrationPage;
 import com.example.localdogs.TermsOfUse;
@@ -65,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //This works :))))))))))) -- this should actually work now
+
 
         if (Authentication.getInstance(getApplicationContext()).isSessionGood()) {
             Log.i("If statement test", "We got in boyz");
@@ -278,13 +280,18 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void authenticateUser(EditText email, EditText password, View v) {
         //*****************loading wheel stuff**********************************
+        Loading l = new Loading();
+        ProgressDialog p = l.showProgressDialog(LoginActivity.this);
+        //Loading l = new Loading.showProgressDialog(LoginActivity.this);
+
+        /*
         ProgressDialog nDialog;
         nDialog = new ProgressDialog(LoginActivity.this);
         nDialog.setMessage("Loading..");
         nDialog.setTitle("Please Wait");
         nDialog.setIndeterminate(false);
         nDialog.setCancelable(true);
-        nDialog.show();
+        nDialog.show();*/
 
         Authentication.getInstance(getApplicationContext()).signInUser(email.getText().toString(), password.getText().toString(), (success) -> {
             Log.i("Success Login", "Woohoo!");
@@ -293,7 +300,7 @@ public class LoginActivity extends AppCompatActivity {
                         Log.i("Retrieve User Test", retrieveUserSuccess.toString());
                         ThreadSafeToast.makeText(getApplicationContext(), "Login succeeded!", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(v.getContext(), Cardstack.class);
-                        nDialog.dismiss();
+                        Loading.hideProgressDialog(p);
                         startActivity(intent);
                         //If there is a valid login after pressing keyboard enter key. End activity
                         finish();
@@ -305,7 +312,8 @@ public class LoginActivity extends AppCompatActivity {
         },(error) -> {
             //user doesn't exist database/incognito pool, entered wrong password
             ThreadSafeToast.makeText(getApplicationContext(), "Login failed!", Toast.LENGTH_SHORT).show();
-            nDialog.dismiss();
+            //nDialog.dismiss();
+            Loading.hideProgressDialog(p);
         });
     }
 

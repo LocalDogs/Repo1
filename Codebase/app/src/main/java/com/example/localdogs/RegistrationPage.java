@@ -203,13 +203,17 @@ public class RegistrationPage extends AppCompatActivity {
 
         Button regButton = findViewById(R.id.registerButton);
         final View t = view;
+
+        Loading l = new Loading();
+        ProgressDialog p = l.showProgressDialog(RegistrationPage.this);
+        /*
         ProgressDialog nDialog;
         nDialog = new ProgressDialog(RegistrationPage.this);
         nDialog.setMessage("Loading..");
         nDialog.setTitle("Please Wait");
         nDialog.setIndeterminate(false);
         nDialog.setCancelable(true);
-        nDialog.show();
+        nDialog.show();*/
 
         if (checkBoxes()) {
             //Intent returnIntent = new Intent();
@@ -221,12 +225,14 @@ public class RegistrationPage extends AppCompatActivity {
                         //go to cardstack; successful
                         Log.i("Success Registration", "Woohoo!");
                         Intent intent = new Intent(t.getContext(), Cardstack.class);
-                        nDialog.dismiss();
+                        //nDialog.dismiss();
+                        Loading.hideProgressDialog(p);
                         startActivity(intent);
                         finish();
             },
             (error) -> {
-                nDialog.dismiss();
+                //nDialog.dismiss();
+                Loading.hideProgressDialog(p);
                 //duplicate email
                 Log.e("Auth", error.getMessage());
                 ThreadSafeToast.makeText(getApplicationContext(), "Email Already Exists!", Toast.LENGTH_SHORT).show();
@@ -236,7 +242,8 @@ public class RegistrationPage extends AppCompatActivity {
             //finish();
         }
         else {
-            nDialog.dismiss();
+            //nDialog.dismiss();
+            Loading.hideProgressDialog(p);
             Toast.makeText(getApplicationContext(), "Error with registration", Toast.LENGTH_SHORT).show();
         }
     }
