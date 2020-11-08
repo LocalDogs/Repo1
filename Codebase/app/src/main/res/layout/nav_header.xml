@@ -9,9 +9,9 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher_round"/>
+        android:layout_width="104dp"
+        android:layout_height="77dp"
+        android:src="@drawable/local_dogs_logo" />
 
     <TextView
         android:layout_width="wrap_content"

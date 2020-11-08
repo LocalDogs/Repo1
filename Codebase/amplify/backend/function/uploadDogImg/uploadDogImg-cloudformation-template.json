@@ -33,12 +33,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "uploadUser",
+            "uploadDogImg",
             {
               "Fn::Join": [
                 "",
                 [
-                  "uploadUser",
+                  "uploadDogImg",
                   "-",
                   {
                     "Ref": "env"
@@ -65,13 +65,11 @@
           ]
         },
         "Runtime": "nodejs12.x",
-        "Layers": [
-          "arn:aws:lambda:us-east-2:451994763983:layer:localdoglayer:12"
-        ],
+        "Layers": [],
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-localdogs-dev-234609-deployment",
-          "S3Key": "amplify-builds/uploadUser-386b736f4d3849503373-build.zip"
+          "S3Key": "amplify-builds/uploadDogImg-72564e2b51774d6f3174-build.zip"
         }
       }
     },
@@ -81,12 +79,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "localdogsLambdaRole10ca0c0f",
+            "localdogsLambdaRole54d425b0",
             {
               "Fn::Join": [
                 "",
                 [
-                  "localdogsLambdaRole10ca0c0f",
+                  "localdogsLambdaRole54d425b0",
                   "-",
                   {
                     "Ref": "env"
