@@ -62,7 +62,7 @@ public class Authentication {
 
     public void signOutUser(Action onSuccess, Consumer<AuthException> onFailure){
         Amplify.Auth.signOut(() -> {
-
+            Authentication.getInstance(context).updateAuthenticatedStatus(false);
             // if user signs out, i think we hold onto the CurrentSession instance
             // if a new user signs in, it will be replaced with the new user's session
             // if the same user logs in, then we're good
