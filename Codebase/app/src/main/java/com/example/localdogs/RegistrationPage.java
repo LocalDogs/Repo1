@@ -49,8 +49,10 @@ public class RegistrationPage extends AppCompatActivity {
     public final int LAUNCH_TERMS_ACTIVITY = 1;
     public static final int MULTIPLE_PERMISSIONS = 10;
     private ImageView imageView;
+    boolean flag = false;
 
     String[] permissions = new String[] {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_FINE_LOCATION,
     };
@@ -122,7 +124,7 @@ public class RegistrationPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_page);
 
-        //*********begin stuff********************************
+        //*********begin picture stuff********************************
 
         //for getting user permission
         if(checkPermissions()) {
@@ -138,7 +140,8 @@ public class RegistrationPage extends AppCompatActivity {
 
             }
         });
-        //***********end pic stuff
+
+        //***********end picture stuff****************
 
 
 
@@ -224,6 +227,7 @@ public class RegistrationPage extends AppCompatActivity {
     //************PICTURE STUFF*********************
 
     private void selectImage(Context context) {
+
         final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -247,21 +251,30 @@ public class RegistrationPage extends AppCompatActivity {
                 }
             }
         });
+
         builder.show();
     }
+
+    /*
+     *TODO: Find a way to make Choosing a Photo From Gallery display properly on a physical Android device
+     *
+     */
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_CANCELED) {
             switch (requestCode) {
+                //Take Picture
                 case 0:
                     if (resultCode == RESULT_OK && data != null) {
                         Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
                         imageView.setImageBitmap(selectedImage);
+                        //flag is set to true, we have gotten the image via taking a picture, so now the user can complete registration once the other fields are complete
+                        flag = true;
                     }
-
                     break;
+                    //Choose From Gallery
                 case 1:
                     if (resultCode == RESULT_OK && data != null) {
                         Uri selectedImage = data.getData();
@@ -276,6 +289,8 @@ public class RegistrationPage extends AppCompatActivity {
                                 String picturePath = cursor.getString(columnIndex);
                                 imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
                                 cursor.close();
+                                //flag is set to true, we have gotten the image via gallery, so now the user can complete registration once the other fields are complete
+                                flag = true;
                             }
                         }
 
@@ -284,6 +299,7 @@ public class RegistrationPage extends AppCompatActivity {
             }
         }
     }
+
 
     //************END PICTURE STUFF
 
@@ -371,7 +387,7 @@ public class RegistrationPage extends AppCompatActivity {
         nDialog.setCancelable(true);
         nDialog.show();*/
 
-        if (checkBoxes()) {
+        if (checkBoxes() && flag == true) {
             //Intent returnIntent = new Intent();
             //setResult(Activity.RESULT_OK, returnIntent);
             // changes here
