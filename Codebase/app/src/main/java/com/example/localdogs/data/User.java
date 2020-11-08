@@ -31,23 +31,26 @@ public class User {
         this.lastname = lastname;
         this.email = email;
         this.dateofbirth = dateofbirth;
+        this.id = id;
         ArrayList<String> breedList = new ArrayList<String>();
         breedList.add("pickle");
         breedList.add("rick");
         ArrayList<Dog> dogList = new ArrayList<Dog>();
-        dogList.add(new Dog(email, "Cheerios", breedList, new dob(8,12,2014), 50, 2));
+        dogList.add(new Dog(email, "Cheerios", breedList, new dob(8,12,2014), 30, 2));
         this.dogs = dogList;
     }
+
     public User(String firstname, String lastname, String email, String dateofbirth){
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.dateofbirth = dateofbirth;
+        this.id = "";
         ArrayList<String> breedList = new ArrayList<String>();
         breedList.add("pickle");
         breedList.add("rick");
         ArrayList<Dog> dogList = new ArrayList<Dog>();
-        dogList.add(new Dog(email, "Cheerios", breedList, new dob(8,12,2014), 50, 2));
+        dogList.add(new Dog(email, "Cheerios", breedList, new dob(8,12,2014), 30, 2));
         this.dogs = dogList;
     }
 
@@ -134,6 +137,7 @@ public class User {
                 TODO:
                     uncomment out the following code when temporary constructor is removed
             */
+
             for(int i = 0; i < jsonUser.getJSONArray("dogs").length(); i++){
                 Dog dog = Dog.toDog(jsonUser.getJSONArray("dogs").getJSONObject(i));
                 dogs.add(dog);

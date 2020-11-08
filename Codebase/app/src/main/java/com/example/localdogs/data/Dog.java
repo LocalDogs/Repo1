@@ -40,6 +40,7 @@ public class Dog {
     public void setImgUrl(String imgurl){
         this.imgurl = imgurl;
     }
+
     public String getImgUrl(){
         return this.imgurl;
     }
@@ -83,6 +84,10 @@ public class Dog {
 
     public ArrayList<String> getBreeds() { return this.breeds; }
 
+    public dob getDOB(){
+        return age;
+    }
+
     public String getBreedsAsString() {
         String b = "";
         if(this.isMixed()) {
@@ -117,7 +122,7 @@ public class Dog {
 
             jsonUser.put("owner", getOwner());
             jsonUser.put("name", getName());
-            jsonUser.put("age", getAge());
+            jsonUser.put("age", getDOB().toString());
             jsonUser.put("activityLevel",getActivityLevel()); // temporary
             for(String breed : breeds){
 
@@ -151,7 +156,7 @@ public class Dog {
                             jsonDog.getString("name"),
                             breedsList,
                             //we're storing age as a DOB object, not an int
-                            new dob(1,1,2020),
+                            new dob(jsonDog.getString("age")),
                             jsonDog.getInt("weight"),
                             jsonDog.getInt("activityLevel"),
                             "https://i.imgur.com/2L7hOiz.jpg"
