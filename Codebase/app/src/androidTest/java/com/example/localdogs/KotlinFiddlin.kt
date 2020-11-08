@@ -34,5 +34,23 @@ class KotlinFiddlin {
         synchronized(obj){
             obj.wait()
         }
+        Authentication.getInstance(appContext).signOutUser({
+            run {
+                Log.i("Auth", "this lambda is not passed a parameter")
+                synchronized(obj) {
+                    obj.notifyAll()
+                }
+            }
+        }, { error ->
+            run {
+                Log.e("Auth", error.recoverySuggestion)
+                synchronized(obj) {
+                    obj.notifyAll()
+                }
+            }
+        })
+        synchronized(obj){
+            obj.wait()
+        }
     }
 }
