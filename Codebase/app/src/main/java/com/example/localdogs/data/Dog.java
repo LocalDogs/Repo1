@@ -150,7 +150,7 @@ public class Dog {
                             jsonDog.getString("owner"),
                             jsonDog.getString("name"),
                             breedsList,
-                            //jsonDog.getInt("age"), we're storing age as a DOB object, not an int
+                            //we're storing age as a DOB object, not an int
                             new dob(1,1,2020),
                             jsonDog.getInt("weight"),
                             jsonDog.getInt("activityLevel"),

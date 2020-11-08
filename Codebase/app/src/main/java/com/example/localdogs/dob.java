@@ -15,6 +15,11 @@ public class dob {
         this.day = day;
         this.year = year;
     }
+
+    public dob(String dateString){
+
+    }
+
     public int getAgeYears(){
         java.util.Date date = new Date();
         Calendar cal = Calendar.getInstance();

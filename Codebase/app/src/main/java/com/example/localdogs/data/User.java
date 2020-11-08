@@ -19,12 +19,25 @@ public class User {
     private String lastname;
     private String email;
     private String dateofbirth;
+    private String id;
     private ArrayList<Dog> dogs;
     /*
     TODO:
         Update constructor calls in rest of code after sprint 1 presentation
         for now, going to just overload the constructor for compatability
      */
+    public User(String firstname, String lastname, String email, String dateofbirth, String id){
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.dateofbirth = dateofbirth;
+        ArrayList<String> breedList = new ArrayList<String>();
+        breedList.add("pickle");
+        breedList.add("rick");
+        ArrayList<Dog> dogList = new ArrayList<Dog>();
+        dogList.add(new Dog(email, "Cheerios", breedList, new dob(8,12,2014), 50, 2));
+        this.dogs = dogList;
+    }
     public User(String firstname, String lastname, String email, String dateofbirth){
         this.firstname = firstname;
         this.lastname = lastname;
@@ -38,7 +51,7 @@ public class User {
         this.dogs = dogList;
     }
 
-    public User(String firstname, String lastname, String email, String dateofbirth, ArrayList<Dog> dogs){
+    public User(String firstname, String lastname, String email, String dateofbirth, ArrayList<Dog> dogs, String id){
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
@@ -60,6 +73,14 @@ public class User {
 
     public void setEmail(String email){
         this.email = email;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getFirstname(){
@@ -113,17 +134,19 @@ public class User {
                 TODO:
                     uncomment out the following code when temporary constructor is removed
             */
-            /*for(int i = 0; i < jsonUser.getJSONArray("dogs").length(); i++){
+            for(int i = 0; i < jsonUser.getJSONArray("dogs").length(); i++){
                 Dog dog = Dog.toDog(jsonUser.getJSONArray("dogs").getJSONObject(i));
                 dogs.add(dog);
-            }*/
+            }
             user = new User
                     (
                             jsonUser.getString("firstname"),
                             jsonUser.getString("lastname"),
                             jsonUser.getString("email"),
-                            jsonUser.getString("dateofbirth")
-                            //dogs
+                            jsonUser.getString("dateofbirth"),
+                            dogs,
+                            jsonUser.getString("_id")
+
             );
 
         } catch (JSONException e) {

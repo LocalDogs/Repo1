@@ -16,6 +16,7 @@ import com.amplifyframework.core.Amplify;
 import com.amplifyframework.core.InitializationStatus;
 import com.amplifyframework.hub.HubChannel;
 import com.amplifyframework.rx.RxAmplify;
+import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
 import com.example.localdogs.data.User;
 
 public class AmplifyHub {
@@ -27,6 +28,7 @@ public class AmplifyHub {
         this.context = context;
         try {
             subscribeToHub();
+            Amplify.addPlugin(new AWSS3StoragePlugin());
             Amplify.addPlugin(new AWSApiPlugin());
             Amplify.addPlugin(new AWSCognitoAuthPlugin());
             Amplify.configure(context);
