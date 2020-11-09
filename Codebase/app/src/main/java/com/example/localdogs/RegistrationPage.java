@@ -1,7 +1,17 @@
 package com.example.localdogs;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.android.volley.Response;
@@ -13,7 +23,10 @@ import com.example.localdogs.ui.ThreadSafeToast;
 import com.example.localdogs.ui.login.LoginActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -21,15 +34,28 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
 import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.*;
 
 public class RegistrationPage extends AppCompatActivity {
     public final int LAUNCH_TERMS_ACTIVITY = 1;
+    public static final int MULTIPLE_PERMISSIONS = 10;
+    private ImageView imageView;
+    boolean flag = false;
+
+    String[] permissions = new String[] {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+    };
 
     EditText firstNameField;
     EditText lastNameField;
@@ -97,6 +123,28 @@ public class RegistrationPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_page);
+
+        //*********begin picture stuff********************************
+
+        //for getting user permission
+        if(checkPermissions()) {
+            //permission granted
+        }
+
+        imageView = (ImageView) findViewById(R.id.my_avatar);
+        final Button uploadDogPictureButton = findViewById(R.id.uploadPictureButton);
+        uploadDogPictureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectImage(RegistrationPage.this);
+
+            }
+        });
+
+        //***********end picture stuff****************
+
+
+
         textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -133,6 +181,130 @@ public class RegistrationPage extends AppCompatActivity {
         });
 
     }
+
+    //**************************BEGIN CHECK PERMISSIONS*******************************
+
+    private boolean checkPermissions() {
+        int result;
+        List<String> listPermissionsNeeded = new ArrayList<>();
+        for (String p:permissions) {
+            result = ContextCompat.checkSelfPermission(RegistrationPage.this, p); //********
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                listPermissionsNeeded.add(p);
+            }
+        }
+        if (!listPermissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), MULTIPLE_PERMISSIONS);
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissionsList[], int[] grantResults) {
+        switch (requestCode) {
+            case MULTIPLE_PERMISSIONS: {
+                if (grantResults.length > 0) {
+                    String permissionsDenied = "";
+                    for (String per : permissionsList) {
+                        if (grantResults[0] == PackageManager.PERMISSION_DENIED || grantResults[1] == PackageManager.PERMISSION_DENIED) {
+                            permissionsDenied += "\n" + per;
+                            Intent intent = new Intent(getApplicationContext(), TermsOfUse.class);
+                            startActivity(intent);
+                            finish();
+                            ThreadSafeToast.makeText(getApplicationContext(), "Permission Denied. Reset app preferences in settings.", Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+                    //Show Permission Denied
+
+                }
+                return;
+            }
+        }
+    }
+
+    //************PICTURE STUFF*********************
+
+    private void selectImage(Context context) {
+
+        final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Choose your profile picture");
+
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+
+                if (options[item].equals("Take Photo")) {
+                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(takePicture, 0);
+
+                } else if (options[item].equals("Choose from Gallery")) {
+                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(pickPhoto , 1);
+
+                } else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        builder.show();
+    }
+
+    /*
+     *TODO: Find a way to make Choosing a Photo From Gallery display properly on a physical Android device
+     *
+     */
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_CANCELED) {
+            switch (requestCode) {
+                //Take Picture
+                case 0:
+                    if (resultCode == RESULT_OK && data != null) {
+                        Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
+                        imageView.setImageBitmap(selectedImage);
+                        //flag is set to true, we have gotten the image via taking a picture, so now the user can complete registration once the other fields are complete
+                        flag = true;
+                    }
+                    break;
+                    //Choose From Gallery
+                case 1:
+                    if (resultCode == RESULT_OK && data != null) {
+                        Uri selectedImage = data.getData();
+                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                        if (selectedImage != null) {
+                            Cursor cursor = getContentResolver().query(selectedImage,
+                                    filePathColumn, null, null, null);
+                            if (cursor != null) {
+                                cursor.moveToFirst();
+
+                                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                                String picturePath = cursor.getString(columnIndex);
+                                imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                                cursor.close();
+                                //flag is set to true, we have gotten the image via gallery, so now the user can complete registration once the other fields are complete
+                                flag = true;
+                            }
+                        }
+
+                    }
+                    break;
+            }
+        }
+    }
+
+
+    //************END PICTURE STUFF
+
+
+    //***************************************************
 
     private boolean checkBoxes() {
         boolean retval = true;
@@ -203,15 +375,19 @@ public class RegistrationPage extends AppCompatActivity {
 
         Button regButton = findViewById(R.id.registerButton);
         final View t = view;
+
+        Loading l = new Loading();
+        ProgressDialog p = l.showProgressDialog(RegistrationPage.this);
+        /*
         ProgressDialog nDialog;
         nDialog = new ProgressDialog(RegistrationPage.this);
         nDialog.setMessage("Loading..");
         nDialog.setTitle("Please Wait");
         nDialog.setIndeterminate(false);
         nDialog.setCancelable(true);
-        nDialog.show();
+        nDialog.show();*/
 
-        if (checkBoxes()) {
+        if (checkBoxes() && flag == true) {
             //Intent returnIntent = new Intent();
             //setResult(Activity.RESULT_OK, returnIntent);
             // changes here
@@ -221,12 +397,14 @@ public class RegistrationPage extends AppCompatActivity {
                         //go to cardstack; successful
                         Log.i("Success Registration", "Woohoo!");
                         Intent intent = new Intent(t.getContext(), Cardstack.class);
-                        nDialog.dismiss();
+                        //nDialog.dismiss();
+                        Loading.hideProgressDialog(p);
                         startActivity(intent);
                         finish();
             },
             (error) -> {
-                nDialog.dismiss();
+                //nDialog.dismiss();
+                Loading.hideProgressDialog(p);
                 //duplicate email
                 Log.e("Auth", error.getMessage());
                 ThreadSafeToast.makeText(getApplicationContext(), "Email Already Exists!", Toast.LENGTH_SHORT).show();
@@ -236,7 +414,8 @@ public class RegistrationPage extends AppCompatActivity {
             //finish();
         }
         else {
-            nDialog.dismiss();
+            //nDialog.dismiss();
+            Loading.hideProgressDialog(p);
             Toast.makeText(getApplicationContext(), "Error with registration", Toast.LENGTH_SHORT).show();
         }
     }

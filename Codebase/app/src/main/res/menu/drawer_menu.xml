@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_matches"
+            android:icon="@drawable/ic_match"
+            android:title="Matches"/>
+        <item android:id="@+id/nav_filter"
+            android:icon="@drawable/ic_filter"
+            android:title="Dog Filter Settings"/>
+        <item android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="User Settings"/>
+        <item android:id="@+id/nav_map"
+            android:icon="@drawable/ic_map"
+            android:title="Map"/>
+        <item android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_power"
+            android:title="Logout"/>
+    </group>
+
+</menu>

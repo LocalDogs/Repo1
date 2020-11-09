@@ -2,7 +2,7 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".RegistrationPage"
@@ -180,7 +180,7 @@
             android:layout_marginRight="8dp"
             android:ems="10"
             android:hint="Dog date of birth (MM/DD/YYYY)"
-            android:inputType="date"
+            android:inputType="textPersonName"
             app:layout_constraintEnd_toStartOf="@+id/vaccinatedCheckBox"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -204,6 +204,34 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dogDobEditText" />
 
+        <ImageView
+            android:id="@+id/my_avatar"
+            android:src="@drawable/placeholder"
+            android:layout_width="181dp"
+            android:layout_height="185dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
+            app:layout_collapseParallaxMultiplier="0.7"
+            app:layout_constraintBottom_toTopOf="@+id/uploadPictureButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/weightDogEditText" />
+
+        <Button
+            android:id="@+id/uploadPictureButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="161dp"
+            android:layout_marginLeft="161dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="162dp"
+            android:layout_marginRight="162dp"
+            android:text="Upload Dog Picture"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/my_avatar" />
+
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
@@ -214,7 +242,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/weightDogEditText" />
+            app:layout_constraintTop_toBottomOf="@+id/uploadPictureButton" />
 
         <RatingBar
             android:id="@+id/energyRatingBar"
@@ -236,6 +264,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="39dp"
             android:layout_marginRight="39dp"
+            android:layout_marginBottom="24dp"
             android:onClick="register"
             android:text="Register!"
             android:textColor="#FFFFFF"
@@ -253,6 +282,7 @@
             android:layout_marginStart="39dp"
             android:layout_marginLeft="39dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
             android:text="Go Back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/registerButton"

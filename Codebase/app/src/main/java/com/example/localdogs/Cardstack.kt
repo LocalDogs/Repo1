@@ -9,25 +9,30 @@ package com.example.localdogs
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
-import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DiffUtil
-import com.example.localdogs.DogFilter.DogFilter
 import com.example.localdogs.DogFilter.DogFilterActivity
+import com.example.localdogs.data.awsinterface.Authentication
 import com.example.localdogs.ui.CardStackAdapter
+import com.example.localdogs.ui.ThreadSafeToast
+import com.example.localdogs.ui.login.LoginActivity
+import com.google.android.material.navigation.NavigationView
 import com.yuyakaido.android.cardstackview.*
 
+
 //class MainActivity : AppCompatActivity(), CardStackListener {
-class Cardstack : AppCompatActivity(), CardStackListener {
+class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavigationItemSelectedListener {
 
     private val drawerLayout by lazy { findViewById<DrawerLayout>(R.id.drawer_layout) }
     private val cardStackView by lazy { findViewById<CardStackView>(R.id.card_stack_view) }
@@ -40,6 +45,75 @@ class Cardstack : AppCompatActivity(), CardStackListener {
         setupNavigation()
         setupCardStackView()
         setupButton()
+
+        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        val navigationView = findViewById<NavigationView>(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        /*
+        when(item.itemId) {
+            R.id.nav_usersettings -> supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
+            FragmentUserSettings()).commit();
+        }
+        */
+        var id = item.itemId;
+        if (id == R.id.nav_matches) {
+            /*
+            * TODO: When Jackson finishes working on Matches page, fix it, because it crashes when loading the activity
+            *  For now, the click will do nothing, to prevent crashing
+             */
+            //val cinemaIntent = Intent(this, Matches::class.java)
+            //startActivity(cinemaIntent)
+        }
+        else if (id == R.id.nav_settings) {
+            val cinemaIntent = Intent(this, UserSettings::class.java)
+            startActivity(cinemaIntent)
+        }
+        else if (id == R.id.nav_filter) {
+            val cinemaIntent = Intent(this, DogFilterActivity::class.java)
+            startActivity(cinemaIntent)
+        }
+        else if (id == R.id.nav_map) {
+            val cinemaIntent = Intent(this, MapsActivity::class.java)
+            startActivity(cinemaIntent)
+        }
+        else if (id == R.id.nav_logout) {
+
+            //*****NEEDS A WAY TO LOG OUT PROPERLY
+            Authentication.getInstance(applicationContext).signOutUser({
+                run {
+                    val cinemaIntent = Intent(this, LoginActivity::class.java)
+                    startActivity(cinemaIntent)
+                    Log.i("Auth", "this lambda is not passed a parameter")
+                    ThreadSafeToast.makeText(applicationContext, "Logout succeeded!", Toast.LENGTH_SHORT).show()
+                    //If there is a valid login after pressing keyboard enter key. End activity
+                    finish();
+                }
+            }, { error ->
+                run {
+                    val cinemaIntent = Intent(this, LoginActivity::class.java)
+                    startActivity(cinemaIntent)
+                    Log.e("Auth", error.recoverySuggestion)
+                    ThreadSafeToast.makeText(applicationContext, "Logout succeeded!", Toast.LENGTH_SHORT).show()
+                    finish();
+                }
+            })
+
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     override fun onBackPressed() {
@@ -179,7 +253,7 @@ class Cardstack : AppCompatActivity(), CardStackListener {
 
     private fun paginate() {
         loadDefaultCards()
-        addNewSpot(Spot("Charles","Good Boy","https://preview.redd.it/mo3qwb4xjtw51.jpg"))
+        addNewSpot(Spot("Charles", "Good Boy", "https://preview.redd.it/mo3qwb4xjtw51.jpg"))
     }
     private fun addNewSpot(spot: Spot){
         val old = adapter.getSpots()
@@ -193,6 +267,7 @@ class Cardstack : AppCompatActivity(), CardStackListener {
         result.dispatchUpdatesTo(adapter)
     }
 
+    /*
     fun settingsClick(view: View) {
         val intent = Intent(this, UserSettings::class.java)
         startActivity(intent)
@@ -200,7 +275,7 @@ class Cardstack : AppCompatActivity(), CardStackListener {
     fun filterClick(view: View) {
         val intent = Intent(this, DogFilterActivity::class.java)
         startActivity(intent)
-    }
+    }*/
 
     private fun addFirst(size: Int) {
         val old = adapter.getSpots()
