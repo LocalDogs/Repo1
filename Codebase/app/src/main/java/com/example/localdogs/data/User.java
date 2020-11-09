@@ -122,7 +122,7 @@ public class User implements Cloneable{
                 Dog tempDog = (Dog) dog.getValue();
                 dogList.put(tempDog.toJSONObject());
             }
-            jsonUser.put("_id", getId());
+            //jsonUser.put("_id", getId());
             jsonUser.put("firstname", getFirstname());
             jsonUser.put("lastname", getLastname());
             jsonUser.put("email", getEmail());

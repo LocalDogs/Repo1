@@ -47,6 +47,7 @@ public class Requests {
         Amplify.API.post(options, (success) -> {
             // do some stuff?
             Log.i("postData", "calling onSuccess callback");
+            Log.i("postData", success.toString());
             onSuccess.accept(success);
             }, (error) -> {
                 // do some stuff?

@@ -121,7 +121,7 @@ public class Authentication {
 
                         Log.e("registerUser", "Automatically loggin in user failed", error.getCause());
 
-                    });
+                        });
                     }, (error) -> {
                         // bad query, email already exists
                         Log.e("RegisterUser", error.getMessage(), error.getCause());
