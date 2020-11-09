@@ -98,31 +98,30 @@ public class Authentication {
                     Amplify.Auth.signIn(email, password, success -> {
 
                         Log.i("registerUser", "Automatically logging user in after registration");
+                        Log.i("UserRegistered", "Attempting to upload new user to database");
+                        ur.uploadUserInfo(userData.toJSONObject(), (uploadUserSuccess) -> {
+
+                            Log.i("RegisterUser", "uploading new user to db");
+                            JSONObject responseToCaller = null;
+                            try {
+
+                                responseToCaller = uploadUserSuccess.getData().asJSONObject();
+                                responseToCaller.put("NextStep", response.getNextStep());
+                                userData.setId(responseToCaller.getString("userid"));
+                                Authentication.getInstance(context).getCurrentSession().updateCurrentSessionUser(userData);
+
+                            } catch (JSONException e) {
+
+                                throw new AssertionError("This literally should never be an issue, but here we are");
+
+                            }
+                            onSuccess.accept(responseToCaller);
 
                     }, error -> {
 
                         Log.e("registerUser", "Automatically loggin in user failed", error.getCause());
 
                     });
-
-                    Log.i("UserRegistered", "Attempting to upload new user to database");
-                    ur.uploadUserInfo(userData.toJSONObject(), (success) -> {
-
-                        Log.i("RegisterUser", "uploading new user to db");
-                        JSONObject responseToCaller = null;
-                        try {
-
-                            responseToCaller = success.getData().asJSONObject();
-                            responseToCaller.put("NextStep", response.getNextStep());
-                            userData.setId(responseToCaller.getString("userid"));
-                            Authentication.getInstance(context).getCurrentSession().updateCurrentSessionUser(userData);
-
-                        } catch (JSONException e) {
-
-                            throw new AssertionError("This literally should never be an issue, but here we are");
-
-                        }
-                        onSuccess.accept(responseToCaller);
                     }, (error) -> {
                         // bad query, email already exists
                         Log.e("RegisterUser", error.getMessage(), error.getCause());

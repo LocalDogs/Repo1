@@ -105,7 +105,7 @@ public class User implements Cloneable{
     public HashMap<String, Dog> getDogs(){ return this.dogs; }
 
     public String getDogImageStorageKey(String dogName){
-        return "public/" + getId() + "/" + dogName;
+        return getId() + "/" + dogName;
     }
 
     /**

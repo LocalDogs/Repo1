@@ -58,7 +58,7 @@ public abstract class Image {
     private static StorageUploadFileOptions publicFileOptions(){
         StorageUploadFileOptions options = StorageUploadFileOptions
                 .builder()
-                .accessLevel(StorageAccessLevel.PROTECTED)
+                .accessLevel(StorageAccessLevel.PUBLIC)
                 .build();
         return options;
     }
