@@ -19,7 +19,8 @@
         "retrieveUser": {},
         "uploadUser": {},
         "updateUser": {},
-        "retrieveDog": {}
+        "retrieveDog": {},
+        "localdogsdeecd585PreSignup": {}
       }
     }
   }

@@ -9,6 +9,18 @@ Parameters:
     Type: String
   
   
+  
+  
+  functionlocaldogsdeecd585PreSignupArn: 
+    Type: String
+    Default: functionlocaldogsdeecd585PreSignupArn
+  
+  functionlocaldogsdeecd585PreSignupName: 
+    Type: String
+    Default: functionlocaldogsdeecd585PreSignupName
+  
+  
+  
 
     
   identityPoolName:
@@ -58,10 +70,10 @@ Parameters:
         
   userpoolClientGenerateSecret:
     Type: String
-                
+            
   userpoolClientRefreshTokenValidity:
-    Type: Number
-                  
+    Type: String
+                      
   userpoolClientWriteAttributes:
     Type: CommaDelimitedList
               
@@ -106,7 +118,19 @@ Parameters:
               
   dependsOn:
     Type: CommaDelimitedList
-    
+        
+  thirdPartyAuth:
+    Type: String
+              
+  userPoolGroups:
+    Type: String
+              
+  adminQueries:
+    Type: String
+              
+  hostedUI:
+    Type: String
+                      
 Conditions:
   ShouldNotCreateEnvResources: !Equals [ !Ref env, NONE ]
 
@@ -160,6 +184,19 @@ Resources:
         
       
       
+      LambdaConfig:
+        
+        
+        
+        
+        
+        
+        
+          PreSignUp: !Ref functionlocaldogsdeecd585PreSignupArn
+        
+        
+        
+      
       
       AutoVerifiedAttributes: !Ref autoVerifiedAttributes
       
@@ -190,6 +227,15 @@ Resources:
     
     
   
+  
+  UserPoolPreSignupLambdaInvokePermission: 
+    Type: "AWS::Lambda::Permission"
+    DependsOn: UserPool
+    Properties: 
+      Action: "lambda:invokeFunction"
+      Principal: "cognito-idp.amazonaws.com"
+      FunctionName: !Ref functionlocaldogsdeecd585PreSignupName
+      SourceArn: !GetAtt UserPool.Arn
   
    
     

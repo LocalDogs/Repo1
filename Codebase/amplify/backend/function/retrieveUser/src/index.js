@@ -40,27 +40,47 @@ exports.handler = (event, context, callback) => {
       var body = {};
 
       body.error = 'Could not query database';
-      body.message = 'Could not damage database';
+      body.message = 'Could not query database';
 
       callback(null, {
 
-      // error trying to query database after successfully establishing
-      // a connection
-      statusCode: err.statusCode || 500,
-      headers: {
+        // error trying to query database after successfully establishing
+        // a connection
+        statusCode: err.statusCode || 500,
+        headers: {
         
-        'Content-Type': 'application/json'
+          'Content-Type': 'application/json'
         
-      },
+        },
       
-      body: JSON.stringify(body)
+        body: JSON.stringify(body)
 
-    })});
+        })
+  });
   }).catch(err => {
     
     // error trying to connect to database
     // execute callback here at some point to
     // notify app of connection error
+    var body = {};
+
+      body.error = 'Could not query database';
+      body.message = 'Could not query database';
+
+    callback(null, {
+
+      // error trying to query database after successfully establishing
+      // a connection
+      statusCode: err.statusCode || 500,
+      headers: {
+      
+        'Content-Type': 'application/json'
+      
+      },
+    
+      body: JSON.stringify(body)
+
+      })
     console.log(err);
 
   });
