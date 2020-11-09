@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -18,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.localdogs.data.User;
 import com.example.localdogs.data.awsinterface.Authentication;
+import com.example.localdogs.data.awsinterface.Image;
 import com.example.localdogs.data.awsinterface.api.UserRequests;
 import com.example.localdogs.ui.ThreadSafeToast;
 import com.example.localdogs.ui.login.LoginActivity;
@@ -49,6 +51,7 @@ public class RegistrationPage extends AppCompatActivity {
     public final int LAUNCH_TERMS_ACTIVITY = 1;
     public static final int MULTIPLE_PERMISSIONS = 10;
     private ImageView imageView;
+    private Bitmap bitmapImage;
     boolean flag = false;
 
     String[] permissions = new String[] {
@@ -268,8 +271,19 @@ public class RegistrationPage extends AppCompatActivity {
                 //Take Picture
                 case 0:
                     if (resultCode == RESULT_OK && data != null) {
-                        Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
-                        imageView.setImageBitmap(selectedImage);
+                        bitmapImage = (Bitmap) data.getExtras().get("data");
+                        imageView.setImageBitmap(bitmapImage);
+                        try {
+                            Image.uploadImage(RegistrationPage.this, nameDogField.getText().toString(), bitmapImage, (success) ->{
+
+                                    },
+                                    (error) -> {
+
+                                    });
+                        } catch (Exception e){
+                            Log.i("Uh Oh", "I/O issues occurred :(");
+                        }
+
                         //flag is set to true, we have gotten the image via taking a picture, so now the user can complete registration once the other fields are complete
                         flag = true;
                     }
@@ -288,6 +302,8 @@ public class RegistrationPage extends AppCompatActivity {
                                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                                 String picturePath = cursor.getString(columnIndex);
                                 imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                                BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+                                bitmapImage = drawable.getBitmap();
                                 cursor.close();
                                 //flag is set to true, we have gotten the image via gallery, so now the user can complete registration once the other fields are complete
                                 flag = true;
@@ -392,15 +408,23 @@ public class RegistrationPage extends AppCompatActivity {
             //setResult(Activity.RESULT_OK, returnIntent);
             // changes here
             User stuff = new User(firstNameField.getText().toString(), lastNameField.getText().toString(), emailField.getText().toString(), dobField.getText().toString());
-            //UserRequests stuff2 = new UserRequests(getApplicationContext());
             Authentication.getInstance(getApplicationContext()).registerUser(stuff.getEmail(), passwordField.getText().toString(), stuff, (success) -> {
-                        //go to cardstack; successful
-                        Log.i("Success Registration", "Woohoo!");
-                        Intent intent = new Intent(t.getContext(), Cardstack.class);
-                        //nDialog.dismiss();
-                        Loading.hideProgressDialog(p);
-                        startActivity(intent);
-                        finish();
+                        try {
+                            Image.uploadImage(RegistrationPage.this, nameDogField.getText().toString(), bitmapImage, (success2) ->{
+                                        //go to cardstack; successful
+                                        Log.i("Success Registration", "Woohoo!");
+                                        Intent intent = new Intent(t.getContext(), Cardstack.class);
+                                        //nDialog.dismiss();
+                                        Loading.hideProgressDialog(p);
+                                        startActivity(intent);
+                                        finish();
+                                    },
+                                    (error) -> {
+
+                                    });
+                        } catch (Exception e){
+                            Log.i("Uh Oh", "I/O issues occurred :(");
+                        }
             },
             (error) -> {
                 //nDialog.dismiss();
