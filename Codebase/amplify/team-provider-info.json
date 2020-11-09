@@ -14,13 +14,6 @@
     "categories": {
       "auth": {
         "localdogsdeecd585": {}
-      },
-      "function": {
-        "retrieveUser": {},
-        "uploadUser": {},
-        "updateUser": {},
-        "retrieveDog": {},
-        "localdogsdeecd585PreSignup": {}
       }
     }
   }
