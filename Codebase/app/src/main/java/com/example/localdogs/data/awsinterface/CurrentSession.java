@@ -6,6 +6,7 @@ import com.example.localdogs.data.Dog;
 import com.example.localdogs.data.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 class CurrentSession {
     private static User currentSessionUser;
@@ -54,7 +55,7 @@ class CurrentSession {
         return currentSessionUser.getDateOfBirth();
     }
 
-    protected ArrayList<Dog> getCurrentSessionUserDogs(){
+    protected HashMap<String, Dog> getCurrentSessionUserDogs(){
         if(currentSessionUser == null) return null;
         return currentSessionUser.getDogs();
     }
@@ -62,6 +63,10 @@ class CurrentSession {
     protected String getCurrentSessionUserId(){
         if(currentSessionUser == null) return null;
         return currentSessionUser.getId();
+    }
+
+    protected User getCurrentSessionUser(){
+        return currentSessionUser;
     }
 
     protected synchronized void updateCurrentSessionUser(User user){

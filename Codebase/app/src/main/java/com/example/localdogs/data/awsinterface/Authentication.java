@@ -47,6 +47,13 @@ public class Authentication {
         isAuthenticated = bool;
     }
 
+    protected static synchronized Authentication getInstance() throws Exception {
+        if (instance == null){
+            throw new Exception("Authentication has not be initialized.");
+        }
+        return instance;
+    }
+
     public void signInUser(String email, String password, Consumer<AuthSignInResult> onSuccess, Consumer<AuthException> onFailure){
         Amplify.Auth.signIn(email, password, (success) -> {
 
@@ -190,9 +197,13 @@ public class Authentication {
         }*/
     }
 
-    public CurrentSession getCurrentSession(){
+    private CurrentSession getCurrentSession(){
         // this COULD be null, hopefully we can prevent that
         return currentSession;
+    }
+
+    public User getCurrentSessionUser(){
+        return currentSession.getCurrentSessionUser().getUserCopy();
     }
 
     private synchronized void loadCurrentSession(User user){

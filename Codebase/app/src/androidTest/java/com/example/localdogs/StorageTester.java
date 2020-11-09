@@ -6,6 +6,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.storage.StoragePlugin;
+import com.example.localdogs.data.User;
 import com.example.localdogs.data.awsinterface.AmplifyHub;
 import com.example.localdogs.data.awsinterface.Authentication;
 
@@ -25,7 +26,7 @@ public class StorageTester {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         AmplifyHub.launchAmplify(appContext);
         Authentication.getInstance(appContext).signInUser("rememberthis@remember.com", "remember!@#$1234", success -> {
-            File exampleFile = new File(appContext.getFilesDir(), "ExampleKey");
+            File exampleFile = new File(appContext.getFilesDir(), "someimage");
 
             try {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(exampleFile));
@@ -34,9 +35,9 @@ public class StorageTester {
             } catch (Exception exception) {
                 Log.e("MyAmplifyApp", "Upload failed", exception);
             }
-
+            //User user = Authentication.getInstance(appContext).get
             Amplify.Storage.uploadFile(
-                    "ExampleKey",
+                    "key",
                     exampleFile,
                     result -> {
 
