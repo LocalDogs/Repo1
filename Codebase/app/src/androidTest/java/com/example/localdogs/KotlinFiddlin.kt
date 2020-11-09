@@ -3,6 +3,7 @@ package com.example.localdogs
 import android.util.Log
 import androidx.test.platform.app.InstrumentationRegistry
 import com.amplifyframework.auth.result.AuthSignInResult
+import com.example.localdogs.data.User
 import com.example.localdogs.data.awsinterface.AmplifyHub
 import com.example.localdogs.data.awsinterface.Authentication
 import okhttp3.internal.notifyAll
@@ -15,40 +16,19 @@ class KotlinFiddlin {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         val obj = Object()
         AmplifyHub.launchAmplify(appContext)
-        Authentication.getInstance(appContext).signInUser("rememberthis@remember.com", "remember!@#$1234", { success ->
-            run {
-                Log.i("Auth", success.toString())
+        val newUser = User("Trevor", "Lockhart", "anotherone@anotherone.com", "01/01/2001")
 
-                synchronized(obj) {
-                    obj.notifyAll()
-                }
-
+        Authentication.getInstance(appContext).registerUser("anotherone@anotherone.com", "remember!@#$1234", newUser, {success -> run {
+            Log.i("Auth", "user registered and confirmed")
+            synchronized(obj){
+                obj.notify()
             }
-        }, { failure ->
-            run {
-            Log.e("Auth", failure.recoverySuggestion)
-            synchronized(obj) {
-                obj.notifyAll()
+        }}, {error -> run {
+            Log.e("Auth", "User failed to register", error)
+            synchronized(obj){
+                obj.notify()
             }
-        }})
-        synchronized(obj){
-            obj.wait()
-        }
-        Authentication.getInstance(appContext).signOutUser({
-            run {
-                Log.i("Auth", "this lambda is not passed a parameter")
-                synchronized(obj) {
-                    obj.notifyAll()
-                }
-            }
-        }, { error ->
-            run {
-                Log.e("Auth", error.recoverySuggestion)
-                synchronized(obj) {
-                    obj.notifyAll()
-                }
-            }
-        })
+        }} )
         synchronized(obj){
             obj.wait()
         }

@@ -64,7 +64,6 @@ public class StorageTester {
 
             }
         });
-
         synchronized (syncObject) {
 
             syncObject.wait();

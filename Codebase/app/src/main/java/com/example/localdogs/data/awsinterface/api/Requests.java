@@ -32,6 +32,7 @@ public class Requests {
     }
 
     public void postData(JSONObject data, String resource, Consumer<RestResponse> onSuccess, Consumer<ApiException> onFailure){
+        Log.i("postData", "sending data");
         byte[] bdata = new byte[0];
         try {
             bdata = data.toString().getBytes("UTF-8");
@@ -45,9 +46,11 @@ public class Requests {
                 .build();
         Amplify.API.post(options, (success) -> {
             // do some stuff?
+            Log.i("postData", "calling onSuccess callback");
             onSuccess.accept(success);
             }, (error) -> {
                 // do some stuff?
+                Log.e("postData", "calling onFailure callback");
                 onFailure.accept(error);
             });
     }

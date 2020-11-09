@@ -1,5 +1,7 @@
 package com.example.localdogs.data.awsinterface.api;
 
+import android.util.Log;
+
 import com.amplifyframework.api.ApiException;
 import com.amplifyframework.api.rest.RestResponse;
 import com.amplifyframework.core.Consumer;
@@ -29,6 +31,7 @@ public class UserRequests extends Requests {
     }
 
     public void uploadUserInfo(JSONObject newUser, Consumer<RestResponse>onSuccess, Consumer<ApiException> onFailure){
+        Log.i("uloadUserInfo", "sending data");
         super.postData(newUser, rsUploadUser, onSuccess, onFailure);
     }
 

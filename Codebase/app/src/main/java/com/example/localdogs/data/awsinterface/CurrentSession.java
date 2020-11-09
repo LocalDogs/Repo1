@@ -59,6 +59,11 @@ class CurrentSession {
         return currentSessionUser.getDogs();
     }
 
+    protected String getCurrentSessionUserId(){
+        if(currentSessionUser == null) return null;
+        return currentSessionUser.getId();
+    }
+
     protected synchronized void updateCurrentSessionUser(User user){
         currentSessionUser = user;
     }

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.UserState;
+import com.amazonaws.mobile.client.UserStateDetails;
 import com.amplifyframework.auth.AuthException;
 import com.amplifyframework.auth.AuthUserAttribute;
 import com.amplifyframework.auth.AuthUserAttributeKey;
@@ -48,6 +49,7 @@ public class Authentication {
 
     public void signInUser(String email, String password, Consumer<AuthSignInResult> onSuccess, Consumer<AuthException> onFailure){
         Amplify.Auth.signIn(email, password, (success) -> {
+
             UserRequests ur = new UserRequests();
             ur.retrieveUserInfo(email, (userProfile) -> {
 
@@ -84,32 +86,48 @@ public class Authentication {
                      **/
 
                     Log.i("Auth", response.toString());
-                    Log.i("UserRegistered", "Am i here");
                     UserRequests ur = new UserRequests();
                     updateCurrentSession(userData);
+                    Amplify.Auth.signIn(email, password, success -> {
+
+                        Log.i("registerUser", "Automatically logging user in after registration");
+
+                    }, error -> {
+
+                        Log.e("registerUser", "Automatically loggin in user failed", error.getCause());
+
+                    });
+
+                    Log.i("UserRegistered", "Attempting to upload new user to database");
                     ur.uploadUserInfo(userData.toJSONObject(), (success) -> {
+
                         Log.i("RegisterUser", "uploading new user to db");
+                        JSONObject responseToCaller = null;
                         try {
 
-                            JSONObject responseToCaller = success.getData().asJSONObject();
+                            responseToCaller = success.getData().asJSONObject();
                             responseToCaller.put("NextStep", response.getNextStep());
-                            onSuccess.accept(responseToCaller);
+                            userData.setId(responseToCaller.getString("userid"));
+                            Authentication.getInstance(context).getCurrentSession().updateCurrentSessionUser(userData);
 
                         } catch (JSONException e) {
 
                             throw new AssertionError("This literally should never be an issue, but here we are");
 
                         }
+                        onSuccess.accept(responseToCaller);
                     }, (error) -> {
-
+                        // bad query, email already exists
                         Log.e("RegisterUser", error.getMessage(), error.getCause());
+                        failure.accept(new AuthException(error.getMessage(), error.getCause(), error.getRecoverySuggestion()));
 
                     });
-
                 },
                 (err) -> {
+                    // registration error -- email already exists
                     // can put stuff here if needed before passed in callback
                     failure.accept(err);
+
                 });
     }
     public void checkInitAuth(){
@@ -119,22 +137,25 @@ public class Authentication {
          * THIS BLOCKS TILL RESULT IS RETURNED
          */
         // pretty sure this call blocks
-        UserState currentUserState = AWSMobileClient.getInstance().currentUserState().getUserState();
-        Log.i("checkInitAuth", AWSMobileClient.getInstance().currentUserState().getUserState().toString());
+        UserStateDetails currentUserState = AWSMobileClient.getInstance().currentUserState();
+        Log.i("checkInitAuth", currentUserState.getUserState().toString());
         // keep an eye on this, i think the 3rd and 4th cases will be true if the user is logged in
         // AND their credentials have expired, which is desired
-        switch(currentUserState){
+        switch(currentUserState.getUserState()){
+
             case GUEST:
             case SIGNED_OUT:
             case SIGNED_OUT_USER_POOLS_TOKENS_INVALID:
             case SIGNED_OUT_FEDERATED_TOKENS_INVALID:
                 updateAuthenticatedStatus(false);
+                Log.i("AuthStatus", currentUserState.toString());
                 break;
             case SIGNED_IN:
                 updateAuthenticatedStatus(true);
                 break;
             default:
                 break;
+
         }
         /*AWSCognitoAuthSession currentSession = (AWSCognitoAuthSession) RxAmplify.Auth.fetchAuthSession().blockingGet();
         switch (currentSession.getAWSCredentials().getType()){
