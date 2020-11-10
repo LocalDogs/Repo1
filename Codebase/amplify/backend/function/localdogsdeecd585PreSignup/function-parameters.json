@@ -1,0 +1,17 @@
+{
+  "trigger": true,
+  "modules": [
+    "custom"
+  ],
+  "parentResource": "localdogsdeecd585",
+  "functionName": "localdogsdeecd585PreSignup",
+  "resourceName": "localdogsdeecd585PreSignup",
+  "parentStack": "auth",
+  "triggerEnvs": "[]",
+  "triggerDir": "C:\\Users\\Trevor\\AppData\\Roaming\\npm\\node_modules\\@aws-amplify\\cli\\node_modules\\amplify-category-auth\\provider-utils\\awscloudformation\\triggers\\PreSignup",
+  "triggerTemplate": "PreSignup.json.ejs",
+  "roleName": "localdogsdeecd585PreSignup",
+  "skipEdit": true,
+  "enableCors": false,
+  "triggerEventPath": "PreSignup.event.json"
+}
