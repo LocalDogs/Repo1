@@ -265,7 +265,8 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
     }
 
     private fun paginate() {
-        loadDefaultCards()
+        //loadDefaultCards()
+        //fillAllDogs()
         //addNewSpot(Spot("Charles", "Good Boy", "https://preview.redd.it/mo3qwb4xjtw51.jpg"))
     }
     private fun addNewSpot(spot: Spot){
@@ -408,7 +409,7 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
         }
     }
 
-    private fun filterWeight(weight: Int, greaterThan: Boolean){
+    public fun filterWeight(weight: Int, greaterThan: Boolean){
         val old = adapter.getSpots()
         emptyOut()
         for(x in old){
