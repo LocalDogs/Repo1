@@ -34,7 +34,8 @@ public class Dog {
         this.age = age;
         this.weight = weight;
         this.activityLevel = activityLevel;
-        this.imgurl = owner + "/" + name + ".png";
+        int index = owner.indexOf("@");
+        this.imgurl = owner.substring(0, index) + "/" + name + ".png";
     }
 
     public void setImgUrl(String imgurl){
