@@ -1,5 +1,6 @@
 package com.example.localdogs.data.awsinterface.api.response;
 
+import com.example.localdogs.DogFilter.DogFilter;
 import com.example.localdogs.data.Dog;
 import com.example.localdogs.data.User;
 
@@ -16,6 +17,7 @@ public class DogFilterResult extends RequestResult{
 
     public DogFilterResult(byte[] rawResponse) {
         super(rawResponse);
+        users = new ArrayList<User>();
         query = "";
         try {
             JSONArray dogs = getResponseAsJSONObject().getJSONArray("dogs");

@@ -67,5 +67,6 @@ public class DogInitTest {
 
     @After
     public void tearDown() throws Exception {
+
     }
 }

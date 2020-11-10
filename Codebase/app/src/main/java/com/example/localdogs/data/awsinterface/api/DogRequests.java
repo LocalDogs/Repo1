@@ -32,7 +32,7 @@ public class DogRequests extends Requests {
     public void getData(Map<String, String> query, String resource, Consumer onSuccess, Consumer<ApiException> onFailure){
         RestOptions options = RestOptions.builder()
                 .addPath(resource)
-                .addQueryParameters(query)
+                //.addQueryParameters(query)
                 .build();
         Amplify.API.get(options, (success) -> {
             // do some stuff?
