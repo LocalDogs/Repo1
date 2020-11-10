@@ -27,6 +27,7 @@ import com.example.localdogs.data.Dog
 import com.example.localdogs.data.awsinterface.Authentication
 import com.example.localdogs.data.awsinterface.api.ApiResources
 import com.example.localdogs.data.awsinterface.api.DogRequests
+import com.example.localdogs.data.awsinterface.api.response.CardStackDogList
 import com.example.localdogs.data.awsinterface.api.response.DogFilterResult
 import com.example.localdogs.ui.CardStackAdapter
 import com.example.localdogs.ui.ThreadSafeToast
@@ -42,7 +43,7 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
     private val cardStackView by lazy { findViewById<CardStackView>(R.id.card_stack_view) }
     private val manager by lazy { CardStackLayoutManager(this, this) }
     private val adapter by lazy { CardStackAdapter(Cards().spots) }
-    private val doglist by lazy { fillAllDogsSuccess(fillAllDogs()) }
+    private val doglist by lazy { CardStackDogList.getInstance(this.applicationContext).dogs }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,38 +83,12 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
             }
         }
     //moveDogSuccessesToStack(doglist)
+        fillAllDogs()
     }
 
-    private fun fillAllDogs() : DogFilterResult{
-        val dr = DogRequests();
-        var dfr = DogFilterResult(null);
-        dr.getData(null, ApiResources.retrieveDogs(), { success ->
-            run {
-                //whatever happens once the request is filled
-                //fillAllDogsSuccess(success as DogFilterResult)
-                dfr = success as DogFilterResult
-            }
-        }, { failure ->
-            run {
-                //shits fucked
-            }
-        })
-        return dfr;
-    }
-
-    private fun fillAllDogsSuccess(dr: DogFilterResult): List<Spot>{
-        val new = mutableListOf<Spot>().apply {
-            for (u in dr.dogs) {
-                for (d in u.dogs) {
-                    add(Spot(d.value))
-                }
-            }
-        }
-        return new;
-    }
-    private fun moveDogSuccessesToStack(dogs: List<Spot>){
-        for(d in dogs){
-            addNewSpot(d)
+    private fun fillAllDogs(){
+        for(d in doglist){
+            addNewSpot(Spot(d))
         }
     }
 

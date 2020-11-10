@@ -68,14 +68,14 @@ public class LoginActivity extends AppCompatActivity {
         //This works :))))))))))) -- this should actually work now
 
         */
-        if (Authentication.getInstance(getApplicationContext()).isSessionGood()) {
+        /*if (Authentication.getInstance(getApplicationContext()).isSessionGood()) {
             Log.i("If statement test", "We got in boyz");
             //user session is already good; bypass login screen
             Intent intent = new Intent(this, Cardstack.class);
             startActivity(intent);
             //If there is a valid login after pressing keyboard enter key. End activity
             finish();
-        }
+        }*/
 
         setContentView(R.layout.activity_login);
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
