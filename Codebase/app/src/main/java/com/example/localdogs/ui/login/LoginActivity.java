@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //This works :))))))))))) -- this should actually work now
 
-
+        */
         if (Authentication.getInstance(getApplicationContext()).isSessionGood()) {
             Log.i("If statement test", "We got in boyz");
             //user session is already good; bypass login screen
@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
             //If there is a valid login after pressing keyboard enter key. End activity
             finish();
         }
-        */
+
         setContentView(R.layout.activity_login);
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
@@ -281,6 +281,7 @@ public class LoginActivity extends AppCompatActivity {
     private void authenticateUser(EditText email, EditText password, View v) {
         //*****************loading wheel stuff**********************************
         Loading l = new Loading();
+        Log.i("LoginAttempt", "About to log in");
         ProgressDialog p = l.showProgressDialog(LoginActivity.this);
         //Loading l = new Loading.showProgressDialog(LoginActivity.this);
 
@@ -307,11 +308,14 @@ public class LoginActivity extends AppCompatActivity {
                     },
                     (error) -> {
                         //no matching email in database; no internet connection; mongodb/aws host is down
+                        Log.i("WTF", "hello?????");
+                        Loading.hideProgressDialog(p);
                         ThreadSafeToast.makeText(getApplicationContext(), "Login failed! Please try again later!", Toast.LENGTH_SHORT).show();
                     });
         },(error) -> {
             //user doesn't exist database/incognito pool, entered wrong password
             ThreadSafeToast.makeText(getApplicationContext(), "Login failed!", Toast.LENGTH_SHORT).show();
+            Log.i("WTF", "hello");
             //nDialog.dismiss();
             Loading.hideProgressDialog(p);
         });

@@ -29,7 +29,7 @@ public class Cards {
         spots.add(new Spot("Scrungus", "Beagle", "https://i.imgur.com/eMKRlnv.jpg"));
     }
     public void defaultDogs2(){
-        spots.add(new Spot(new Dog("Amelia","Monster", new ArrayList<String>(Arrays.asList("Golden Retriever")), new dob(8,15,2010), 62, 7, "https://localdogsdogimgs.s3.us-east-2.amazonaws.com/5fa056df4a33c10008492473/monster.jpg")));
+        spots.add(new Spot(new Dog("Amelia","Monster", new ArrayList<String>(Arrays.asList("Golden Retriever")), new dob(8,15,2010), 62, 7, "https://s3localdogsimages234609-dev.s3.us-east-2.amazonaws.com/public/hurrdurr%40tankycommie.com/Charlie.png")));
         spots.add(new Spot(new Dog("Jane","Max", new ArrayList<String>(Arrays.asList("Pitbull", "Staffie")), new dob(12,31,2008), 50, 2, "https://i.imgur.com/E0MbHhU.jpg")));
     }
     public void newSpot(String name, String city, String url){

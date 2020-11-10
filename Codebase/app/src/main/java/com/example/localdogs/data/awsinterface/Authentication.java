@@ -57,8 +57,10 @@ public class Authentication {
                 if(getCurrentSession() == null || !getCurrentSession().getCurrentSessionUserEmail().equals(email)) loadCurrentSession(userProfile.getUser());
                 onSuccess.accept(success);
 
-            }, (error) -> Log.e("signInUser", "Failed to get user profile from database"));
-
+            }, (error) -> {
+                Log.e("signInUser", "Failed to get user profile from database");
+                onFailure.accept(new AuthException("Couldn't Retrieve user", "Try retrieving again later"));
+            });
         }, onFailure);
     }
 
