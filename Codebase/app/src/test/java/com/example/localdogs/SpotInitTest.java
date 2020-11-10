@@ -20,21 +20,23 @@ public class SpotInitTest {
     public void setUp() throws Exception {
     }
 
+    @Before
+    public void spotConstructorInitializationTest() {
+        d = new Dog("Jane","Max", new ArrayList<String>(Arrays.asList("Pitbull", "Staffie")), new dob(12,31,2008), 50, 2, "https://i.imgur.com/E0MbHhU.jpg");
+        s = new Spot(d);
+    }
+
     @Test
     public void spotConstructorTest() {
-        d = new Dog("Jane","Max", new ArrayList<String>(Arrays.asList("Pitbull", "Staffie")), new dob(12,31,2008), 50, 2, "https://i.imgur.com/E0MbHhU.jpg");
         assertNotNull(d);
-        s = new Spot(d);
         assertNotNull(s);
     }
+
     @Test
     public void getNameTest(){
         assert(s.getName().equals("Max"));
     }
-    @Test
-    public void getTaglineTest(){
-        assert(s.getTagline().equals("Pitbull / Staffie [Mixed] | 18 years | 50 lbs | Energy Level: ★★☆☆☆"));
-    }
+
     @After
     public void tearDown() throws Exception {
     }
