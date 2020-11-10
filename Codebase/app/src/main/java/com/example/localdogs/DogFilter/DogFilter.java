@@ -1,6 +1,9 @@
 package com.example.localdogs.DogFilter;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -9,7 +12,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-public class DogFilter {
+public class DogFilter implements Parcelable {
 
     private static DogFilter instance;
     private static Context ctx;
@@ -30,6 +33,28 @@ public class DogFilter {
         this.breed1 = "";
         this.breed2 = "";
     }
+
+    protected DogFilter(Parcel in) {
+        activityLevel = in.readInt();
+        minWeight = in.readInt();
+        maxWeight = in.readInt();
+        minAge = in.readInt();
+        maxAge = in.readInt();
+        breed1 = in.readString();
+        breed2 = in.readString();
+    }
+
+    public static final Creator<DogFilter> CREATOR = new Creator<DogFilter>() {
+        @Override
+        public DogFilter createFromParcel(Parcel in) {
+            return new DogFilter(in);
+        }
+
+        @Override
+        public DogFilter[] newArray(int size) {
+            return new DogFilter[size];
+        }
+    };
 
     public static synchronized DogFilter getInstance(Context ctx){
         if(instance == null) instance = new DogFilter(ctx.getApplicationContext());
@@ -128,5 +153,24 @@ public class DogFilter {
         hashMap.put("breed1", String.valueOf(breed1));
         hashMap.put("breed2", String.valueOf(breed2));
         return hashMap;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        Log.i("DogFilter","Parceling | minWeight: "+minWeight+", maxWeight: "+maxWeight);
+        dest.writeInt(activityLevel);
+        dest.writeInt(minWeight);
+        dest.writeInt(maxWeight);
+        dest.writeInt(minAge);
+        dest.writeInt(maxAge);
+        dest.writeString(breed1);
+        dest.writeString(breed2);
+
+
     }
 }

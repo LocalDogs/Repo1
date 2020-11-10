@@ -152,13 +152,14 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == 10){//5){
+        if(requestCode == 5){//5){
             var dogfilter = data?.getParcelableExtra<Parcelable>("filter")
+            Log.d("PrintDogFilter", dogfilter.toString())
             var df2 = dogfilter as DogFilter
-            var mw = df2.minWeight
-            filterWeight(mw, true)
+            var minWeight = df2.minWeight
+            var maxWeight = df2.maxWeight
+            filterWeight(minWeight, maxWeight)
         }
-
     }
 
     override fun onBackPressed() {
@@ -420,11 +421,12 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
         }
     }
 
-    public fun filterWeight(weight: Int, greaterThan: Boolean){
+    public fun filterWeight(min: Int, max: Int){
+        Log.i("Cardstack", "WeightFilter | Min: $min, Max: $max")
         val old = doglist
         emptyOut()
         for(x in old){
-            if(greaterThan == (x.weight > weight))
+            if(x.weight in min..max)
                 addNewSpot(Spot(x))
         }
     }

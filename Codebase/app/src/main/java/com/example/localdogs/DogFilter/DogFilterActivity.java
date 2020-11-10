@@ -104,7 +104,7 @@ public class DogFilterActivity extends AppCompatActivity{
         dogFilter.setMinWeight(minWeight);
         Log.d("PrintDogFilter", dogFilter.toString());
         Intent intent = new Intent();
-        intent.putExtra("filter", (Parcelable) this.dogFilter);
+        intent.putExtra("filter", this.dogFilter);
         setResult(RESULT_OK, intent);
         finish();
     }
