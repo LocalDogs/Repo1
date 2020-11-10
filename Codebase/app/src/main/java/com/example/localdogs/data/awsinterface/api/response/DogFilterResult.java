@@ -1,27 +1,43 @@
 package com.example.localdogs.data.awsinterface.api.response;
 
 import com.example.localdogs.data.Dog;
+import com.example.localdogs.data.User;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 public class DogFilterResult extends RequestResult{
 
-    private ArrayList<Dog> dogs;
+    private ArrayList<User> users;
     private String query;
 
     public DogFilterResult(byte[] rawResponse) {
         super(rawResponse);
-        // parse dogs
+        query = "";
+        try {
+            JSONArray dogs = getResponseAsJSONObject().getJSONArray("dogs");
+            query = getResponseAsJSONObject().getString("query");
+            if (query == null) query = "";
+            for(int i = 0; i < dogs.length(); i++){
+                users.add(User.toUser(dogs.getJSONObject(i)));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         // parse query
     }
 
     @Override
     public boolean isSuccess() {
+        if(users != null) return true;
         return false;
     }
 
-    public ArrayList<Dog> getDogs(){
-        return dogs;
+    public ArrayList<User> getDogs(){
+        return users;
     }
 
     public String getQuery(){
