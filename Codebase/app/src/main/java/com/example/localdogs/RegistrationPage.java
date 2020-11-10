@@ -446,4 +446,8 @@ public class RegistrationPage extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Error with registration", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public void clickUploadImage(View view) {
+        selectImage(RegistrationPage.this);
+    }
 }

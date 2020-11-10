@@ -73,8 +73,8 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
             * TODO: When Jackson finishes working on Matches page, fix it, because it crashes when loading the activity
             *  For now, the click will do nothing, to prevent crashing
              */
-            //val cinemaIntent = Intent(this, Matches::class.java)
-            //startActivity(cinemaIntent)
+            val cinemaIntent = Intent(this, Matches::class.java)
+            startActivity(cinemaIntent)
         }
         else if (id == R.id.nav_settings) {
             val cinemaIntent = Intent(this, UserSettings::class.java)

@@ -43,6 +43,9 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"></activity>
         <activity
+            android:name=".Matches"
+            android:label="Scrolling Activity"></activity>
+        <activity
             android:name=".TermsOfUse"
             android:label="@string/title_activity_terms_of_use"
             android:theme="@style/AppTheme.NoActionBar" />

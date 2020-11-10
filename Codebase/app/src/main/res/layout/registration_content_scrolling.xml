@@ -206,28 +206,32 @@
 
         <ImageView
             android:id="@+id/my_avatar"
-            android:src="@drawable/placeholder"
             android:layout_width="181dp"
             android:layout_height="185dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:adjustViewBounds="true"
+            android:onClick="clickUploadImage"
+            android:src="@drawable/addphoto"
             app:layout_collapseParallaxMultiplier="0.7"
             app:layout_constraintBottom_toTopOf="@+id/uploadPictureButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/weightDogEditText" />
+            app:layout_constraintTop_toBottomOf="@+id/weightDogEditText"
+            app:srcCompat="@drawable/addphoto"
+            tools:srcCompat="@drawable/addphoto" />
 
         <Button
             android:id="@+id/uploadPictureButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="183dp"
+            android:layout_height="11dp"
             android:layout_marginStart="161dp"
             android:layout_marginLeft="161dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="162dp"
             android:layout_marginRight="162dp"
             android:text="Upload Dog Picture"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/my_avatar" />
