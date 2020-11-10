@@ -4,25 +4,18 @@ import android.content.Context;
 import android.util.Log;
 
 import com.amazonaws.mobile.client.AWSMobileClient;
-import com.amazonaws.mobile.client.UserState;
 import com.amazonaws.mobile.client.UserStateDetails;
 import com.amplifyframework.auth.AuthException;
-import com.amplifyframework.auth.AuthUserAttribute;
 import com.amplifyframework.auth.AuthUserAttributeKey;
-import com.amplifyframework.auth.cognito.AWSCognitoAuthSession;
 import com.amplifyframework.auth.options.AuthSignUpOptions;
 import com.amplifyframework.auth.result.AuthSignInResult;
 import com.amplifyframework.core.Action;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.core.Consumer;
-import com.amplifyframework.rx.RxAmplify;
 import com.example.localdogs.data.User;
 import com.example.localdogs.data.awsinterface.api.UserRequests;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.List;
+import com.example.localdogs.data.awsinterface.api.response.RegisterException;
+import com.example.localdogs.data.awsinterface.api.response.RegisterResult;
 
 public class Authentication {
     private static volatile Authentication instance;
@@ -59,7 +52,7 @@ public class Authentication {
 
             UserRequests ur = new UserRequests();
             ur.retrieveUserInfo(email, (userProfile) -> {
-
+                updateAuthenticatedStatus(true);
                 Log.i("signInUser", "Checking CurrentSession status");
                 if(getCurrentSession() == null || !getCurrentSession().getCurrentSessionUserEmail().equals(email)) loadCurrentSession(userProfile.getUser());
                 onSuccess.accept(success);
@@ -80,7 +73,7 @@ public class Authentication {
         }, onFailure);
     }
 
-    public void registerUser(String email, String password, User userData, Consumer<JSONObject> onSuccess, Consumer<AuthException> failure){
+    public void registerUser(String email, String password, User userData, Consumer<RegisterResult> onSuccess, Consumer<RegisterException> failure){
         Amplify.Auth.signUp(
                 email,
                 password,
@@ -96,43 +89,35 @@ public class Authentication {
                     UserRequests ur = new UserRequests();
                     updateCurrentSession(userData);
                     Amplify.Auth.signIn(email, password, success -> {
-
+                        updateAuthenticatedStatus(true);
                         Log.i("registerUser", "Automatically logging user in after registration");
-                        Log.i("UserRegistered", "Attempting to upload new user to database");
+                        Log.i("registerUser", "Attempting to upload new user to database");
                         ur.uploadUserInfo(userData.toJSONObject(), (uploadUserSuccess) -> {
+                            Log.i("registerUser", "uploading new user to db");
+                            RegisterResult registerResult = new RegisterResult(uploadUserSuccess.getRawBytes(), true, true);
+                            if(registerResult.isInserted()) updateCurrentSession(registerResult.getUser());
+                            // contains response from lambda function, whether success or failure
+                            onSuccess.accept(registerResult);
 
-                            Log.i("RegisterUser", "uploading new user to db");
-                            JSONObject responseToCaller = null;
-                            try {
-
-                                responseToCaller = uploadUserSuccess.getData().asJSONObject();
-                                responseToCaller.put("NextStep", response.getNextStep());
-                                userData.setId(responseToCaller.getString("userid"));
-                                Authentication.getInstance(context).getCurrentSession().updateCurrentSessionUser(userData);
-
-                            } catch (JSONException e) {
-
-                                throw new AssertionError("This literally should never be an issue, but here we are");
-
-                            }
-                            onSuccess.accept(responseToCaller);
-
-                    }, error -> {
-
-                        Log.e("registerUser", "Automatically loggin in user failed", error.getCause());
+                        }, error -> {
+                            RegisterResult registerException = new RegisterResult("Failed to upload new user", error.getMessage(), true, true);
+                            onSuccess.accept(registerException);
 
                         });
                     }, (error) -> {
-                        // bad query, email already exists
-                        Log.e("RegisterUser", error.getMessage(), error.getCause());
-                        failure.accept(new AuthException(error.getMessage(), error.getCause(), error.getRecoverySuggestion()));
+
+                        Log.e("registerUser", "Automatically logging in user failed", error.getCause());
+                        RegisterResult registerResult = new RegisterResult("Failed to sign in and upload new user", error.getMessage(), false, true);
+                        onSuccess.accept(registerResult);
 
                     });
                 },
                 (err) -> {
                     // registration error -- email already exists
                     // can put stuff here if needed before passed in callback
-                    failure.accept(err);
+                    // this means the entire process failed
+                    RegisterException registerException = new RegisterException(err.getMessage(), err.getCause(), err.getRecoverySuggestion(), false, false);
+                    failure.accept(registerException);
 
                 });
     }

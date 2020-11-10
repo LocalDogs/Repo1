@@ -4,19 +4,20 @@ import android.util.Log;
 
 import com.amplifyframework.api.ApiException;
 import com.amplifyframework.api.rest.RestOptions;
-import com.amplifyframework.api.rest.RestResponse;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.core.Consumer;
-import com.example.localdogs.data.awsinterface.api.response.ProfileResult;
+import com.example.localdogs.data.awsinterface.api.response.DogFilterResult;
+import com.example.localdogs.data.awsinterface.api.response.RetrieveUserResult;
+import com.example.localdogs.data.awsinterface.api.response.UploadResult;
 
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
-public class Requests {
+public abstract class Requests {
 
-    public void getData(Map<String, String> query, String resource, Consumer<ProfileResult> onSuccess, Consumer<ApiException> onFailure){
+    public void getData(Map<String, String> query, String resource, Consumer onSuccess, Consumer<ApiException> onFailure){
         RestOptions options = RestOptions.builder()
                 .addPath(resource)
                 .addQueryParameters(query)
@@ -24,14 +25,14 @@ public class Requests {
         Amplify.API.get(options, (success) -> {
             // do some stuff?
             Log.i("getData", success.getData().asString());
-            onSuccess.accept(new ProfileResult(success.getData().getRawBytes()));
+            onSuccess.accept(new RetrieveUserResult(success.getData().getRawBytes()));
         }, (error) -> {
             // do some stuff?
             onFailure.accept(error);
         });
     }
 
-    public void postData(JSONObject data, String resource, Consumer<RestResponse> onSuccess, Consumer<ApiException> onFailure){
+    public void postData(JSONObject data, String resource, Consumer<UploadResult> onSuccess, Consumer<ApiException> onFailure){
         Log.i("postData", "sending data");
         byte[] bdata = new byte[0];
         try {
@@ -48,7 +49,8 @@ public class Requests {
             // do some stuff?
             Log.i("postData", "calling onSuccess callback");
             Log.i("postData", success.toString());
-            onSuccess.accept(success);
+            UploadResult uploadResult = new UploadResult(success.getData().getRawBytes());
+            onSuccess.accept(uploadResult);
             }, (error) -> {
                 // do some stuff?
                 Log.e("postData", "calling onFailure callback");

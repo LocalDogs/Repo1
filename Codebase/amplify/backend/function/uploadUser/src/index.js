@@ -25,13 +25,13 @@ exports.handler = (event, context, callback) => {
         body.duplicate = false;
         body.error = null;
         body.payloadid = event.email;
-        body.userid = result.insertedId;
+        body.user = result.ops[0];
         response.body = JSON.stringify(body);
         // send query results back to app
         callback (null, response);
       
     }).catch(err => {
-      console.log("Querying Database Erro: " + err.message);
+      console.log("Querying Database Error: " + err.message);
       var body = {};
       // this should never actually make it back to the app, because 
       // the duplicate email will be caught already by the AWS Cognito
@@ -44,7 +44,7 @@ exports.handler = (event, context, callback) => {
         body.error = "Unknown";
         body.duplicate = false;
       }
-      body.error = err.message;
+      body.user = null;
       body.payloadid = event.email; // might be null?
       body.inserted = false;
       callback(null, {
@@ -67,6 +67,11 @@ exports.handler = (event, context, callback) => {
     // error trying to connect to database
     // execute callback here at some point to
     // notify app of connection error
+    var body = {};
+    body.user= null;
+    body.error = err.message;
+    body.payloadid = event.email; // might be null?
+    body.inserted = false;
     console.log("Database Connection Error" + err);
       callback(null, {
 
@@ -79,7 +84,7 @@ exports.handler = (event, context, callback) => {
           
         },
         
-        body: '"message": "Could not connect to database"}'
+        body: JSON.stringify(body)
 
       });
   });

@@ -123,7 +123,7 @@ public class Dog {
             jsonUser.put("owner", getOwner());
             jsonUser.put("name", getName());
             jsonUser.put("age", getDOB().toString());
-            jsonUser.put("activityLevel",getActivityLevel()); // temporary
+            jsonUser.put("activitylevel",getActivityLevel()); // temporary
             for(String breed : breeds){
 
                 dogArray.put(breed);
@@ -131,6 +131,7 @@ public class Dog {
             }
             jsonUser.put("breeds", dogArray);
             jsonUser.put("mixed", isMixed());
+            jsonUser.put("weight", getWeight());
 
         } catch (JSONException e) {
 
@@ -158,7 +159,7 @@ public class Dog {
                             //we're storing age as a DOB object, not an int
                             new dob(jsonDog.getString("age")),
                             jsonDog.getInt("weight"),
-                            jsonDog.getInt("activityLevel"),
+                            jsonDog.getInt("activitylevel"),
                             "https://i.imgur.com/2L7hOiz.jpg"
                     );
         } catch (JSONException e) {

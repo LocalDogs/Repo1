@@ -1,23 +1,40 @@
 package com.example.localdogs.data.awsinterface.api.response;
 
-public class RegisterResult extends RequestResult {
+import android.util.Log;
 
-    private boolean inserted;
-    private boolean duplicate;
+import org.json.JSONException;
 
-    public RegisterResult(byte[] rawResponse) {
+public class RegisterResult extends UploadResult{
+
+    private boolean isLoggedIn;
+    private boolean isRegistered;
+
+    public RegisterResult(byte[] rawResponse, boolean isLoggedIn, boolean isRegistered) {
         super(rawResponse);
+        this.isLoggedIn = isLoggedIn;
+        this.isRegistered = isRegistered;
     }
 
-    public boolean isDuplicate(){
-        return duplicate;
+    public RegisterResult(String message, String error, boolean isLoggedIn, boolean isRegistered){
+        super(message, error);
+        this.isLoggedIn = isLoggedIn;
+        this.isRegistered = isRegistered;
     }
 
-    public boolean isInserted(){
-        return inserted;
+    @Override
+    public boolean isSuccess() {
+        return (isLoggedIn && isInserted() && isRegistered);
     }
 
-    public boolean isErrorUnknown(){
-        return !(inserted && duplicate);
+    public boolean isLoggedIn(){
+        return isLoggedIn;
+    }
+
+    public boolean isRegistered(){
+        return isRegistered;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        isLoggedIn = loggedIn;
     }
 }

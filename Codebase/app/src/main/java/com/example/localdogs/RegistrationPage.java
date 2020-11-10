@@ -17,6 +17,7 @@ import android.os.Bundle;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.localdogs.data.Dog;
 import com.example.localdogs.data.User;
 import com.example.localdogs.data.awsinterface.Authentication;
 import com.example.localdogs.data.awsinterface.Image;
@@ -273,17 +274,6 @@ public class RegistrationPage extends AppCompatActivity {
                     if (resultCode == RESULT_OK && data != null) {
                         bitmapImage = (Bitmap) data.getExtras().get("data");
                         imageView.setImageBitmap(bitmapImage);
-                        try {
-                            Image.uploadImage(RegistrationPage.this, nameDogField.getText().toString(), bitmapImage, (success) ->{
-
-                                    },
-                                    (error) -> {
-
-                                    });
-                        } catch (Exception e){
-                            Log.i("Uh Oh", "I/O issues occurred :(");
-                        }
-
                         //flag is set to true, we have gotten the image via taking a picture, so now the user can complete registration once the other fields are complete
                         flag = true;
                     }
@@ -407,24 +397,37 @@ public class RegistrationPage extends AppCompatActivity {
             //Intent returnIntent = new Intent();
             //setResult(Activity.RESULT_OK, returnIntent);
             // changes here
-            User stuff = new User(firstNameField.getText().toString(), lastNameField.getText().toString(), emailField.getText().toString(), dobField.getText().toString());
+            ArrayList<String> firstDogBreeds = new ArrayList<String>();
+            firstDogBreeds.add(breedDogField.getText().toString());
+            dob firstDogDob = new dob(dobDogField.getText().toString());
+            Dog firstDog = new Dog(
+                    emailField.getText().toString(),
+                    nameDogField.getText().toString(),
+                    firstDogBreeds,
+                    firstDogDob,
+                    Integer.parseInt(weightDogField.getText().toString()),
+                    (int) energyBar.getRating(),
+                    null
+            );
+            User stuff = new User(firstNameField.getText().toString(), lastNameField.getText().toString(), emailField.getText().toString(), dobField.getText().toString(), firstDog);
             Authentication.getInstance(getApplicationContext()).registerUser(stuff.getEmail(), passwordField.getText().toString(), stuff, (success) -> {
-                        try {
-                            Image.uploadImage(RegistrationPage.this, nameDogField.getText().toString(), bitmapImage, (success2) ->{
-                                        //go to cardstack; successful
-                                        Log.i("Success Registration", "Woohoo!");
-                                        Intent intent = new Intent(t.getContext(), Cardstack.class);
-                                        //nDialog.dismiss();
-                                        Loading.hideProgressDialog(p);
-                                        startActivity(intent);
-                                        finish();
-                                    },
-                                    (error) -> {
+                Log.i("RegistrationPage", success.getMessage());
+                try {
+                    Image.uploadImage(RegistrationPage.this, nameDogField.getText().toString(), bitmapImage, (success2) ->{
+                        //go to cardstack; successful
+                                Log.i("Success Registration", "Woohoo!");
+                                Intent intent = new Intent(t.getContext(), Cardstack.class);
+                                //nDialog.dismiss();
+                                Loading.hideProgressDialog(p);
+                                startActivity(intent);
+                                finish();
+                                },
+                            (error) -> {
 
-                                    });
-                        } catch (Exception e){
-                            Log.i("Uh Oh", "I/O issues occurred :(");
-                        }
+                    });
+                } catch (Exception e){
+                    Log.i("Uh Oh", "I/O issues occurred :(");
+                }
             },
             (error) -> {
                 //nDialog.dismiss();

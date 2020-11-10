@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 public class DogFilter {
 
     private static DogFilter instance;
@@ -20,6 +22,7 @@ public class DogFilter {
     private String breed2;
 
     private DogFilter(Context ctx){
+        this.ctx = ctx;
         this.activityLevel = -1;
         this.maxWeight = -1;
         this.minAge = -1;
@@ -28,34 +31,34 @@ public class DogFilter {
         this.breed2 = "";
     }
 
-    public static DogFilter getInstance(Context ctx){
-        if(instance == null) instance = new DogFilter(ctx);
+    public static synchronized DogFilter getInstance(Context ctx){
+        if(instance == null) instance = new DogFilter(ctx.getApplicationContext());
         return instance;
     }
 
-    public void setActivityLevel(int activityLevel){
+    public synchronized void setActivityLevel(int activityLevel){
         this.activityLevel = activityLevel;
     }
 
-    public void setMinAge(int minAge){
+    public synchronized void setMinAge(int minAge){
         this.minAge = minAge;
     }
 
-    public void setMaxAge(int maxAge){
+    public synchronized void setMaxAge(int maxAge){
         this.maxAge = maxAge;
     }
 
-    public void setMinWeight(int minWeight){
+    public synchronized void setMinWeight(int minWeight){
         this.minWeight = minWeight;
     }
 
-    public void setMaxWeight(int maxWeight) { this.maxWeight = maxWeight; }
+    public synchronized void setMaxWeight(int maxWeight) { this.maxWeight = maxWeight; }
 
-    public void setBreed1(String breed1){
+    public synchronized void setBreed1(String breed1){
         this.breed1 = breed1;
     }
 
-    public void setBreed2(String breed2){
+    public synchronized void setBreed2(String breed2){
         this.breed2 = breed2;
     }
 
@@ -89,12 +92,12 @@ public class DogFilter {
 
     @NonNull
     @Override
-    public String toString(){
+    public synchronized String toString(){
 
         return this.toJSONObject().toString();
 
     }
-    public JSONObject toJSONObject(){
+    public synchronized JSONObject toJSONObject(){
 
         JSONObject jsonDogFilter = new JSONObject();
         try {
@@ -113,5 +116,17 @@ public class DogFilter {
 
         }
         return jsonDogFilter;
+    }
+
+    public synchronized HashMap<String, String> toHashMap(){
+        HashMap<String, String> hashMap = new HashMap<String, String>();
+        hashMap.put("activityLevel", String.valueOf(activityLevel));
+        hashMap.put("minWeight", String.valueOf(minWeight));
+        hashMap.put("maxWeight", String.valueOf(maxWeight));
+        hashMap.put("minAge", String.valueOf(minAge));
+        hashMap.put("maxAge", String.valueOf(maxAge));
+        hashMap.put("breed1", String.valueOf(breed1));
+        hashMap.put("breed2", String.valueOf(breed2));
+        return hashMap;
     }
 }

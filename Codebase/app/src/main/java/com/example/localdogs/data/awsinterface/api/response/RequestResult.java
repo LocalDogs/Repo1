@@ -14,8 +14,10 @@ public abstract class RequestResult {
     private JSONObject responseAsJSONObject;
     private String message;
     private String error;
+    private byte[] rawBytes;
 
     public RequestResult(byte[] rawResponse){
+        rawBytes = rawResponse;
         try {
             responseAsJSONObject = new JSONObject(new String(rawResponse, "UTF-8"));
             this.message = responseAsJSONObject.getString("message");
@@ -26,9 +28,17 @@ public abstract class RequestResult {
             // reason
             // UnsupportedEncodingException will only happen if something is tragically wrong
             // with the JVM on the android device
-            e.printStackTrace();
+            this.message = "";
+            this.error = e.getMessage();
+            responseAsJSONObject = null;
+            Log.e("RequestResult", e.getMessage());
         }
+    }
 
+    public RequestResult (String message, String error){
+        responseAsJSONObject = null;
+        this.message = message;
+        this.error = error;
     }
 
     public JSONObject getResponseAsJSONObject(){
@@ -41,6 +51,20 @@ public abstract class RequestResult {
 
     public String getError(){
         return error;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    public abstract boolean isSuccess();
+
+    public byte[] getRawBytes(){
+        return rawBytes;
     }
 
 }

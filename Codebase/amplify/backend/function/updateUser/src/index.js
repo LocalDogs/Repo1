@@ -33,6 +33,8 @@ exports.handler = (event, context, callback) => {
       // atm, don't know what might be a common error here
       // and therefore don't know what to parse for
       body.error = err.message;
+      body.updated = false;
+      body.payloadid = event.email;
       callback(null, {
         // error trying to query database after successfully establishing
         // a connection
@@ -52,6 +54,10 @@ exports.handler = (event, context, callback) => {
     // error trying to connect to database
     // execute callback here at some point to
     // notify app of connection error
+    var body = {};
+    body.error = err.message;
+    body.updated = false;
+    body.payloadid = event.email;
     console.log("Database Connection Error" + err);
       callback(null, {
 
@@ -64,7 +70,7 @@ exports.handler = (event, context, callback) => {
           
         },
         
-        body: '{"message": "Could not connect to database"}'
+        body: JSON.stringify(body) 
       });
   });
   

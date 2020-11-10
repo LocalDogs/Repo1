@@ -1,7 +1,11 @@
 package com.example.localdogs.data;
 
+import android.content.Context;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
+import com.amplifyframework.core.Amplify;
 import com.example.localdogs.dob;
 import com.google.gson.Gson;
 
@@ -28,32 +32,23 @@ public class User implements Cloneable{
      */
     private User() {}
 
-    public User(String firstname, String lastname, String email, String dateofbirth, String id){
+    public User(String firstname, String lastname, String email, String dateofbirth, String id, HashMap<String, Dog> dogs){
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.dateofbirth = dateofbirth;
         this.id = id;
-        ArrayList<String> breedList = new ArrayList<String>();
-        breedList.add("pickle");
-        breedList.add("rick");
-        HashMap<String, Dog> dogList = new HashMap<String, Dog>();
-        dogList.put("Cheerios", new Dog(email, "Cheerios", breedList, new dob(8,12,2014), 30, 2));
-        this.dogs = dogList;
+        this.dogs = dogs;
     }
 
-    public User(String firstname, String lastname, String email, String dateofbirth){
+    public User(String firstname, String lastname, String email, String dateofbirth, Dog dog){
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.dateofbirth = dateofbirth;
         this.id = "";
-        ArrayList<String> breedList = new ArrayList<String>();
-        breedList.add("pickle");
-        breedList.add("rick");
-        HashMap<String, Dog> dogList = new HashMap<String, Dog>();
-        dogList.put("Cheerios", new Dog(email, "Cheerios", breedList, new dob(8,12,2014), 30, 2));
-        this.dogs = dogList;
+        this.dogs = new HashMap<String, Dog>();
+        this.dogs.put(dog.getName(), dog);
     }
 
     public User(String firstname, String lastname, String email, String dateofbirth, HashMap<String, Dog> dogs, String id){
@@ -105,7 +100,7 @@ public class User implements Cloneable{
     public HashMap<String, Dog> getDogs(){ return this.dogs; }
 
     public String getDogImageStorageKey(String dogName){
-        return getId() + "/" + dogName;
+        return getId() + "/" + dogName + ".png";
     }
 
     /**
@@ -140,15 +135,21 @@ public class User implements Cloneable{
     public static User toUser(JSONObject jsonUser){
         User user = null;
         HashMap<String, Dog> dogs = new HashMap<String, Dog>();
+        String id = "";
         try {
-            /*
-                TODO:
-                    uncomment out the following code when temporary constructor is removed
-            */
-
+            id = jsonUser.getString("_id");
+        } catch (JSONException e) {
+            Log.e("toUser", "Could not parse user id");
+        }
+        try{
             for(int i = 0; i < jsonUser.getJSONArray("dogs").length(); i++){
-                Dog dog = Dog.toDog(jsonUser.getJSONArray("dogs").getJSONObject(i));
-                dogs.put(dog.getName(), dog);
+                Dog dog;
+                dog = Dog.toDog(jsonUser.getJSONArray("dogs").getJSONObject(i));
+                // we should programmatically get this url but for now here it is
+                if(dog != null) {
+                    dog.setImgUrl("https://s3localdogsimages234609-dev.s3.us-east-2.amazonaws.com/public/" + id + "/" + dog.getName() + ".png");
+                    dogs.put(dog.getName(), dog);
+                }
             }
             user = new User
                     (
@@ -157,10 +158,9 @@ public class User implements Cloneable{
                             jsonUser.getString("email"),
                             jsonUser.getString("dateofbirth"),
                             dogs,
-                            jsonUser.getString("_id")
+                            id
 
             );
-
         } catch (JSONException e) {
             e.printStackTrace();
             System.out.println("User.toUser conversion error");

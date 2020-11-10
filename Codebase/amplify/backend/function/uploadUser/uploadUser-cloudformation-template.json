@@ -66,12 +66,12 @@
         },
         "Runtime": "nodejs12.x",
         "Layers": [
-          "arn:aws:lambda:us-east-2:451994763983:layer:localdoglayer:12"
+          "arn:aws:lambda:us-east-2:451994763983:layer:localdoglayer:15"
         ],
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-localdogs-dev-234609-deployment",
-          "S3Key": "amplify-builds/uploadUser-386b736f4d3849503373-build.zip"
+          "S3Key": "amplify-builds/uploadUser-6a374435786f61785556-build.zip"
         }
       }
     },

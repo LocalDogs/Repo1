@@ -40,8 +40,10 @@ exports.handler = (event, context, callback) => {
       var body = {};
 
       body.error = 'Could not query database';
-      body.message = 'Could not query database';
-
+      body.message = 'Probably a malformed query';
+      body.user = null;
+      body.found = false;
+      body.query = event.queryStringParameters;
       callback(null, {
 
         // error trying to query database after successfully establishing
@@ -63,9 +65,11 @@ exports.handler = (event, context, callback) => {
     // execute callback here at some point to
     // notify app of connection error
     var body = {};
-
-      body.error = 'Could not query database';
-      body.message = 'Could not query database';
+      body.user = null;
+      body.error = err.message;
+      body.message = 'Could not connect to database';
+      body.found = false;
+      body.query = event.queryStringParameters;
 
     callback(null, {
 

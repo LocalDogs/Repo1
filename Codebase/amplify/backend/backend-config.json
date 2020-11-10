@@ -68,6 +68,11 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "S3Trigger35966f34": {
+      "service": "Lambda",
+      "providerPlugin": "awscloudformation",
+      "build": true
     }
   },
   "api": {
@@ -113,7 +118,18 @@
   "storage": {
     "LocalDogImages": {
       "service": "S3",
-      "providerPlugin": "awscloudformation"
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "S3Trigger35966f34",
+          "attributes": [
+            "Name",
+            "Arn",
+            "LambdaExecutionRole"
+          ]
+        }
+      ]
     }
   }
 }
