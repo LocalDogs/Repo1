@@ -64,9 +64,9 @@ public class Dog {
 
     public String getActivityLevelAsString() {
         String s = "";
-        for(int i=0; i<getActivityLevel()/2; i++)
+        for(int i=0; i<getActivityLevel(); i++)
             s += "★";
-        for(int i=0; i<5-getActivityLevel()/2; i++)
+        for(int i=0; i<5-getActivityLevel(); i++)
             s += "☆";
         return s;
     }

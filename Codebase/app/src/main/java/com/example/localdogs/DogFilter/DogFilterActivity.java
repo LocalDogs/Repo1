@@ -1,6 +1,9 @@
 package com.example.localdogs.DogFilter;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -100,6 +103,9 @@ public class DogFilterActivity extends AppCompatActivity{
         dogFilter.setMaxWeight(maxWeight);
         dogFilter.setMinWeight(minWeight);
         Log.d("PrintDogFilter", dogFilter.toString());
+        Intent intent = new Intent();
+        intent.putExtra("filter", (Parcelable) this.dogFilter);
+        setResult(RESULT_OK, intent);
         finish();
     }
 }

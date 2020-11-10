@@ -8,6 +8,7 @@ package com.example.localdogs
 //import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -22,13 +23,10 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DiffUtil
+import com.example.localdogs.DogFilter.DogFilter
 import com.example.localdogs.DogFilter.DogFilterActivity
-import com.example.localdogs.data.Dog
 import com.example.localdogs.data.awsinterface.Authentication
-import com.example.localdogs.data.awsinterface.api.ApiResources
-import com.example.localdogs.data.awsinterface.api.DogRequests
 import com.example.localdogs.data.awsinterface.api.response.CardStackDogList
-import com.example.localdogs.data.awsinterface.api.response.DogFilterResult
 import com.example.localdogs.ui.CardStackAdapter
 import com.example.localdogs.ui.ThreadSafeToast
 import com.example.localdogs.ui.login.LoginActivity
@@ -116,7 +114,9 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
         }
         else if (id == R.id.nav_filter) {
             val cinemaIntent = Intent(this, DogFilterActivity::class.java)
-            startActivity(cinemaIntent)
+            //startActivity(cinemaIntent)
+            startActivityForResult(cinemaIntent, 5);
+
         }
         else if (id == R.id.nav_map) {
             val cinemaIntent = Intent(this, MapsActivity::class.java)
@@ -148,6 +148,17 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == 10){//5){
+            var dogfilter = data?.getParcelableExtra<Parcelable>("filter")
+            var df2 = dogfilter as DogFilter
+            var mw = df2.minWeight
+            filterWeight(mw, true)
+        }
+
     }
 
     override fun onBackPressed() {
@@ -410,11 +421,11 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
     }
 
     public fun filterWeight(weight: Int, greaterThan: Boolean){
-        val old = adapter.getSpots()
+        val old = doglist
         emptyOut()
         for(x in old){
-            if(greaterThan == (x.dog.weight > weight))
-                addNewSpot(x)
+            if(greaterThan == (x.weight > weight))
+                addNewSpot(Spot(x))
         }
     }
 
