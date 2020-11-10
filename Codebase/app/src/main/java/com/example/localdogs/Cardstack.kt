@@ -156,9 +156,33 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
             var dogfilter = data?.getParcelableExtra<Parcelable>("filter")
             Log.d("PrintDogFilter", dogfilter.toString())
             var df2 = dogfilter as DogFilter
+
+            //Weight
             var minWeight = df2.minWeight
             var maxWeight = df2.maxWeight
+            if(maxWeight == -1)
+                maxWeight = 500;
             filterWeight(minWeight, maxWeight)
+
+            //Activity level
+            var acLev = df2.activityLevel
+            if(acLev != 0)
+                filterActivityLevel(0, acLev)
+
+            //Age
+            var minAge = df2.minAge
+            var maxAge = df2.maxAge
+            if(maxAge != 0)
+                filterAge(minAge, maxAge)
+
+            //breed
+            var breedlist = ArrayList<String>(2)
+            if(! df2.breed1.equals(""))
+                breedlist.add(df2.breed1)
+            if(! df2.breed1.equals(""))
+                breedlist.add(df2.breed2)
+            if(breedlist.size > 0)
+                filterBreeds(breedlist, true)
         }
     }
 
@@ -400,24 +424,25 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
     }
 
     private fun filterBreeds(breeds: ArrayList<String>, whitelist: Boolean){
-        val old = adapter.getSpots()
+        val old = doglist
         emptyOut()
             for (x in old) {
+
                 for (y in breeds) {
-                    if (whitelist == x.dog.breeds.contains(y)){
-                        addNewSpot(x)
-                        continue
+                    if (whitelist == x.breeds.contains(y)){
+                        addNewSpot(Spot(x))
+                        break
                     }
                 }
             }
     }
 
     private fun filterAge(ageMin: Int, ageMax: Int){
-        val old = adapter.getSpots()
+        val old = doglist
         emptyOut()
         for(x in old){
-            if((x.dog.getAge() >= ageMin) && (x.dog.getAge() <= ageMin))
-                addNewSpot(x)
+            if(x.getAge() in ageMin..ageMax)
+                addNewSpot(Spot(x))
         }
     }
 
@@ -432,11 +457,12 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
     }
 
     private fun filterActivityLevel(min: Int, max: Int){
-        val old = adapter.getSpots()
+        Log.i("Cardstack","filterActivityLevel | min: $min, max: $max")
+        val old = doglist
         emptyOut()
         for(x in old){
-            if((x.dog.weight >= min) && (x.dog.weight <= min))
-                addNewSpot(x)
+            if(x.activityLevel in min..max)
+                addNewSpot(Spot(x))
         }
     }
 
