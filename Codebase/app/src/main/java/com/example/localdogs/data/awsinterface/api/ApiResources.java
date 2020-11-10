@@ -1,12 +1,12 @@
 package com.example.localdogs.data.awsinterface.api;
 
-class ApiResources {
+public class ApiResources {
     static String updateUser = "/updateUser";
     static String updateDog = "/updateUser";
     static String uploadDog = "/updateUser";
     static String uploadUser = "/uploadUser";
     static String retrieveUser = "/retrieveUser";
-    static String retrieveDogs = "/retrieveDogs";
+    static String retrieveDogs = "/retrieveDog";
 
     public static String updateUser(){
         return updateUser;

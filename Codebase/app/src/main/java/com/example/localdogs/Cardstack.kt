@@ -23,7 +23,11 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DiffUtil
 import com.example.localdogs.DogFilter.DogFilterActivity
+import com.example.localdogs.data.Dog
 import com.example.localdogs.data.awsinterface.Authentication
+import com.example.localdogs.data.awsinterface.api.ApiResources
+import com.example.localdogs.data.awsinterface.api.DogRequests
+import com.example.localdogs.data.awsinterface.api.response.DogFilterResult
 import com.example.localdogs.ui.CardStackAdapter
 import com.example.localdogs.ui.ThreadSafeToast
 import com.example.localdogs.ui.login.LoginActivity
@@ -38,6 +42,7 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
     private val cardStackView by lazy { findViewById<CardStackView>(R.id.card_stack_view) }
     private val manager by lazy { CardStackLayoutManager(this, this) }
     private val adapter by lazy { CardStackAdapter(Cards().spots) }
+    private val doglist by lazy { fillAllDogsSuccess(fillAllDogs()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,8 +61,60 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+    }
+    private fun initialize() {
+        manager.setStackFrom(StackFrom.None)
+        manager.setVisibleCount(3)
+        manager.setTranslationInterval(8.0f)
+        manager.setScaleInterval(0.95f)
+        manager.setSwipeThreshold(0.3f)
+        manager.setMaxDegree(20.0f)
+        manager.setDirections(Direction.HORIZONTAL)
+        manager.setCanScrollHorizontal(true)
+        manager.setCanScrollVertical(true)
+        manager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
+        manager.setOverlayInterpolator(LinearInterpolator())
+        cardStackView.layoutManager = manager
+        cardStackView.adapter = adapter
+        cardStackView.itemAnimator.apply {
+            if (this is DefaultItemAnimator) {
+                supportsChangeAnimations = false
+            }
+        }
+    //moveDogSuccessesToStack(doglist)
+    }
 
+    private fun fillAllDogs() : DogFilterResult{
+        val dr = DogRequests();
+        var dfr = DogFilterResult(null);
+        dr.getData(null, ApiResources.retrieveDogs(), { success ->
+            run {
+                //whatever happens once the request is filled
+                //fillAllDogsSuccess(success as DogFilterResult)
+                dfr = success as DogFilterResult
+            }
+        }, { failure ->
+            run {
+                //shits fucked
+            }
+        })
+        return dfr;
+    }
 
+    private fun fillAllDogsSuccess(dr: DogFilterResult): List<Spot>{
+        val new = mutableListOf<Spot>().apply {
+            for (u in dr.dogs) {
+                for (d in u.dogs) {
+                    add(Spot(d.value))
+                }
+            }
+        }
+        return new;
+    }
+    private fun moveDogSuccessesToStack(dogs: List<Spot>){
+        for(d in dogs){
+            addNewSpot(d)
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -219,27 +276,6 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
         }
     }
 
-    private fun initialize() {
-        manager.setStackFrom(StackFrom.None)
-        manager.setVisibleCount(3)
-        manager.setTranslationInterval(8.0f)
-        manager.setScaleInterval(0.95f)
-        manager.setSwipeThreshold(0.3f)
-        manager.setMaxDegree(20.0f)
-        manager.setDirections(Direction.HORIZONTAL)
-        manager.setCanScrollHorizontal(true)
-        manager.setCanScrollVertical(true)
-        manager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
-        manager.setOverlayInterpolator(LinearInterpolator())
-        cardStackView.layoutManager = manager
-        cardStackView.adapter = adapter
-        cardStackView.itemAnimator.apply {
-            if (this is DefaultItemAnimator) {
-                supportsChangeAnimations = false
-            }
-        }
-    }
-
     private fun loadDefaultCards(){
         val old = adapter.getSpots()
         val cards = Cards()
@@ -261,6 +297,14 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
             addAll(old)
             add(manager.topPosition, spot)
         }
+        val callback = SpotDiffCallback(old, new)
+        val result = DiffUtil.calculateDiff(callback)
+        adapter.setSpots(new)
+        result.dispatchUpdatesTo(adapter)
+    }
+    private fun emptyOut(){
+        val old = adapter.getSpots()
+        val new = mutableListOf<Spot>().apply {}
         val callback = SpotDiffCallback(old, new)
         val result = DiffUtil.calculateDiff(callback)
         adapter.setSpots(new)
@@ -363,6 +407,46 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
         val result = DiffUtil.calculateDiff(callback)
         adapter.setSpots(new)
         result.dispatchUpdatesTo(adapter)
+    }
+
+    private fun filterBreeds(breeds: ArrayList<String>, whitelist: Boolean){
+        val old = adapter.getSpots()
+        emptyOut()
+            for (x in old) {
+                for (y in breeds) {
+                    if (whitelist == x.dog.breeds.contains(y)){
+                        addNewSpot(x)
+                        continue
+                    }
+                }
+            }
+    }
+
+    private fun filterAge(ageMin: Int, ageMax: Int){
+        val old = adapter.getSpots()
+        emptyOut()
+        for(x in old){
+            if((x.dog.getAge() >= ageMin) && (x.dog.getAge() <= ageMin))
+                addNewSpot(x)
+        }
+    }
+
+    private fun filterWeight(weight: Int, greaterThan: Boolean){
+        val old = adapter.getSpots()
+        emptyOut()
+        for(x in old){
+            if(greaterThan == (x.dog.weight > weight))
+                addNewSpot(x)
+        }
+    }
+
+    private fun filterActivityLevel(min: Int, max: Int){
+        val old = adapter.getSpots()
+        emptyOut()
+        for(x in old){
+            if((x.dog.weight >= min) && (x.dog.weight <= min))
+                addNewSpot(x)
+        }
     }
 
 }
