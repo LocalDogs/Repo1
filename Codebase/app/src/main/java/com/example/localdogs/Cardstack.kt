@@ -266,7 +266,7 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
 
     private fun paginate() {
         loadDefaultCards()
-        addNewSpot(Spot("Charles", "Good Boy", "https://preview.redd.it/mo3qwb4xjtw51.jpg"))
+        //addNewSpot(Spot("Charles", "Good Boy", "https://preview.redd.it/mo3qwb4xjtw51.jpg"))
     }
     private fun addNewSpot(spot: Spot){
         val old = adapter.getSpots()

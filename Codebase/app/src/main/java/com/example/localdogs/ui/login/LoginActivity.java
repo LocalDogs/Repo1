@@ -301,7 +301,7 @@ public class LoginActivity extends AppCompatActivity {
             UserRequests ur = new UserRequests();
             ur.retrieveUserInfo(email.getText().toString(), (retrieveUserSuccess) -> {
                         Log.i("Retrieve User Test", retrieveUserSuccess.toString());
-                        ThreadSafeToast.makeText(getApplicationContext(), "Login succeeded!", Toast.LENGTH_SHORT).show();
+                        //ThreadSafeToast.makeText(getApplicationContext(), "Login succeeded!", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(v.getContext(), Cardstack.class);
                         Loading.hideProgressDialog(p);
                         startActivity(intent);

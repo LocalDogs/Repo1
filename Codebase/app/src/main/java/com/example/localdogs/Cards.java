@@ -11,7 +11,7 @@ public class Cards {
     public Cards(){
         this.spots = new ArrayList<Spot>();
         //defaultSpots();
-        defaultDogs2();
+        //defaultDogs2();
     }
 
     public void emptyCards(){
