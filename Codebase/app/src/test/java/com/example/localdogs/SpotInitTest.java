@@ -22,7 +22,7 @@ public class SpotInitTest {
 
     @Before
     public void spotConstructorInitializationTest() {
-        d = new Dog("Jane","Max", new ArrayList<String>(Arrays.asList("Pitbull", "Staffie")), new dob(12,31,2008), 50, 2, "https://i.imgur.com/E0MbHhU.jpg");
+        d = new Dog("Jane@gmail.com","Max", new ArrayList<String>(Arrays.asList("Pitbull", "Staffie")), new dob(12,31,2008), 50, 2);
         s = new Spot(d);
     }
 

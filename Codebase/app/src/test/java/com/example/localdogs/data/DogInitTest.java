@@ -21,7 +21,7 @@ public class DogInitTest {
 
     @Before
     public void initializeInfoTest() {
-        d = new Dog("Jane","Max", new ArrayList<String>(Arrays.asList("Pitbull", "Staffie")), new dob(12,31,2008), 50, 3, "https://i.imgur.com/E0MbHhU.jpg");
+        d = new Dog("Jane@gmail.com","Max", new ArrayList<String>(Arrays.asList("Pitbull", "Staffie")), new dob(12,31,2008), 50, 3);
     }
 
     @Test
@@ -36,7 +36,7 @@ public class DogInitTest {
 
     @Test
     public void getOwnerTest() {
-        assert(d.getOwner().equals("Jane"));
+        assert(d.getOwner().equals("Jane@gmail.com"));
     }
 
     @Test
@@ -62,7 +62,7 @@ public class DogInitTest {
 
     @Test
     public void getURLTest() {
-        assert(d.getImgUrl().equals("https://i.imgur.com/E0MbHhU.jpg"));
+        assert(d.getImgUrl().equals("Jane/Max.png"));
     }
 
     @After
