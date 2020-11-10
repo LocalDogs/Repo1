@@ -6,6 +6,7 @@ import com.example.localdogs.DogFilter.DogFilterActivity;
 import com.example.localdogs.data.Dog;
 import com.example.localdogs.data.User;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -32,6 +33,10 @@ public class CardStackDogList {
                 this.dogs.add(tempDog);
             }
         }
+    }
+
+    public ArrayList<Dog> getDogs(){
+        return dogs;
     }
 
 }

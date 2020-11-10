@@ -13,7 +13,11 @@ import com.amplifyframework.core.Action;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.core.Consumer;
 import com.example.localdogs.data.User;
+import com.example.localdogs.data.awsinterface.api.ApiResources;
+import com.example.localdogs.data.awsinterface.api.DogRequests;
 import com.example.localdogs.data.awsinterface.api.UserRequests;
+import com.example.localdogs.data.awsinterface.api.response.CardStackDogList;
+import com.example.localdogs.data.awsinterface.api.response.DogFilterResult;
 import com.example.localdogs.data.awsinterface.api.response.RegisterException;
 import com.example.localdogs.data.awsinterface.api.response.RegisterResult;
 
@@ -27,7 +31,9 @@ public class Authentication {
         this.context = context;
         updateAuthenticatedStatus(false);
     }
-
+    private Context getContext(){
+        return context;
+    }
     public static synchronized Authentication getInstance(Context context){
         if(instance == null) instance = new Authentication(context.getApplicationContext());
         return instance;
@@ -55,7 +61,15 @@ public class Authentication {
                 updateAuthenticatedStatus(true);
                 Log.i("signInUser", "Checking CurrentSession status");
                 if(getCurrentSession() == null || !getCurrentSession().getCurrentSessionUserEmail().equals(email)) loadCurrentSession(userProfile.getUser());
-                onSuccess.accept(success);
+                DogRequests dogRequests = new DogRequests();
+                dogRequests.getData(null, ApiResources.retrieveDogs(), dogFilterSuccess -> {
+                    Log.i("DogFilter", "Retrieved Dogs");
+                    CardStackDogList.getInstance(getContext().getApplicationContext()).setDogs((DogFilterResult) dogFilterSuccess);
+                    onSuccess.accept(success);
+                }, DogFilterError -> {
+                    Log.e("DogFiler", "Something went wrong :)");
+                });
+                //onSuccess.accept(success);
 
             }, (error) -> {
                 Log.e("signInUser", "Failed to get user profile from database");
@@ -92,14 +106,23 @@ public class Authentication {
                     updateCurrentSession(userData);
                     Amplify.Auth.signIn(email, password, success -> {
                         updateAuthenticatedStatus(true);
+
                         Log.i("registerUser", "Automatically logging user in after registration");
                         Log.i("registerUser", "Attempting to upload new user to database");
                         ur.uploadUserInfo(userData.toJSONObject(), (uploadUserSuccess) -> {
                             Log.i("registerUser", "uploading new user to db");
                             RegisterResult registerResult = new RegisterResult(uploadUserSuccess.getRawBytes(), true, true);
                             if(registerResult.isInserted()) updateCurrentSession(registerResult.getUser());
+                            DogRequests dogRequests = new DogRequests();
+                            dogRequests.getData(null, ApiResources.retrieveDogs(), dogFilterSuccess -> {
+                                Log.i("DogFilter", "Retrieved Dogs");
+                                CardStackDogList.getInstance(getContext().getApplicationContext()).setDogs((DogFilterResult) dogFilterSuccess);
+                                onSuccess.accept(registerResult);
+                            }, DogFilterError -> {
+                                Log.e("DogFiler", "Something went wrong :)");
+                            });
                             // contains response from lambda function, whether success or failure
-                            onSuccess.accept(registerResult);
+                            //onSuccess.accept(registerResult);
 
                         }, error -> {
                             RegisterResult registerException = new RegisterResult("Failed to upload new user", error.getMessage(), true, true);
