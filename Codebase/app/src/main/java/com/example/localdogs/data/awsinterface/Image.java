@@ -39,7 +39,7 @@ public abstract class Image {
         User user = null;
         try {
             user = Authentication.getInstance().getCurrentSessionUser();
-            Amplify.Storage.uploadFile(user.getDogImageStorageKey(dogName), imageFile, publicFileOptions(), success -> {
+            Amplify.Storage.uploadFile(user.getDogs().get(dogName).getImgUrl(), imageFile, publicFileOptions(), success -> {
 
                 Log.i("uploadImage", success.toString());
                 onSuccess.accept(success);

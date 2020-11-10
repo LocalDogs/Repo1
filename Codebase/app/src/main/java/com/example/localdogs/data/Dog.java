@@ -34,7 +34,7 @@ public class Dog {
         this.age = age;
         this.weight = weight;
         this.activityLevel = activityLevel;
-        this.imgurl = "https://i.imgur.com/2L7hOiz.jpg";
+        this.imgurl = owner + "/" + name + ".png";
     }
 
     public void setImgUrl(String imgurl){
@@ -132,6 +132,7 @@ public class Dog {
             jsonUser.put("breeds", dogArray);
             jsonUser.put("mixed", isMixed());
             jsonUser.put("weight", getWeight());
+            jsonUser.put("imgurl", getImgUrl());
 
         } catch (JSONException e) {
 
@@ -160,7 +161,7 @@ public class Dog {
                             new dob(jsonDog.getString("age")),
                             jsonDog.getInt("weight"),
                             jsonDog.getInt("activitylevel"),
-                            "https://i.imgur.com/2L7hOiz.jpg"
+                            jsonDog.getString("imgurl")
                     );
         } catch (JSONException e) {
 

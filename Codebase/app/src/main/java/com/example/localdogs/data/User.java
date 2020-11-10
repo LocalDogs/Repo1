@@ -99,10 +99,6 @@ public class User implements Cloneable{
 
     public HashMap<String, Dog> getDogs(){ return this.dogs; }
 
-    public String getDogImageStorageKey(String dogName){
-        return getId() + "/" + dogName + ".png";
-    }
-
     /**
      * This method is to turn a User class object into a json object.
      * @param
@@ -137,19 +133,16 @@ public class User implements Cloneable{
         HashMap<String, Dog> dogs = new HashMap<String, Dog>();
         String id = "";
         try {
-            id = jsonUser.getString("_id");
+            //id = jsonUser.getString("_id");
+            id = jsonUser.getString("email");
         } catch (JSONException e) {
-            Log.e("toUser", "Could not parse user id");
+            Log.e("toUser", "Could not parse user email");
         }
         try{
             for(int i = 0; i < jsonUser.getJSONArray("dogs").length(); i++){
                 Dog dog;
                 dog = Dog.toDog(jsonUser.getJSONArray("dogs").getJSONObject(i));
-                // we should programmatically get this url but for now here it is
-                if(dog != null) {
-                    dog.setImgUrl("https://s3localdogsimages234609-dev.s3.us-east-2.amazonaws.com/public/" + id + "/" + dog.getName() + ".png");
-                    dogs.put(dog.getName(), dog);
-                }
+                dogs.put(dog.getName(), dog);
             }
             user = new User
                     (
@@ -158,7 +151,7 @@ public class User implements Cloneable{
                             jsonUser.getString("email"),
                             jsonUser.getString("dateofbirth"),
                             dogs,
-                            id
+                            jsonUser.getString("_id")
 
             );
         } catch (JSONException e) {

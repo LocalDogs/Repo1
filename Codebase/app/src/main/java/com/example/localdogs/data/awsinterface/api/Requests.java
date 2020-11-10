@@ -48,7 +48,7 @@ public abstract class Requests {
         Amplify.API.post(options, (success) -> {
             // do some stuff?
             Log.i("postData", "calling onSuccess callback");
-            Log.i("postData", success.toString());
+            Log.i("postData", success.getData().asString());
             UploadResult uploadResult = new UploadResult(success.getData().getRawBytes());
             onSuccess.accept(uploadResult);
             }, (error) -> {

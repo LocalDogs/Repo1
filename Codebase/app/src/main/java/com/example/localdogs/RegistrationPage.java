@@ -406,8 +406,7 @@ public class RegistrationPage extends AppCompatActivity {
                     firstDogBreeds,
                     firstDogDob,
                     Integer.parseInt(weightDogField.getText().toString()),
-                    (int) energyBar.getRating(),
-                    null
+                    (int) energyBar.getRating()
             );
             User stuff = new User(firstNameField.getText().toString(), lastNameField.getText().toString(), emailField.getText().toString(), dobField.getText().toString(), firstDog);
             Authentication.getInstance(getApplicationContext()).registerUser(stuff.getEmail(), passwordField.getText().toString(), stuff, (success) -> {
