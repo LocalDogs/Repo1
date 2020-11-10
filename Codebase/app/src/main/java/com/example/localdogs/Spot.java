@@ -1,6 +1,7 @@
 package com.example.localdogs;
 
 import com.example.localdogs.data.Dog;
+import com.example.localdogs.data.awsinterface.api.ApiResources;
 
 public class Spot {
     public String name;
@@ -15,7 +16,7 @@ public class Spot {
     }
     public Spot(Dog dog){
         this.dog = dog;
-        this.url = dog.getImgUrl();
+        this.url = ApiResources.getGetS3Bucket() + dog.getImgUrl();
         getTagline();
         getName();
     }

@@ -38,6 +38,8 @@ import com.example.localdogs.data.User;
 import com.example.localdogs.data.awsinterface.AmplifyHub;
 import com.example.localdogs.data.awsinterface.Authentication;
 import com.example.localdogs.data.awsinterface.api.UserRequests;
+import com.example.localdogs.data.awsinterface.api.response.CardStackDogList;
+import com.example.localdogs.data.awsinterface.api.response.DogFilterResult;
 import com.example.localdogs.ui.ThreadSafeToast;
 import com.example.localdogs.ui.login.LoginViewModel;
 import com.example.localdogs.ui.login.LoginViewModelFactory;

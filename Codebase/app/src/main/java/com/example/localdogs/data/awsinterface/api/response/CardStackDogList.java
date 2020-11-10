@@ -1,6 +1,7 @@
 package com.example.localdogs.data.awsinterface.api.response;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.localdogs.DogFilter.DogFilterActivity;
 import com.example.localdogs.data.Dog;
@@ -17,20 +18,24 @@ public class CardStackDogList {
 
     private CardStackDogList(Context context){
         this.context = context;
-        this.dogs = null;
+        this.dogs = new ArrayList<Dog>();
     }
 
     public synchronized static CardStackDogList getInstance(Context context){
-        if(instance == null) return new CardStackDogList(context.getApplicationContext());
+        if(instance == null) instance = new CardStackDogList(context.getApplicationContext());
+        return instance;
+    }
+
+    public synchronized static CardStackDogList getInstance(){
         return instance;
     }
 
     public synchronized void setDogs(DogFilterResult dogs){
-        this.dogs = new ArrayList<Dog>();
         for(User u : dogs.getDogs()){
             for(Map.Entry dog : u.getDogs().entrySet()){
                 Dog tempDog = (Dog) dog.getValue();
                 this.dogs.add(tempDog);
+                Log.i("setDogs", tempDog.getName());
             }
         }
     }

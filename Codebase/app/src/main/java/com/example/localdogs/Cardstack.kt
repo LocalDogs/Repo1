@@ -87,8 +87,10 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
     }
 
     private fun fillAllDogs(){
+        Log.i("fillAllDogs", "SDFJK:SDJ:")
         for(d in doglist){
             addNewSpot(Spot(d))
+            Log.i("fillAllDogs", d.name);
         }
     }
 
