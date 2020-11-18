@@ -10,13 +10,15 @@ import androidx.annotation.NonNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DogFilter implements Parcelable {
 
     private static DogFilter instance;
     private static Context ctx;
-    private int activityLevel;
+    private int minACL;
+    private int maxACL;
     private int minWeight;
     private int maxWeight;
     private int minAge;
@@ -24,18 +26,13 @@ public class DogFilter implements Parcelable {
     private String breed1;
     private String breed2;
 
-    private DogFilter(Context ctx){
+    private DogFilter(Context ctx) {
         this.ctx = ctx;
-        this.activityLevel = -1;
-        this.maxWeight = -1;
-        this.minAge = -1;
-        this.maxAge = -1;
-        this.breed1 = "";
-        this.breed2 = "";
     }
 
     protected DogFilter(Parcel in) {
-        activityLevel = in.readInt();
+        minACL = in.readInt();
+        maxACL = in.readInt();
         minWeight = in.readInt();
         maxWeight = in.readInt();
         minAge = in.readInt();
@@ -56,39 +53,49 @@ public class DogFilter implements Parcelable {
         }
     };
 
-    public static synchronized DogFilter getInstance(Context ctx){
-        if(instance == null) instance = new DogFilter(ctx.getApplicationContext());
+    public static synchronized DogFilter getInstance(Context ctx) {
+        if (instance == null) instance = new DogFilter(ctx.getApplicationContext());
         return instance;
     }
 
-    public synchronized void setActivityLevel(int activityLevel){
-        this.activityLevel = activityLevel;
+    public synchronized void setMinAcl(int minAcl) {
+        this.minACL = minAcl;
     }
 
-    public synchronized void setMinAge(int minAge){
+    public synchronized void setMaxACL(int maxACL) {
+        this.maxACL = maxACL;
+    }
+
+    public synchronized void setMinAge(int minAge) {
         this.minAge = minAge;
     }
 
-    public synchronized void setMaxAge(int maxAge){
+    public synchronized void setMaxAge(int maxAge) {
         this.maxAge = maxAge;
     }
 
-    public synchronized void setMinWeight(int minWeight){
+    public synchronized void setMinWeight(int minWeight) {
         this.minWeight = minWeight;
     }
 
-    public synchronized void setMaxWeight(int maxWeight) { this.maxWeight = maxWeight; }
+    public synchronized void setMaxWeight(int maxWeight) {
+        this.maxWeight = maxWeight;
+    }
 
-    public synchronized void setBreed1(String breed1){
+    public synchronized void setBreed1(String breed1) {
         this.breed1 = breed1;
     }
 
-    public synchronized void setBreed2(String breed2){
+    public synchronized void setBreed2(String breed2) {
         this.breed2 = breed2;
     }
 
-    public int getActivityLevel() {
-        return activityLevel;
+    public int getMinACL() {
+        return minACL;
+    }
+
+    public int getMaxACL() {
+        return maxACL;
     }
 
     public int getMinWeight() {
@@ -117,17 +124,19 @@ public class DogFilter implements Parcelable {
 
     @NonNull
     @Override
-    public synchronized String toString(){
+    public synchronized String toString() {
 
         return this.toJSONObject().toString();
 
     }
-    public synchronized JSONObject toJSONObject(){
+
+    public synchronized JSONObject toJSONObject() {
 
         JSONObject jsonDogFilter = new JSONObject();
         try {
 
-            jsonDogFilter.put("activityLevel", activityLevel);
+            jsonDogFilter.put("minACL", minACL);
+            jsonDogFilter.put("maxACL", maxACL);
             jsonDogFilter.put("minWeight", minWeight);
             jsonDogFilter.put("maxWeight", maxWeight);
             jsonDogFilter.put("minAge", minAge); // temporary
@@ -143,9 +152,10 @@ public class DogFilter implements Parcelable {
         return jsonDogFilter;
     }
 
-    public synchronized HashMap<String, String> toHashMap(){
+    public synchronized HashMap<String, String> toHashMap() {
         HashMap<String, String> hashMap = new HashMap<String, String>();
-        hashMap.put("activityLevel", String.valueOf(activityLevel));
+        hashMap.put("minACL", String.valueOf(minACL));
+        hashMap.put("maxACL", String.valueOf(maxACL));
         hashMap.put("minWeight", String.valueOf(minWeight));
         hashMap.put("maxWeight", String.valueOf(maxWeight));
         hashMap.put("minAge", String.valueOf(minAge));
@@ -162,15 +172,14 @@ public class DogFilter implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        Log.i("DogFilter","Parceling | minWeight: "+minWeight+", maxWeight: "+maxWeight);
-        dest.writeInt(activityLevel);
+        Log.i("DogFilter", "Parceling | minWeight: " + minWeight + ", maxWeight: " + maxWeight);
+        dest.writeInt(minACL);
+        dest.writeInt(maxACL);
         dest.writeInt(minWeight);
         dest.writeInt(maxWeight);
         dest.writeInt(minAge);
         dest.writeInt(maxAge);
         dest.writeString(breed1);
         dest.writeString(breed2);
-
-
     }
 }

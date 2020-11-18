@@ -22,6 +22,9 @@ import com.example.localdogs.DogFilter.InputFields.DogFilterBreedFields;
 import com.example.localdogs.DogFilter.InputFields.DogFilterWeightFields;
 import com.example.localdogs.R;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class DogFilterActivity extends AppCompatActivity{
     private DogFilter dogFilter;
     //private ArrayList<String> dogBreeds; ?
@@ -72,6 +75,7 @@ public class DogFilterActivity extends AppCompatActivity{
             public void onClick(View view) {
                 updateDogFilter
                         (
+                                0,
                                 activityLevel.getActivityLevel(),
                                 ages.getMinAge(),
                                 ages.getMaxAge(),
@@ -84,9 +88,11 @@ public class DogFilterActivity extends AppCompatActivity{
         });
 
     }
+
     private void updateDogFilter
             (
-                    int activityLevel,
+                    int minACL,
+                    int maxACL,
                     int minAge,
                     int maxAge,
                     int minWeight,
@@ -95,7 +101,8 @@ public class DogFilterActivity extends AppCompatActivity{
                     String breed2
             )
     {
-        dogFilter.setActivityLevel(activityLevel);
+        dogFilter.setMinAcl(minACL);
+        dogFilter.setMaxACL(maxACL);
         dogFilter.setBreed1(breed1);
         dogFilter.setBreed2(breed2);
         dogFilter.setMaxAge(maxAge);

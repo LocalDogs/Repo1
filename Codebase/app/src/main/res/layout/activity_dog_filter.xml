@@ -203,7 +203,7 @@
                         android:background="@drawable/outlinedboxlw"
                         android:contentDescription="dog breed name"
                         android:ems="10"
-                        android:hint="Enter breed name"
+                        android:hint="Only these breeds"
                         android:singleLine="true"
                         android:visibility="gone" />
 
@@ -215,7 +215,7 @@
                         android:background="@drawable/outlinedboxlw"
                         android:contentDescription="dog breed name"
                         android:ems="10"
-                        android:hint="Enter breed name"
+                        android:hint="Exclude these breeds"
                         android:singleLine="true"
                         android:visibility="gone" />
                 </TableRow>
