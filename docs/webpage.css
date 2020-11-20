@@ -1,16 +1,21 @@
+html { 
+    overflow: scroll; 
+}
+
 html, body {
-    position: fixed;
     top: 0; 
     left: 0; 
     right: 0;
     bottom: 0;
 }
 
-body {
-    background-color: #e7e8ec;
-    text-align: center;
+.text {
+    font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
+.center {
+    text-align: center;
+}
 
 ul.navbar {
     list-style-type: none;
@@ -60,20 +65,32 @@ h1 {
     text-align: center;
 }
 
-p {
-    font-family: Georgia, 'Times New Roman', Times, serif;
+h3 {
+    text-align: start;
+}
+
+ul.text {
+    text-align: start;
 }
 
 .myDiv1 {
-    margin: 0px 150px;
+    margin: 0px 400px;
     padding: 10px 0px;
   }
 
 .myDiv2 {
-    margin: 0px 150px;
+    margin: 0px 400px;
     border: 2px outset black;
-    padding: 0px 150px;
-    background-color: rgba(249, 252, 233, 0.5);
+    padding: 0px 10px;
+    background-color: #FCFDF4ff;
     border-radius: 15px;
     box-shadow: 5px 10px #000000;
-  }
+}
+
+.dark-mode {
+    background-color: #121212;
+}
+
+.footer {
+    text-align: center;
+}
