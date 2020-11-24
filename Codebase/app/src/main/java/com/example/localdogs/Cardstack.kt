@@ -45,6 +45,7 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
     private val manager by lazy { CardStackLayoutManager(this, this) }
     private val adapter by lazy { CardStackAdapter(Cards().spots) }
     private val doglist by lazy { CardStackDogList.getInstance(this.applicationContext).dogs }
+    private lateinit var currentDog: Dog;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -223,6 +224,7 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
     override fun onCardAppeared(view: View, position: Int) {
         val textView = view.findViewById<TextView>(R.id.item_name)
         Log.d("CardStackView", "onCardAppeared: ($position) ${textView.text}")
+        currentDog = getDogByName(textView.text as String, adapter.getSpots())
     }
 
     override fun onCardDisappeared(view: View, position: Int) {
@@ -292,8 +294,23 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
                     .setInterpolator(AccelerateInterpolator())
                     .build()
             manager.setSwipeAnimationSetting(setting)
+            //here's where you control what happens
+            //when a dog is liked
+            Log.i("Cardstack", "Liked dog: "+currentDog.name)
+
             cardStackView.swipe()
+
+
         }
+    }
+
+    private fun getDogByName(name: String, arr: List<Spot>): Dog{
+        Log.i("getDogByName","Looking for "+name)
+        for(x in arr){
+            if(x.dog.name.equals(name))
+                return x.dog;
+        }
+        return arr.get(0).dog
     }
 
     private fun loadDefaultCards() {
