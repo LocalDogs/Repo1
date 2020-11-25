@@ -73,6 +73,12 @@
       "service": "Lambda",
       "providerPlugin": "awscloudformation",
       "build": true
+    },
+    "matchUsers": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": []
     }
   },
   "api": {
@@ -107,6 +113,14 @@
         {
           "category": "function",
           "resourceName": "uploadUser",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "matchUsers",
           "attributes": [
             "Name",
             "Arn"

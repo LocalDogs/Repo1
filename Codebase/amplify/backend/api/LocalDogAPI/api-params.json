@@ -60,6 +60,20 @@
                     "/DELETE"
                 ]
             }
+        },
+        {
+            "name": "/match",
+            "lambdaFunction": "matchUsers",
+            "privacy": {
+                "private": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ]
+            }
         }
     ],
     "resourceName": "LocalDogAPI",
@@ -76,10 +90,13 @@
         },
         {
             "lambdaFunction": "uploadUser"
+        },
+        {
+            "lambdaFunction": "matchUsers"
         }
     ],
     "privacy": {
-        "auth": 4,
+        "auth": 5,
         "unauth": 1,
         "authRoleName": "amplify-localdogs-dev-234609-authRole",
         "unAuthRoleName": "amplify-localdogs-dev-234609-unauthRole"
@@ -116,7 +133,15 @@
                 "Name",
                 "Arn"
             ]
+        },
+        {
+            "category": "function",
+            "resourceName": "matchUsers",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
         }
     ],
-    "uuid": "5a081ff1"
+    "uuid": "33633a25"
 }
