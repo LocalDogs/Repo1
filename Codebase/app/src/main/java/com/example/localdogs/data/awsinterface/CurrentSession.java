@@ -55,6 +55,16 @@ class CurrentSession {
         return currentSessionUser.getDateOfBirth();
     }
 
+    protected String getCurrentSessionUserContactInfo(){
+        if(currentSessionUser == null) return null;
+        return currentSessionUser.getContactInfo();
+    }
+
+    protected String getCurrentSessionUserId(){
+        if(currentSessionUser == null) return null;
+        return currentSessionUser.getId();
+    }
+
     protected HashMap<String, Dog> getCurrentSessionUserDogs(){
         if(currentSessionUser == null) return null;
         return currentSessionUser.getDogs();

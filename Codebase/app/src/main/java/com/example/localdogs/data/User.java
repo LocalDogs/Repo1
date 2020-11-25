@@ -57,12 +57,13 @@ public class User implements Cloneable{
         this.contactInfo = contactInfo;
     }
 
-    public User(String firstname, String lastname, String email, String dateofbirth, HashMap<String, Dog> dogs, String id){
+    public User(String firstname, String lastname, String email, String dateofbirth, HashMap<String, Dog> dogs, String id, String contactInfo){
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.dateofbirth = dateofbirth;
         this.dogs = dogs;
+        this.contactInfo = contactInfo;
     }
 
     public void setFirstName(String firstname){
@@ -164,7 +165,7 @@ public class User implements Cloneable{
                             jsonUser.getString("email"),
                             jsonUser.getString("dateofbirth"),
                             dogs,
-                            //jsonUser.getString("_id"),
+                            jsonUser.getString("_id"),
                             //--
                             jsonUser.getString("contactInfo")
 
@@ -189,7 +190,7 @@ public class User implements Cloneable{
         try {
             user = (User) clone();
         } catch (CloneNotSupportedException e) {
-            user = new User(getFirstname(), getLastname(), getEmail(), getDateOfBirth(), getDogs(), getId());
+            user = new User(getFirstname(), getLastname(), getEmail(), getDateOfBirth(), getDogs(), getId(), getContactInfo());
             e.printStackTrace();
         }
         user.setDogs((HashMap<String, Dog>) dogs.clone());
