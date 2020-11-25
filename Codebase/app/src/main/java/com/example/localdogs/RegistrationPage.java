@@ -77,6 +77,8 @@ public class RegistrationPage extends AppCompatActivity {
     RatingBar energyBar;
     TextWatcher textWatcher;
 
+    EditText contactInfoField;
+
     public void initFields() {
         firstNameField = findViewById(R.id.firstNameEditText);
         firstNameField.addTextChangedListener(textWatcher);
@@ -103,6 +105,9 @@ public class RegistrationPage extends AppCompatActivity {
         purebredBox = findViewById(R.id.purebredCheckbox);
         vaccinatedBox = findViewById(R.id.vaccinatedCheckBox);
         energyBar = findViewById(R.id.energyRatingBar);
+
+        contactInfoField = findViewById(R.id.contactInfoEditText);
+        contactInfoField.addTextChangedListener(textWatcher);
     }
 
     Boolean validatePasswords() {
@@ -338,6 +343,13 @@ public class RegistrationPage extends AppCompatActivity {
                 breedDogField.setError("Invalid breed");
             retval = false;
         }
+
+        if (!p.matcher(contactInfoField.getText().toString()).matches()) {
+            if (!contactInfoField.getText().toString().equals(""))
+                contactInfoField.setError("Invalid contact information");
+            retval = false;
+        }
+
         if (!validatePasswords())
             retval = false;
         regex = "(?=.*[0-9])"
