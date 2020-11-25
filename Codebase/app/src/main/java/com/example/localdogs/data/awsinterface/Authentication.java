@@ -118,7 +118,10 @@ public class Authentication {
                             TODO:
                                   Need to figure out a cleaner way to populate the cardstack.
                             */
-                            dogRequests.getData(null, ApiResources.retrieveDogs(), dogFilterSuccess -> {
+                            dogRequests.getDogs
+                                    (
+                                            Authentication.getInstance(getContext().getApplicationContext()).getCurrentSessionUser().getEmail(),
+                                            dogFilterSuccess -> {
                                 Log.i("DogFilter", "Retrieved Dogs");
                                 CardStackDogList.getInstance(getContext().getApplicationContext()).setDogs((DogFilterResult) dogFilterSuccess);
                                 onSuccess.accept(registerResult);

@@ -43,7 +43,11 @@ public class DogRequests extends Requests {
             onFailure.accept(error);
         });
     }
-
+    public void getDogs(String email, Consumer onSuccess, Consumer<ApiException> onFailure) {
+        Map<String, String> query = new HashMap<String, String>();
+        query.put("email", email);
+        super.getData(query, rsRetrieveDogs, onSuccess, onFailure);
+    }
     /**
      * Just calling an updateUser method on the backend with the user's updated dog list
      *
