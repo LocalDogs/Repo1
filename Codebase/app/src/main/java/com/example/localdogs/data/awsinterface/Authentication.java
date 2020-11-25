@@ -58,9 +58,11 @@ public class Authentication {
 
             UserRequests ur = new UserRequests();
             ur.retrieveUserInfo(email, (userProfile) -> {
-                updateAuthenticatedStatus(true);
+                Authentication.getInstance(context).updateAuthenticatedStatus(true);
                 Log.i("signInUser", "Checking CurrentSession status");
-                if(getCurrentSession() == null || !getCurrentSession().getCurrentSessionUserEmail().equals(email)) updateCurrentSession(userProfile.getUser());
+                if(getCurrentSession() == null || !getCurrentSession().getCurrentSessionUserEmail().equals(email)){
+                    Authentication.getInstance(this.context).updateCurrentSession(userProfile.getUser());
+                }
                 DogRequests dogRequests = new DogRequests();
                 dogRequests.getDogs
                         (
@@ -125,7 +127,7 @@ public class Authentication {
                             */
                             dogRequests.getDogs
                                     (
-                                            getCurrentSessionUser().getEmail(),
+                                            Authentication.getInstance(context).getCurrentSessionUser().getEmail(),
                                             dogFilterSuccess -> {
                                 Log.i("DogFilter", "Retrieved Dogs");
                                 CardStackDogList.getInstance(getContext().getApplicationContext()).setDogs((DogFilterResult) dogFilterSuccess);

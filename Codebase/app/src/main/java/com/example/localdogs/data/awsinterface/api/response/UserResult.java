@@ -17,7 +17,8 @@ public class UserResult extends RequestResult{
         user = null;
         try {
             JSONObject jsonUser = getResponseAsJSONObject().getJSONObject("user");
-            if(jsonUser != null) user = User.toUser(getResponseAsJSONObject().getJSONObject("user"));
+            Log.i("UserResult", jsonUser.toString());
+            if(jsonUser != null) user = User.toUser(jsonUser);
         } catch (JSONException e) {
             Log.e("UserResult", e.getMessage());
         }
