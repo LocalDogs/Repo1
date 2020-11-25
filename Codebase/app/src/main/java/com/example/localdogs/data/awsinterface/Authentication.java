@@ -60,15 +60,20 @@ public class Authentication {
             ur.retrieveUserInfo(email, (userProfile) -> {
                 updateAuthenticatedStatus(true);
                 Log.i("signInUser", "Checking CurrentSession status");
-                if(getCurrentSession() == null || !getCurrentSession().getCurrentSessionUserEmail().equals(email)) loadCurrentSession(userProfile.getUser());
+                if(getCurrentSession() == null || !getCurrentSession().getCurrentSessionUserEmail().equals(email)) updateCurrentSession(userProfile.getUser());
                 DogRequests dogRequests = new DogRequests();
-                dogRequests.getData(null, ApiResources.retrieveDogs(), dogFilterSuccess -> {
-                    Log.i("DogFilter", "Retrieved Dogs");
-                    CardStackDogList.getInstance(getContext().getApplicationContext()).setDogs((DogFilterResult) dogFilterSuccess);
-                    onSuccess.accept(success);
-                }, DogFilterError -> {
-                    Log.e("DogFilter", "Something went wrong :)");
-                });
+                dogRequests.getDogs
+                        (
+                                getCurrentSessionUser().getEmail(),
+                                dogFilterSuccess -> {
+                                    Log.i("DogFilter", "Retrieved Dogs");
+                                    CardStackDogList.getInstance(getContext().getApplicationContext()).setDogs((DogFilterResult) dogFilterSuccess);
+                                    onSuccess.accept(success);
+                                    },
+                                DogFilterError -> {
+                                    Log.e("DogFilter", "Something went wrong :)");
+                                }
+                        );
                 //onSuccess.accept(success);
 
             }, (error) -> {
@@ -120,7 +125,7 @@ public class Authentication {
                             */
                             dogRequests.getDogs
                                     (
-                                            Authentication.getInstance(getContext().getApplicationContext()).getCurrentSessionUser().getEmail(),
+                                            getCurrentSessionUser().getEmail(),
                                             dogFilterSuccess -> {
                                 Log.i("DogFilter", "Retrieved Dogs");
                                 CardStackDogList.getInstance(getContext().getApplicationContext()).setDogs((DogFilterResult) dogFilterSuccess);
@@ -213,7 +218,7 @@ public class Authentication {
         }*/
     }
 
-    private CurrentSession getCurrentSession(){
+    public CurrentSession getCurrentSession(){
         // this COULD be null, hopefully we can prevent that
         return currentSession;
     }
@@ -222,13 +227,8 @@ public class Authentication {
         return currentSession.getCurrentSessionUser().getUserCopy();
     }
 
-    private synchronized void loadCurrentSession(User user){
-        currentSession = CurrentSession.getInstance(context);
-        currentSession.updateCurrentSessionUser(user);
-    }
-
     public synchronized void updateCurrentSession(User user){
         currentSession = CurrentSession.getInstance(context);
-        currentSession.updateCurrentSessionUser(user);
+        currentSession.updateCurrentSessionUser(user.getUserCopy());
     }
 }
