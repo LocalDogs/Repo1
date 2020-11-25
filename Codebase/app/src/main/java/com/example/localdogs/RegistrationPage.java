@@ -420,7 +420,7 @@ public class RegistrationPage extends AppCompatActivity {
                     Integer.parseInt(weightDogField.getText().toString()),
                     (int) energyBar.getRating()
             );
-            User stuff = new User(firstNameField.getText().toString(), lastNameField.getText().toString(), emailField.getText().toString(), dobField.getText().toString(), firstDog);
+            User stuff = new User(firstNameField.getText().toString(), lastNameField.getText().toString(), emailField.getText().toString(), dobField.getText().toString(), firstDog, "");
             Authentication.getInstance(getApplicationContext()).registerUser(stuff.getEmail(), passwordField.getText().toString(), stuff, (success) -> {
                 Log.i("RegistrationPage", success.getMessage());
                 try {

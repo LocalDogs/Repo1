@@ -67,7 +67,7 @@ public class Authentication {
                     CardStackDogList.getInstance(getContext().getApplicationContext()).setDogs((DogFilterResult) dogFilterSuccess);
                     onSuccess.accept(success);
                 }, DogFilterError -> {
-                    Log.e("DogFiler", "Something went wrong :)");
+                    Log.e("DogFilter", "Something went wrong :)");
                 });
                 //onSuccess.accept(success);
 
@@ -114,6 +114,10 @@ public class Authentication {
                             RegisterResult registerResult = new RegisterResult(uploadUserSuccess.getRawBytes(), true, true);
                             if(registerResult.isInserted()) updateCurrentSession(registerResult.getUser());
                             DogRequests dogRequests = new DogRequests();
+                            /*
+                            TODO:
+                                  Need to figure out a cleaner way to populate the cardstack.
+                            */
                             dogRequests.getData(null, ApiResources.retrieveDogs(), dogFilterSuccess -> {
                                 Log.i("DogFilter", "Retrieved Dogs");
                                 CardStackDogList.getInstance(getContext().getApplicationContext()).setDogs((DogFilterResult) dogFilterSuccess);
