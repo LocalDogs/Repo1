@@ -9,7 +9,7 @@ exports.handler = (event, context, callback) => {
   console.log('=> event: ' + JSON.stringify(event));
   connect.getDBconnection().then((dbConnection) => {
     
-    queries.retrieveDogsTemp(dbConnection).toArray((err, dogs) => {
+    queries.retrieveDogsTemp(dbConnection, event.queryStringParameters).toArray((err, dogs) => {
       var response = {};
       var body = {};
       if(err) {

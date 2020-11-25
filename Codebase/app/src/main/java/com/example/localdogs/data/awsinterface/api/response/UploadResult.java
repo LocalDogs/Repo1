@@ -4,7 +4,7 @@ import android.util.Log;
 
 import org.json.JSONException;
 
-public class UploadResult extends UserResult{
+public class UploadResult extends RetrieveUserResult{
 
     private boolean isInserted;
     private boolean isDuplicate;

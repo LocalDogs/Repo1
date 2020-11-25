@@ -2,6 +2,8 @@ package com.example.localdogs.data.awsinterface.api.response;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.example.localdogs.data.User;
 
 import org.json.JSONException;
@@ -35,4 +37,5 @@ public class UserResult extends RequestResult{
     public User getUser(){
         return user;
     }
+
 }
