@@ -7,6 +7,7 @@ public class ApiResources {
     static String uploadUser = "/uploadUser";
     static String retrieveUser = "/retrieveUser";
     static String retrieveDogs = "/retrieveDog";
+    static String matchUsers = "/match";
 
     static String getS3Bucket = "https://s3localdogsimages234609-dev.s3.us-east-2.amazonaws.com/public/";
 
@@ -38,7 +39,8 @@ public class ApiResources {
         return getS3Bucket;
     }
 
-    public static void setGetS3Bucket(String getS3Bucket) {
-        ApiResources.getS3Bucket = getS3Bucket;
+    public static String matchUsers() {
+        return matchUsers;
     }
+
 }

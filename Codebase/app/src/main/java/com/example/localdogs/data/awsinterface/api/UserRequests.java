@@ -19,12 +19,14 @@ public class UserRequests extends Requests {
     private String rsUploadUser;
     private String rsRetrieveUser;
     private String rsUpdateUser;
+    private String rsMatchUser;
 
     public UserRequests(){
         super();
         rsUploadUser = ApiResources.uploadUser();
         rsRetrieveUser = ApiResources.retrieveUser();
         rsUpdateUser = ApiResources.updateUser();
+        rsMatchUser = ApiResources.matchUsers();
     }
 
     public void retrieveUserInfo(String email, Consumer<RetrieveUserResult>onSuccess, Consumer<ApiException> onFailure){
@@ -47,7 +49,7 @@ public class UserRequests extends Requests {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //super.postData(jsonBody, )
+        super.updateData(jsonBody, rsMatchUser, onSuccess, onFailure);
     }
 
     /*public void updateUserInfo(JSONObject user, Consumer<RestResponse>onSuccess, Consumer<ApiException> onFailure){
