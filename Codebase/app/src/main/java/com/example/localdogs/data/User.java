@@ -25,6 +25,8 @@ public class User implements Cloneable{
     private String dateofbirth;
     private String id;
     private HashMap<String, Dog> dogs;
+    //--
+    private String contactInfo;
     /*
     TODO:
         Update constructor calls in rest of code after sprint 1 presentation
@@ -32,16 +34,18 @@ public class User implements Cloneable{
      */
     private User() {}
 
-    public User(String firstname, String lastname, String email, String dateofbirth, String id, HashMap<String, Dog> dogs){
+    public User(String firstname, String lastname, String email, String dateofbirth, String id, HashMap<String, Dog> dogs, String contactInfo){
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.dateofbirth = dateofbirth;
         this.id = id;
         this.dogs = dogs;
+        //--
+        this.contactInfo = contactInfo;
     }
 
-    public User(String firstname, String lastname, String email, String dateofbirth, Dog dog){
+    public User(String firstname, String lastname, String email, String dateofbirth, Dog dog, String contactInfo){
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
@@ -49,6 +53,8 @@ public class User implements Cloneable{
         this.id = "";
         this.dogs = new HashMap<String, Dog>();
         this.dogs.put(dog.getName(), dog);
+        //--
+        this.contactInfo = contactInfo;
     }
 
     public User(String firstname, String lastname, String email, String dateofbirth, HashMap<String, Dog> dogs, String id){
@@ -78,6 +84,11 @@ public class User implements Cloneable{
     public void setId(String id) {
         this.id = id;
     }
+
+    //--
+    public void setContactInfo(String contactInfo) { this.contactInfo = contactInfo; }
+    //--
+    public String getContactInfo() { return this.contactInfo; }
 
     public String getId() {
         return id;
@@ -119,6 +130,8 @@ public class User implements Cloneable{
             jsonUser.put("email", getEmail());
             jsonUser.put("dateofbirth", getDateOfBirth());
             jsonUser.put("dogs", dogList);
+            //--
+            jsonUser.put("contactInfo", getContactInfo());
 
         } catch (JSONException e) {
 
@@ -151,7 +164,9 @@ public class User implements Cloneable{
                             jsonUser.getString("email"),
                             jsonUser.getString("dateofbirth"),
                             dogs,
-                            jsonUser.getString("_id")
+                            //jsonUser.getString("_id"),
+                            //--
+                            jsonUser.getString("contactInfo")
 
             );
         } catch (JSONException e) {
