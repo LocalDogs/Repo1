@@ -26,7 +26,9 @@ import androidx.recyclerview.widget.DiffUtil
 import com.example.localdogs.DogFilter.DogFilter
 import com.example.localdogs.DogFilter.DogFilterActivity
 import com.example.localdogs.data.Dog
+import com.example.localdogs.data.User
 import com.example.localdogs.data.awsinterface.Authentication
+import com.example.localdogs.data.awsinterface.api.UserRequests
 import com.example.localdogs.data.awsinterface.api.response.CardStackDogList
 import com.example.localdogs.ui.CardStackAdapter
 import com.example.localdogs.ui.ThreadSafeToast
@@ -296,7 +298,21 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
             manager.setSwipeAnimationSetting(setting)
             //here's where you control what happens
             //when a dog is liked
-            Log.i("Cardstack", "Liked dog: "+currentDog.name)
+            Log.i("Cardstack", "Liked dog: " + currentDog.name+ ", "+currentDog.owner)
+
+            val userRequests = UserRequests()
+            val currentUser: User = Authentication.getInstance(applicationContext).currentSessionUser
+            userRequests.matchUsers(currentUser.getEmail(), currentDog.owner, { success ->
+            run {
+                //doshit
+            }
+        }, { error ->
+            run {
+                //doshit
+            }
+        });
+            //matchUsers(String callingUser, String likedUser, Consumer<UpdateResult> onSuccess, Consumer<ApiException> onFailure);
+
 
             cardStackView.swipe()
 
@@ -305,7 +321,7 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
     }
 
     private fun getDogByName(name: String, arr: List<Spot>): Dog{
-        Log.i("getDogByName","Looking for "+name)
+        Log.i("getDogByName", "Looking for " + name)
         for(x in arr){
             if(x.dog.name.equals(name))
                 return x.dog;
