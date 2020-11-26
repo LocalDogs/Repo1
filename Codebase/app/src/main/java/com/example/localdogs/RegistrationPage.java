@@ -344,6 +344,10 @@ public class RegistrationPage extends AppCompatActivity {
             retval = false;
         }
 
+        regex = "(?=.*[a-zA-Z0-9_@.\\n\\s])"
+                + ".{2,500}$";
+        p = Pattern.compile(regex);
+
         if (!p.matcher(contactInfoField.getText().toString()).matches()) {
             if (!contactInfoField.getText().toString().equals(""))
                 contactInfoField.setError("Invalid contact information");
@@ -420,7 +424,7 @@ public class RegistrationPage extends AppCompatActivity {
                     Integer.parseInt(weightDogField.getText().toString()),
                     (int) energyBar.getRating()
             );
-            User stuff = new User(firstNameField.getText().toString(), lastNameField.getText().toString(), emailField.getText().toString(), dobField.getText().toString(), firstDog, "");
+            User stuff = new User(firstNameField.getText().toString(), lastNameField.getText().toString(), emailField.getText().toString(), dobField.getText().toString(), firstDog, contactInfoField.getText().toString());
             Authentication.getInstance(getApplicationContext()).registerUser(stuff.getEmail(), passwordField.getText().toString(), stuff, (success) -> {
                 Log.i("RegistrationPage", success.getMessage());
                 try {

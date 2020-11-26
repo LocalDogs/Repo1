@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
+import android.widget.EditText;
 
 public class Matches extends AppCompatActivity {
 
@@ -18,4 +19,8 @@ public class Matches extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matches);
     }
+
+    //EditText exampleInput = (EditText)dialogCarro.findViewById(R.id.example_edittext);
+
+
 }

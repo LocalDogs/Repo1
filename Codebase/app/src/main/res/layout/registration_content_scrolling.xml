@@ -365,7 +365,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:text="Use the following format:\n'Email: user@gmail.com' or 'Telegram: (Username)' or\n 'KIK: (Username)', etc."
+            android:text="Use the following format:\nEmail: user@gmail.com, Telegram: (Username), \nKIK: (Username), etc."
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textView9" />
@@ -383,7 +383,7 @@
             android:layout_marginBottom="8dp"
             android:ems="10"
             android:gravity="top|left"
-            android:hint="Email: user@gmail.com\nTelegram: Username\nKIK: Username\netc..."
+            android:hint="Email: user@gmail.com, Telegram: Username, KIK: Username"
             android:inputType="textMultiLine"
             android:lines="5"
             android:maxLines="5"
