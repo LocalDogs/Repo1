@@ -90,7 +90,7 @@ ul.text {
 .myDiv1 {
     margin: 0px 400px;
     padding: 10px 0px;
-    min-width: 500px;
+    min-width: 750px;
     position:relative;
 }
 
@@ -98,10 +98,10 @@ ul.text {
     margin: 0px 400px;
     border: 2px outset black;
     padding: 0px 10px;
-    background-color: #FCFDF4ff;
+    background-color: #FCFDF4ff; 
     border-radius: 15px;
     box-shadow: 5px 10px #000000;
-    min-width: 500px;
+    min-width: 750px;
     position:relative;
 
 }
@@ -115,4 +115,12 @@ ul.text {
     text-align: center;
 }
 
+@media screen and (max-width: 960px) {
+    .myDiv1 {
+       margin: 0px 10px;
+    }
 
+    .myDiv2 {
+        margin: 0px 10px;
+    }
+}
