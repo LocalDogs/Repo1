@@ -1,6 +1,7 @@
 package com.example.localdogs.data;
 
 import android.content.Context;
+import android.service.autofill.FieldClassification;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,8 @@ public class User implements Cloneable{
     private HashMap<String, Dog> dogs;
     //--
     private String contactInfo;
+
+    private ArrayList<MatchesData> MatchData;
     /*
     TODO:
         Update constructor calls in rest of code after sprint 1 presentation
@@ -34,7 +37,7 @@ public class User implements Cloneable{
      */
     private User() {}
 
-    public User(String firstname, String lastname, String email, String dateofbirth, String id, HashMap<String, Dog> dogs, String contactInfo){
+    public User(String firstname, String lastname, String email, String dateofbirth, String id, HashMap<String, Dog> dogs, String contactInfo, ArrayList<MatchesData> MatchData){
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
@@ -43,9 +46,10 @@ public class User implements Cloneable{
         this.dogs = dogs;
         //--
         this.contactInfo = contactInfo;
+        this.MatchData = MatchData;
     }
 
-    public User(String firstname, String lastname, String email, String dateofbirth, Dog dog, String contactInfo){
+    public User(String firstname, String lastname, String email, String dateofbirth, Dog dog, String contactInfo, ArrayList<MatchesData> MatchData){
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
@@ -55,15 +59,17 @@ public class User implements Cloneable{
         this.dogs.put(dog.getName(), dog);
         //--
         this.contactInfo = contactInfo;
+        this.MatchData = MatchData;
     }
 
-    public User(String firstname, String lastname, String email, String dateofbirth, HashMap<String, Dog> dogs, String id, String contactInfo){
+    public User(String firstname, String lastname, String email, String dateofbirth, HashMap<String, Dog> dogs, String id, String contactInfo, ArrayList<MatchesData> MatchData){
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.dateofbirth = dateofbirth;
         this.dogs = dogs;
         this.contactInfo = contactInfo;
+        this.MatchData = MatchData;
     }
 
     public void setFirstName(String firstname){
@@ -111,6 +117,12 @@ public class User implements Cloneable{
 
     public HashMap<String, Dog> getDogs(){ return this.dogs; }
 
+    //--
+
+    public void setMatchData(ArrayList<MatchesData> MatchData){ this.MatchData = MatchData; }
+
+    public ArrayList<MatchesData> getMatchData() {return this.MatchData; }
+
     /**
      * This method is to turn a User class object into a json object.
      * @param
@@ -120,10 +132,14 @@ public class User implements Cloneable{
 
         JSONObject jsonUser = new JSONObject();
         JSONArray dogList = new JSONArray();
+        JSONArray matchesData = new JSONArray();
         try {
             for(Map.Entry dog : dogs.entrySet()){
                 Dog tempDog = (Dog) dog.getValue();
                 dogList.put(tempDog.toJSONObject());
+            }
+            for(MatchesData data : getMatchData()) {
+                matchesData.put(data.getMatchedEmail());
             }
             //jsonUser.put("_id", getId());
             jsonUser.put("firstname", getFirstname());
@@ -133,6 +149,7 @@ public class User implements Cloneable{
             jsonUser.put("dogs", dogList);
             //--
             jsonUser.put("contactInfo", getContactInfo());
+            jsonUser.put("Match Data", matchesData);
 
         } catch (JSONException e) {
 
@@ -145,6 +162,7 @@ public class User implements Cloneable{
     public static User toUser(JSONObject jsonUser){
         User user = null;
         HashMap<String, Dog> dogs = new HashMap<String, Dog>();
+        ArrayList<MatchesData> matchList = new ArrayList<MatchesData>();
         String id = "";
         try {
             //id = jsonUser.getString("_id");
@@ -158,6 +176,20 @@ public class User implements Cloneable{
                 dog = Dog.toDog(jsonUser.getJSONArray("dogs").getJSONObject(i));
                 dogs.put(dog.getName(), dog);
             }
+            //*****
+            /*
+            *TODO: NEED REQUEST RESPONSE TO CONTAIN JSON ARRAY WITH KEY CALLED matchedList
+             */
+            for(int i = 0; i < jsonUser.getJSONArray("matchedList").length(); i++){
+                JSONObject jsonMatch = jsonUser.getJSONArray("matchedList").getJSONObject(i);
+                MatchesData match =  new MatchesData(
+                        jsonMatch.getString("matchedEmail"),
+                        jsonMatch.getString("matchedDogName"),
+                        jsonMatch.getString("matchedContactInfo")
+                );
+                matchList.add(match);
+            }
+
             user = new User
                     (
                             jsonUser.getString("firstname"),
@@ -167,7 +199,8 @@ public class User implements Cloneable{
                             dogs,
                             jsonUser.getString("_id"),
                             //--
-                            jsonUser.getString("contactInfo")
+                            jsonUser.getString("contactInfo"),
+                            matchList
 
             );
         } catch (JSONException e) {
@@ -190,7 +223,7 @@ public class User implements Cloneable{
         try {
             user = (User) clone();
         } catch (CloneNotSupportedException e) {
-            user = new User(getFirstname(), getLastname(), getEmail(), getDateOfBirth(), getDogs(), getId(), getContactInfo());
+            user = new User(getFirstname(), getLastname(), getEmail(), getDateOfBirth(), getDogs(), getId(), getContactInfo(), getMatchData());
             e.printStackTrace();
         }
         user.setDogs((HashMap<String, Dog>) dogs.clone());
