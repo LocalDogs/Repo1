@@ -302,7 +302,7 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
 
             val userRequests = UserRequests()
             val currentUser: User = Authentication.getInstance(applicationContext).currentSessionUser
-            userRequests.matchUsers(currentUser.getEmail(), currentDog.owner, { success ->
+            userRequests.matchUsers(currentUser.email, currentDog.owner, { success ->
             run {
                 //doshit
             }

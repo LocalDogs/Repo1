@@ -71,7 +71,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-localdogs-dev-234609-deployment",
-          "S3Key": "amplify-builds/uploadUser-6a374435786f61785556-build.zip"
+          "S3Key": "amplify-builds/uploadUser-372f45374b6a754f356e-build.zip"
         }
       }
     },

@@ -18,6 +18,7 @@ import android.os.Bundle;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.localdogs.data.Dog;
+import com.example.localdogs.data.MatchesData;
 import com.example.localdogs.data.User;
 import com.example.localdogs.data.awsinterface.Authentication;
 import com.example.localdogs.data.awsinterface.Image;
@@ -424,7 +425,10 @@ public class RegistrationPage extends AppCompatActivity {
                     Integer.parseInt(weightDogField.getText().toString()),
                     (int) energyBar.getRating()
             );
-            User stuff = new User(firstNameField.getText().toString(), lastNameField.getText().toString(), emailField.getText().toString(), dobField.getText().toString(), firstDog, contactInfoField.getText().toString());
+            ArrayList<MatchesData> matches = new ArrayList<MatchesData>();
+            // don't think we need the empty placeholder
+            //matches.add(new MatchesData());
+            User stuff = new User(firstNameField.getText().toString(), lastNameField.getText().toString(), emailField.getText().toString(), dobField.getText().toString(), firstDog, contactInfoField.getText().toString(), matches);
             Authentication.getInstance(getApplicationContext()).registerUser(stuff.getEmail(), passwordField.getText().toString(), stuff, (success) -> {
                 Log.i("RegistrationPage", success.getMessage());
                 try {
