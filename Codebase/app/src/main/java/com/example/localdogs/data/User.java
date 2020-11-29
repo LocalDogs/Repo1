@@ -138,9 +138,9 @@ public class User implements Cloneable{
                 Dog tempDog = (Dog) dog.getValue();
                 dogList.put(tempDog.toJSONObject());
             }
-            for(MatchesData data : getMatchData()) {
+            /*for(MatchesData data : getMatchData()) {
                 matchesData.put(data.getMatchedEmail());
-            }
+            }*/
             //jsonUser.put("_id", getId());
             jsonUser.put("firstname", getFirstname());
             jsonUser.put("lastname", getLastname());
@@ -149,7 +149,7 @@ public class User implements Cloneable{
             jsonUser.put("dogs", dogList);
             //--
             jsonUser.put("contactInfo", getContactInfo());
-            jsonUser.put("Match Data", matchesData);
+            //jsonUser.put("Match Data", matchesData);
 
         } catch (JSONException e) {
 
@@ -180,16 +180,19 @@ public class User implements Cloneable{
             /*
             *TODO: NEED REQUEST RESPONSE TO CONTAIN JSON ARRAY WITH KEY CALLED matchedList
              */
-            for(int i = 0; i < jsonUser.getJSONArray("matchedList").length(); i++){
-                JSONObject jsonMatch = jsonUser.getJSONArray("matchedList").getJSONObject(i);
-                MatchesData match =  new MatchesData(
-                        jsonMatch.getString("matchedEmail"),
-                        jsonMatch.getString("matchedDogName"),
-                        jsonMatch.getString("matchedContactInfo")
-                );
-                matchList.add(match);
+            try{
+                for(int i = 0; i < jsonUser.getJSONArray("matchList").length(); i++){
+                    JSONObject jsonMatch = jsonUser.getJSONArray("matchList").getJSONObject(i);
+                    MatchesData match =  new MatchesData(
+                            jsonMatch.getString("matchedEmail"),
+                            jsonMatch.getString("matchedDogName"),
+                            jsonMatch.getString("matchedContactInfo")
+                    );
+                    matchList.add(match);
+                }
+            }catch(JSONException e){
+                Log.w("User.toUser", "No value for matchList");
             }
-
             user = new User
                     (
                             jsonUser.getString("firstname"),

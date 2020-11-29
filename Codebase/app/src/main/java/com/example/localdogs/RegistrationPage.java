@@ -426,7 +426,8 @@ public class RegistrationPage extends AppCompatActivity {
                     (int) energyBar.getRating()
             );
             ArrayList<MatchesData> matches = new ArrayList<MatchesData>();
-            matches.add(new MatchesData());
+            // don't think we need the empty placeholder
+            //matches.add(new MatchesData());
             User stuff = new User(firstNameField.getText().toString(), lastNameField.getText().toString(), emailField.getText().toString(), dobField.getText().toString(), firstDog, contactInfoField.getText().toString(), matches);
             Authentication.getInstance(getApplicationContext()).registerUser(stuff.getEmail(), passwordField.getText().toString(), stuff, (success) -> {
                 Log.i("RegistrationPage", success.getMessage());

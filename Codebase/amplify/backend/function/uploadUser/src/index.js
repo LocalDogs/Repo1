@@ -26,6 +26,7 @@ exports.handler = (event, context, callback) => {
         body.error = null;
         body.payloadid = event.email;
         body.user = result.ops[0];
+        body.user.matchList = [];
         response.body = JSON.stringify(body);
         // send query results back to app
         callback (null, response);

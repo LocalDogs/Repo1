@@ -1,7 +1,5 @@
 package com.example.localdogs.data;
 
-import com.example.localdogs.Matches;
-
 public class MatchesData {
     private String matchedEmail;
     private String matchedDogName;
