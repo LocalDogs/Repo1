@@ -185,6 +185,7 @@ public class User implements Cloneable{
                     JSONObject jsonMatch = jsonUser.getJSONArray("matchList").getJSONObject(i);
                     MatchesData match =  new MatchesData(
                             jsonMatch.getString("matchedEmail"),
+                            jsonMatch.getString("matchedFirstName"),
                             jsonMatch.getString("matchedDogName"),
                             jsonMatch.getString("matchedContactInfo")
                     );

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.localdogs.data.MatchesData;
 import com.example.localdogs.dummy.DummyContent.DummyItem;
 
 import java.util.List;
@@ -17,9 +18,9 @@ import java.util.List;
  */
 public class MyMatchesRecyclerViewAdapter extends RecyclerView.Adapter<MyMatchesRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<MatchesData> mValues;
 
-    public MyMatchesRecyclerViewAdapter(List<DummyItem> items) {
+    public MyMatchesRecyclerViewAdapter(List<MatchesData> items) {
         mValues = items;
     }
 
@@ -33,8 +34,8 @@ public class MyMatchesRecyclerViewAdapter extends RecyclerView.Adapter<MyMatches
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mIdView.setText(mValues.get(position).getMatchedFirstName() + " - " + mValues.get(position).getMatchedDogName());
+        holder.mContentView.setText(mValues.get(position).getMatchedContactInfo());
     }
 
     @Override
@@ -46,7 +47,7 @@ public class MyMatchesRecyclerViewAdapter extends RecyclerView.Adapter<MyMatches
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public MatchesData mItem;
 
         public ViewHolder(View view) {
             super(view);

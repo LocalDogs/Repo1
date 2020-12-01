@@ -60,14 +60,20 @@ public class Authentication {
             ur.retrieveUserInfo(email, (userProfile) -> {
                 Authentication.getInstance(context).updateAuthenticatedStatus(true);
                 Log.i("signInUser", "Checking CurrentSession status");
-                if(getCurrentSession() == null || !getCurrentSession().getCurrentSessionUserEmail().equals(email)){
+                /*if(getCurrentSession() == null || !getCurrentSession().getCurrentSessionUserEmail().equals(email)){
                     if(userProfile.getUser() == null){
                         onSuccess.accept(success);
                         Log.i("signInUser", "user was not found in database");
 
                     }
                     Authentication.getInstance(this.context).updateCurrentSession(userProfile.getUser());
+                }*/
+                if(userProfile.getUser() == null){
+                    onSuccess.accept(success);
+                    Log.i("signInUser", "user was not found in database");
+
                 }
+                Authentication.getInstance(this.context).updateCurrentSession(userProfile.getUser());
                 DogRequests dogRequests = new DogRequests();
                 dogRequests.getDogs
                         (
@@ -172,7 +178,7 @@ public class Authentication {
          * THIS BLOCKS TILL RESULT IS RETURNED
          */
         // pretty sure this call blocks
-       /* UserStateDetails currentUserState = AWSMobileClient.getInstance().currentUserState();
+        UserStateDetails currentUserState = AWSMobileClient.getInstance().currentUserState();
         Log.i("checkInitAuth", currentUserState.getUserState().toString());
         // keep an eye on this, i think the 3rd and 4th cases will be true if the user is logged in
         // AND their credentials have expired, which is desired
@@ -192,7 +198,7 @@ public class Authentication {
                 break;
 
         }
-        *//*AWSCognitoAuthSession currentSession = (AWSCognitoAuthSession) RxAmplify.Auth.fetchAuthSession().blockingGet();
+        /*AWSCognitoAuthSession currentSession = (AWSCognitoAuthSession) RxAmplify.Auth.fetchAuthSession().blockingGet();
         switch (currentSession.getAWSCredentials().getType()){
             case SUCCESS:
 

@@ -2,12 +2,14 @@ package com.example.localdogs.data;
 
 public class MatchesData {
     private String matchedEmail;
+    private String matchedFirstName;
     private String matchedDogName;
     private String matchedContactInfo;
 
 
-    public MatchesData(String matchedEmail, String matchedDogName, String matchedContactInfo) {
+    public MatchesData(String matchedEmail, String matchedFirstName, String matchedDogName, String matchedContactInfo) {
         this.matchedEmail = matchedEmail;
+        this.matchedFirstName = matchedFirstName;
         this.matchedDogName = matchedDogName;
         this.matchedContactInfo = matchedContactInfo;
     }
@@ -24,6 +26,14 @@ public class MatchesData {
 
     public void setMatchedEmail(String matchedEmail) {
         this.matchedEmail = matchedEmail;
+    }
+
+    public String getMatchedFirstName() {
+        return matchedFirstName;
+    }
+
+    public void setMatchedFirstName(String matchedFirstName) {
+        this.matchedFirstName = matchedFirstName;
     }
 
     public String getMatchedDogName() {
