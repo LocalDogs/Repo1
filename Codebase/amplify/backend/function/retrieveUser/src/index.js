@@ -29,11 +29,13 @@ exports.handler = (event, context, callback) => {
         body.error = null;
         body.user = user[0];
         var scrubbedMatchList = [];
-        if(body.user.matchList.length == null) body.user.matchList = [];
+        console.log("===> user result: " + JSON.stringify(body.user));
+        if(body.user.matchList == null) body.user.matchList = scrubbedMatchList; 
         else{
           body.user.matchList.forEach(element => {
             var match = {
               matchedEmail: element.email,
+              matchedFirstName: element.firstname,
               matchedDogName: element.dogs[0].name,
               matchedContactInfo: element.contactInfo
             }

@@ -14,8 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toolbar;
 
+import com.example.localdogs.data.MatchesData;
+import com.example.localdogs.data.awsinterface.Authentication;
 import com.example.localdogs.dummy.DummyContent;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
 
 /**
  * A fragment representing a list of Items.
@@ -68,7 +72,8 @@ public class MatchesFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyMatchesRecyclerViewAdapter(DummyContent.ITEMS));
+            ArrayList<MatchesData> matchesList = Authentication.getInstance(context.getApplicationContext()).getCurrentSessionUser().getMatchData();
+            recyclerView.setAdapter(new MyMatchesRecyclerViewAdapter(matchesList));
         }
         return view;
     }
