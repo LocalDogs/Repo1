@@ -2,6 +2,7 @@ package com.example.localdogs.data;
 
 import com.example.localdogs.dob;
 
+import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,7 +11,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
@@ -26,7 +26,7 @@ public class UserInitTest {
 
     @Before
     public void initializeInfoTest() {
-        u = new User("Jane","Doe", "jane@gmail.com", "01/01/1980", "", new HashMap<String, Dog>(1, 1), "Email: jane@gmail.com, Twitter: @jane_atgmail");
+        u = new User("Jane","Doe", "jane@gmail.com", "01/01/1980", "", new HashMap<String, Dog>(1, 1), "Email: jane@gmail.com, Twitter: @jane_atgmail", new ArrayList<MatchesData>());
     }
 
     @Test
@@ -97,7 +97,7 @@ public class UserInitTest {
 
     @Test
     public void getContactInfoTest() { assert(u.getContactInfo().equals("Email: jane@gmail.com, Twitter: @jane_atgmail")); }
-
+    
 
     @After
     public void tearDown() throws Exception {
