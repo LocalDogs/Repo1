@@ -26,11 +26,16 @@ public class CardStackDogList {
         return instance;
     }
 
+    private synchronized void resetDogList(){
+        dogs = new ArrayList<Dog>();
+    }
+
     public synchronized static CardStackDogList getInstance(){
         return instance;
     }
 
     public synchronized void setDogs(DogFilterResult dogs){
+        resetDogList();
         for(User u : dogs.getDogs()){
             for(Map.Entry dog : u.getDogs().entrySet()){
                 Dog tempDog = (Dog) dog.getValue();

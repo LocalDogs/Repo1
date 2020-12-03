@@ -56,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AmplifyHub.launchAmplify(getApplicationContext());
+        Authentication.getInstance(getApplicationContext()).checkInitAuth();
         /**
          * TODO: Make flag set to false in sign out process
          */
@@ -295,7 +296,8 @@ public class LoginActivity extends AppCompatActivity {
         nDialog.setIndeterminate(false);
         nDialog.setCancelable(true);
         nDialog.show();*/
-
+        Log.i("email", email.getText().toString());
+        Log.i("pw", password.getText().toString());
         Authentication.getInstance(getApplicationContext()).signInUser(email.getText().toString(), password.getText().toString(), (success) -> {
             Log.i("Success Login", "Woohoo!");
             UserRequests ur = new UserRequests();

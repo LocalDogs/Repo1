@@ -32,7 +32,7 @@ public class AmplifyHub {
             Amplify.addPlugin(new AWSCognitoAuthPlugin());
             Amplify.configure(context);
             Amplify.Auth.initialize(context);
-            Authentication.getInstance(context.getApplicationContext()).checkInitAuth();
+            Authentication.getInstance(context.getApplicationContext());
             Log.i("AmplifyHub", "Initialized Amplify");
         } catch (AmplifyException error) {
             // this shouldn't happen

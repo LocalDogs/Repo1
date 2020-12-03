@@ -1,5 +1,7 @@
 package com.example.localdogs.data.awsinterface.api.response;
 
+import android.util.Log;
+
 import com.example.localdogs.DogFilter.DogFilter;
 import com.example.localdogs.data.Dog;
 import com.example.localdogs.data.User;
@@ -23,6 +25,7 @@ public class DogFilterResult extends RequestResult{
             JSONArray dogs = getResponseAsJSONObject().getJSONArray("dogs");
             query = getResponseAsJSONObject().getString("query");
             if (query == null) query = "";
+            Log.i("DogFilterResult", dogs.toString());
             for(int i = 0; i < dogs.length(); i++){
                 users.add(User.toUser(dogs.getJSONObject(i)));
             }
