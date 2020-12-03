@@ -110,10 +110,26 @@ class Cardstack : AppCompatActivity(), CardStackListener, NavigationView.OnNavig
         if (id == R.id.nav_matches) {
             /*
             * TODO: When Jackson finishes working on Matches page, fix it, because it crashes when loading the activity
-            *  For now, the click will do nothing, to prevent crashing
+            *  For now, the click will do nothing, to prevent crashing -- yikes
              */
             val cinemaIntent = Intent(this, MatchesLoader::class.java)
-            startActivity(cinemaIntent)
+            val ur = UserRequests()
+            val cu = Authentication.getInstance(applicationContext).currentSessionUser;
+            //val pdialog = Loading.showProgressDialog(applicationContext);
+            ur.retrieveUserInfo(cu.email, { success ->
+                run {
+                    Authentication.getInstance(applicationContext).updateCurrentSession(success.user)
+                    startActivity(cinemaIntent)
+                    //Loading.hideProgressDialog(pdialog)
+                }
+            }, { error ->
+                run {
+                    error.message?.let { Log.e("MatchesLoader", it) };
+                    //Loading.hideProgressDialog(pdialog)
+                    ThreadSafeToast.makeText(applicationContext, "Failed to get Matches", 5)
+                }
+            })
+            //startActivity(cinemaIntent)
         } else if (id == R.id.nav_settings) {
             val cinemaIntent = Intent(this, UserSettings::class.java)
             startActivity(cinemaIntent)

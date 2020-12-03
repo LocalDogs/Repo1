@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AmplifyHub.launchAmplify(getApplicationContext());
-        Authentication.getInstance(getApplicationContext()).checkInitAuth();
+        //Authentication.getInstance(getApplicationContext()).checkInitAuth();
         /**
          * TODO: Make flag set to false in sign out process
          */
