@@ -98,11 +98,6 @@ public class UserInitTest {
     @Test
     public void getContactInfoTest() { assert(u.getContactInfo().equals("Email: jane@gmail.com, Twitter: @jane_atgmail")); }
 
-    @Test
-    public void jsonAssertUserData() {
-
-    }
-
     @After
     public void tearDown() throws Exception {
     }
