@@ -5,20 +5,30 @@ import androidx.fragment.app.FragmentActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private static final int EDIT_REQUEST = 1;
+    private ArrayList<MarkerOptions> markOptsList = new ArrayList<MarkerOptions>();
+    private ArrayList<Marker> markers = new ArrayList<Marker>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +52,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 MapsActivity.this.startActivityForResult(edit, EDIT_REQUEST);
             }
         });
-
         LatLng tuscaloosa = new LatLng(33.189281, -87.565155);
-        mMap.addMarker(new MarkerOptions().position(tuscaloosa).title("Marker in Tuscaloosa"));
+        markers.add(mMap.addMarker(new MarkerOptions().position(tuscaloosa).title("Tuscaloosa")));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(tuscaloosa));
+
+        // Construct a CameraPosition focusing on Mountain View and animate the camera to that position.
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(tuscaloosa )      // Sets the center of the map to Mountain View
+                .zoom(10)                   // Sets the zoom
+                .build();                   // Creates a CameraPosition from the builder
+        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+
+        if(mMap == null){
+            Log.e("Map","ERROR: Map is null after initialization");
+        }
+        else Log.i("Map","Map is not null, initialized successfully");
     }
 
     @Override
@@ -55,51 +77,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             case (EDIT_REQUEST) : {
                 if (resultCode == Activity.RESULT_OK) {
                     MarkerOptions markerOptions = data.getParcelableExtra("marker");
-                    mMap.addMarker(markerOptions);
+
+                    // Set the color of the marker to green
+                    BitmapDescriptor defaultMarker =
+                            BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+                    if(markerOptions.getTitle().contains("Park")){
+                        markerOptions.icon(defaultMarker);
+                    }
+
+                    Marker m = mMap.addMarker(markerOptions);
+                    Log.i("Map","adding marker: "+m.getTag());
+                    markers.add(m);
+                    markOptsList.add(markerOptions);
                 }
                 break;
             }
         }
     }
-    //////
 
-    /*@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-
-        final Button cardstackButton = findViewById(R.id.maps2cardstackbutton);
-
-        cardstackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), Cardstack.class);
-                startActivity(intent);
-                finish();
+    public void searchClick(View view) {
+        String searchText = ((TextView) findViewById(R.id.editTextTextPersonName)).getText().toString();
+        Log.i("Maps","Searching for "+searchText+" through "+markers.size()+" markers");
+        for(int i=0; i<markers.size(); i++){
+            if(markers.get(i) == null) {} else {
+                Log.i("Maps", "[" + i + "] Marker: " + markers.get(i).getTitle());
+                if (markers.get(i).getTitle().contains(searchText)) {
+                    markers.get(i).setVisible(true);
+                } else {
+                    markers.get(i).setVisible(false);
+                }
             }
-        });
-    }*/
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
-    //@Override
-    /*public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng tuscaloosa = new LatLng(33.189281, -87.565155);
-        mMap.addMarker(new MarkerOptions().position(tuscaloosa).title("Marker in Tuscaloosa"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(tuscaloosa));
-    }*/
+        }
+        Log.i("Maps","Clicked to search, text: "+searchText);
+    }
 }
