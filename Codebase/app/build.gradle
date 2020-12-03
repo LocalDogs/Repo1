@@ -74,6 +74,12 @@ dependencies {
     //map
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
+    //espresso
+    androidTestImplementation "com.android.support.test.espresso:espresso-intents:3.0.1"
+    androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.2'
+
+
+
 }
 repositories {
     mavenCentral()
