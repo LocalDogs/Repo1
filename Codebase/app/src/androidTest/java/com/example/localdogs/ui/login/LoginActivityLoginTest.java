@@ -46,7 +46,19 @@ public class LoginActivityLoginTest {
         Espresso.closeSoftKeyboard();
         Espresso.onView(withId(R.id.login)).perform(click());
 
+        /*
+        *TODO: FIX THIS TEST CASE, AS IT HAS ISSUES PROCESSING KOTLIN CLASS
+         */
         intended(hasComponent(Cardstack.class.getName()));
+
+    }
+
+    @Test
+    public void register() {
+        //register action
+        Espresso.onView(withId(R.id.register)).perform(click());
+
+        intended(hasComponent(TermsOfUse.class.getName()));
 
     }
 
